@@ -1,30 +1,174 @@
 /* app css stylesheet */
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+body {
+    background-image: url(../img/bauernhof.jpg);
+    background-size: 100% auto;
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-color: #00A;
 }
 
-.menu:before {
-  content: "[";
+td {
+    text-align: right;
 }
 
-.menu:after {
-  content: "]";
+.container {
+    position: relative;
 }
 
-.menu > li {
-  display: inline;
+.field, .soil, .nutrition, .cropsequence, .harvest {
+    position: absolute;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+.soil, .nutrition, .cropsequence, .harvest {
+    opacity: 0.6;
+    z-index: 10;
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+.soil li, .nutrition li, .cropsequence li, .harvest li {
+    line-height: 6em;
+}
+
+.ui-selectable .ui-selectee {
+    background-image: url(../img/Brachland.jpg);
+    background-size: 100% auto;
+    color: white;
+}
+
+.ui-selectable .ui-selecting {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid red;
+    background-size: 100% auto;
+}
+
+.ui-selectable .ui-selected {
+    background: #F39814;
+    background-size: 100% auto;
+    color: white;
+}
+
+.ui-selectable {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.ui-selectable li {
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    color: white;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid black;
+    padding: 0px;
+    float: left;
+    width: 12.5%;
+    height: 0;
+    padding-bottom: 12%;
+    font-size: 1em;
+    text-align: center;
+}
+
+.plantation li {
+    width: 20%;
+    padding-bottom: 19%;
+}
+
+body {
+    padding: 50px;
+    background-color: #ececec;
+}
+
+/* beta banner */
+#corner-banner {
+    z-index: 10000;
+    position: absolute;
+    left: -65px;
+    top: 25px;
+    display: block;
+    width: 200px;
+    background: #FA0; /* old browsers */
+    background: -moz-linear-gradient(top, #FA0 0%, #FD0 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FA0), color-stop(100%, #FD0)); /* webkit */
+    text-align: center;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 3px 3px 4px 3px;
+    text-shadow: #000 1px 1px 0;
+
+    -moz-transform: rotate(-45deg); /* FF3.5+ */
+    -o-transform: rotate(-45deg); /* Opera 10.5 */
+    -webkit-transform: rotate(-45deg); /* Saf3.1+, Chrome */
+    transform: rotate(-45deg); /* CSS3 (for when it gets supported) */
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    -o-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+}
+
+#corner-banner em {
+    letter-spacing: 1px;
+    font-style: normal;
+    font-size: 18px !important;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 12px;
+    display: block;
+}
+
+# show hide
+.ui-show {
+    color: blue;
+}
+.ui-hide {
+    opacity: 0;
+}
+
+.endRound {
+    width: 100%;
+    position: absolute;
+    background-color: rgba(255,255,255,0.7);
+    padding: 1%;
+}
+
+.endRound button {
+    width: 50%;
+}
+
+.endRound table {
+    opacity: 1;
+    border-spacing:10px;
+}
+
+.endRound table th {
+    text-align: right;
+}
+
+.endRound table td {
+    width: 100%;
+}
+
+.endRound select {
+    margin: 0;
+    width: 100%;
+}
+
+.finance {
+    width: 100%;
+    position: absolute;
+    background-color: rgba(255,255,255,0.7);
+    padding: 1%;
+}
+
+.finance table {
+    background: white;
+    width: 100%;
 }

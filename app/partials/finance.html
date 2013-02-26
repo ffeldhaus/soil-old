@@ -1,0 +1,149 @@
+<div class="finance">
+    <table cellpadding="5px" border="1">
+        <thead>
+        <th colspan="3">Runde 1</th>
+        <th ng-repeat="group in groups">{{group.name}}</th>
+        </thead>
+        <tr>
+            <th colspan="2" rowspan="5">Entscheidungen</th>
+            <th>Einsatz von Maschinen</th>
+            <td ng-repeat="group in groups">{{group.decision_machines}}</td>
+        </tr>
+        <tr>
+            <th>Bio-Siegel</th>
+            <td ng-repeat="group in groups">{{group.decision_organic | checkmark}}</td>
+        </tr>
+        <tr>
+            <th>Düngen</th>
+            <td ng-repeat="group in groups">{{group.decision_fertilize | checkmark}}</td>
+        </tr>
+        <tr>
+            <th>Pflanzenschutz</th>
+            <td ng-repeat="group in groups">{{group.decision_pesticide | checkmark}}</td>
+        </tr>
+        <tr>
+            <th>Nützlinge</th>
+            <td ng-repeat="group in groups">{{group.decision_organisms | checkmark}}</td>
+        </tr>
+        <tr>
+            <th colspan="2" rowspan="5">Übersicht</th>
+            <th>Einsatz von Maschinen</th>
+            <td ng-repeat="group in groups">{{group.overview_machines}}</td>
+        </tr>
+        <tr>
+            <th>Tiere pro Landfläche</th>
+            <td ng-repeat="group in groups">{{group.overview_animals}}</td>
+        </tr>
+        <tr>
+            <th>Bio Siegel</th>
+            <td ng-repeat="group in groups">{{group.overview_organic | checkmark}}</td>
+        </tr>
+        <tr>
+            <th>Wetter</th>
+            <td ng-repeat="group in groups">{{group.overview_weather}}</td>
+        </tr>
+        <tr>
+            <th>Schädlinge</th>
+            <td ng-repeat="group in groups">{{group.overview_vermin}}</td>
+        </tr>
+        <tr>
+            <th colspan="3">Startkapital</th>
+            <td ng-repeat="group in groups">{{group.seedcapital}}</td>
+        </tr>
+        <tr>
+            <th rowspan="18">Ausgaben</th>
+            <th rowspan="8">Saatgut</th>
+            <th>Ackerbohnen</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_fieldbean}}</td>
+        </tr>
+        <tr>
+            <th>Gerste</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_barley}}</td>
+        </tr>
+        <tr>
+            <th>Hafer</th>
+        </tr>
+        <tr>
+            <th>Kartoffeln</th>
+        </tr>
+        <tr>
+            <th>Mais</th>
+        </tr>
+        <tr>
+            <th>Roggen</th>
+        </tr>
+        <tr>
+            <th>Weizen</th>
+        </tr>
+        <tr>
+            <th>Zuckerrüben</th>
+        </tr>
+        <tr>
+            <th rowspan="3">Investitionen</th>
+            <th>Tiere</th>
+        </tr>
+        <tr>
+            <th>Landkauf</th>
+        </tr>
+        <tr>
+            <th>Einsatz von Maschinen</th>
+        </tr>
+        <tr>
+            <th rowspan="6">Laufende Kosten</th>
+            <th>Kontrollen Bio-Siegel</th>
+        </tr>
+        <tr>
+            <th>Dünger</th>
+        </tr>
+        <tr>
+            <th>Pflanzenschutz</th>
+        </tr>
+        <tr>
+            <th>Nützlinge</th>
+        </tr>
+        <tr>
+            <th>Tiere</th>
+        </tr>
+        <tr>
+            <th>Grundkosten</th>
+        </tr>
+        <tr>
+            <th colspan="2">Summe</th>
+        </tr>
+        <tr>
+            <th rowspan="9">Einnahmen</th>
+            <th rowspan="8">Erträge</th>
+            <th>Ackerbohnen</th>
+        </tr>
+        <tr>
+            <th>Gerste</th>
+        </tr>
+        <tr>
+            <th>Hafer</th>
+        </tr>
+        <tr>
+            <th>Kartoffeln</th>
+        </tr>
+        <tr>
+            <th>Mais</th>
+        </tr>
+        <tr>
+            <th>Roggen</th>
+        </tr>
+        <tr>
+            <th>Weizen</th>
+        </tr>
+        <tr>
+            <th>Zuckerrüben</th>
+        </tr>
+        <tr>
+            <th colspan="2">Summe</th>
+        </tr>
+        <tr>
+            <th colspan="3">Gewinn</th>
+        </tr>
+        <tr>
+            <th colspan="3">Kapital</th>
+        </tr>
+    </table>
+</div>

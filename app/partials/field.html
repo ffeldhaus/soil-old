@@ -1,0 +1,40 @@
+<div class="field">
+    <ol ui-selectable>
+        <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in fields"
+            class="ui-state-default">
+            {{field.content}}
+        </li>
+    </ol>
+</div>
+<div class="soil" ui-if="show=='soil'">
+    <ol class="ui-selectable">
+        <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in soil"
+            class="ui-state-default">
+            {{field.content}}
+        </li>
+    </ol>
+</div>
+<div class="nutrition" ui-if="show=='nutrition'">
+    <ol class="ui-selectable">
+        <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in nutrition"
+            class="ui-state-default">
+            {{field.content}}
+        </li>
+    </ol>
+</div>
+<div class="cropsequence" ui-if="show=='cropsequence'">
+    <ol class="ui-selectable">
+        <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in cropsequence"
+            class="ui-state-default">
+            {{field.content}}
+        </li>
+    </ol>
+</div>
+<div class="harvest" ui-if="show=='harvest'">
+    <ol class="ui-selectable">
+        <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in harvest"
+            class="ui-state-default">
+            {{field.content}}
+        </li>
+    </ol>
+</div>

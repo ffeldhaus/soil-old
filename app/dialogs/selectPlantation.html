@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h1>Was soll angebaut werden?</h1>
+</div>
+<div class="modal-body">
+    <ol class="ui-selectable plantation">
+        <li ng-click="click(plantation)" class="ui-selectee" style="background-image: url(img/{{plantation.picture}})" ng-repeat="plantation in plantations">{{plantation.content}}</li>
+    </ol>
+    {{msg}}
+</div>

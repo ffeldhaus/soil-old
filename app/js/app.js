@@ -1,10 +1,10 @@
 'use strict';
 
-
-// Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives']).
-  config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: MyCtrl1});
-    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: MyCtrl2});
-    $routeProvider.otherwise({redirectTo: '/view1'});
-  }]);
+angular.module('soil', ['ui', 'ui.bootstrap', 'soil.filters', 'soil.directives']).
+    config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+        when('/field', {templateUrl:'partials/field.html', controller:FieldCtrl}).
+        when('/finance', {templateUrl:'partials/finance.html', controller:FinanceCtrl}).
+        when('/endRound', {templateUrl:'partials/endRound.html', controller:EndRoundCtrl}).
+        otherwise({redirectTo:'/field'});
+}]);

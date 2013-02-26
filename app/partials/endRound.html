@@ -1,0 +1,72 @@
+<div class="endRound">
+    <div style="position: relative;float: left;width: 48%;">
+        <table cellpadding="5px" >
+            <tr>
+                <th>Düngen</th>
+                <td>
+                    <div class="btn-group">
+                        <button ng-click="$parent.fertilize=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.fertilize}">Ja
+                        </button>
+                        <button ng-click="$parent.fertilize=false" type="button" class="btn" value="false"
+                                ng-class="{active:!$parent.fertilize}">Nein
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Pflanzenschutzmittel</th>
+                <td>
+                    <div class="btn-group">
+                        <button ng-click="$parent.pesticide=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.pesticide}">Ja
+                        </button>
+                        <button ng-click="$parent.pesticide=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.pesticide}">Nein
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Nützlinge</th>
+                <td>
+                    <div class="btn-group">
+                        <button ng-click="$parent.organisms=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.organisms}">Ja
+                        </button>
+                        <button ng-click="$parent.organisms=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.organisms}">Nein
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Maschineneinsatz steigern</th>
+                <td>
+                    <select ng-model="$parent.machine" ng-options="machine.percent for machine in percentages"></select>
+                </td>
+            </tr>
+            <tr>
+                <th>Bio-Siegel</th>
+                <td>
+                    <div class="btn-group">
+                        <button ng-click="$parent.organic=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.organic}">Ja
+                        </button>
+                        <button ng-click="$parent.organic=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.organic}">Nein
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="position: relative;float: right;width: 50%" class="field">
+        <ol class="ui-selectable">
+            <li style="background-image: url(img/{{field.picture}})" ng-repeat="field in fields"
+                class="ui-state-default">
+                {{field.short}}
+            </li>
+        </ol>
+    </div>
+</div>
