@@ -172,3 +172,11 @@ body {
     background: white;
     width: 100%;
 }
+
+.navbar {
+    font-size: 120%;
+}
+
+.navbar a {
+    font-size: 120%;
+}
