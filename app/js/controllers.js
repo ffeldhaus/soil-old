@@ -3,11 +3,14 @@
 /* Controllers */
 
 function SoilCtrl($scope,$location,$dialog) {
+
+    $scope.percentages = [{percent: '0%'},{percent:'10%'},{percent:'20%'},{percent:'30%'},{percent:'40%'},{percent:'50%'}]
+
     $scope.fertilize = false;
     $scope.pesicide = false;
     $scope.nutrition = false;
     $scope.organic = false;
-    $scope.machine = {percent: '0%'};
+    $scope.machine = $scope.percentages[0];
 
     $scope.fields = [
         {content:'Ackerbohne', picture:'ackerbohne.jpg', short:'A'},
@@ -277,5 +280,4 @@ function FinanceCtrl($scope) {
 }
 
 function EndRoundCtrl($scope) {
-    $scope.percentages = [{percent: '0%'},{percent:'10%'},{percent:'20%'},{percent:'30%'},{percent:'40%'},{percent:'50%'}]
 }
