@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  machines: 1
+  organic: false
+  round_id: 
+
+two:
+  machines: 1
+  organic: false
+  round_id: 

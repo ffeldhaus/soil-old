@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nutrition: 1
+  soil: 1
+  cropsequence: MyString
+  harvest: 9.99
+  plantation: MyString
+  field_id: 
+
+two:
+  nutrition: 1
+  soil: 1
+  cropsequence: MyString
+  harvest: 9.99
+  plantation: MyString
+  field_id: 

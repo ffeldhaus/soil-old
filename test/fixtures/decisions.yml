@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  machines: 9.99
+  organic: false
+  pesticide: false
+  fertilize: false
+  organisms: false
+  round_id: 
+
+two:
+  machines: 9.99
+  organic: false
+  pesticide: false
+  fertilize: false
+  organisms: false
+  round_id: 
