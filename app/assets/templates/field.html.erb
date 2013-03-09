@@ -1,0 +1,40 @@
+<div class="field">
+    <ol ui-selectable>
+        <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound].field.parcels"
+            class="ui-state-default">
+            {{parcel.plantation}}
+        </li>
+    </ol>
+</div>
+<div class="soil" ui-if="show=='soil'">
+    <ol class="ui-selectable">
+      <li style="background-size: 0; background-color: hsl({{1.5*parcel.soil-20}},100%,40%);" ng-repeat="parcel in rounds[currentRound].field.parcels"
+            class="ui-state-default">
+            {{parcel.soil}}%
+        </li>
+    </ol>
+</div>
+<div class="nutrition" ui-if="show=='nutrition'">
+    <ol class="ui-selectable">
+      <li style="background-size: 0; background-color: hsl({{1.5*parcel.soil-20}},100%,40%);" ng-repeat="parcel in rounds[currentRound].field.parcels"
+            class="ui-state-default">
+            {{parcel.nutrition}}%
+        </li>
+    </ol>
+</div>
+<div class="cropsequence" ui-if="show=='cropsequence'">
+    <ol class="ui-selectable">
+      <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.cropsequence | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound].field.parcels"
+            class="ui-state-default">
+            {{parcel.cropsequence}}
+        </li>
+    </ol>
+</div>
+<div class="harvest" ui-if="show=='harvest'">
+    <ol class="ui-selectable">
+      <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.harvest | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound].field.parcels"
+            class="ui-state-default">
+            {{parcel.harvest}}
+        </li>
+    </ol>
+</div>

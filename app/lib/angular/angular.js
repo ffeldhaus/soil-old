@@ -7022,7 +7022,7 @@ function $RouteProvider(){
      * @property {Array.<Object>} routes Array of all configured routes.
      *
      * @description
-     * Is used for deep-linking URLs to controllers and views (HTML partials).
+     * Is used for deep-linking URLs to controllers and views (HTML templates).
      * It watches `$location.url()` and tries to map the path to an existing route definition.
      *
      * You can define routes through {@link ng.$routeProvider $routeProvider}'s API.

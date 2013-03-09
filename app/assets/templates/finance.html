@@ -7,44 +7,44 @@
         <tr>
             <th colspan="2" rowspan="5">Entscheidungen</th>
             <th>Einsatz von Maschinen</th>
-            <td ng-repeat="group in groups">{{group.decision_machines}}</td>
+            <td ng-repeat="group in groups">{{group.decision.machines}}</td>
         </tr>
         <tr>
             <th>Bio-Siegel</th>
-            <td ng-repeat="group in groups">{{group.decision_organic | checkmark}}</td>
+            <td ng-repeat="group in groups">{{group.decision.organic | checkmark}}</td>
         </tr>
         <tr>
             <th>Düngen</th>
-            <td ng-repeat="group in groups">{{group.decision_fertilize | checkmark}}</td>
+            <td ng-repeat="group in groups">{{group.decision.fertilize | checkmark}}</td>
         </tr>
         <tr>
             <th>Pflanzenschutz</th>
-            <td ng-repeat="group in groups">{{group.decision_pesticide | checkmark}}</td>
+            <td ng-repeat="group in groups">{{group.decision.pesticide | checkmark}}</td>
         </tr>
         <tr>
             <th>Nützlinge</th>
-            <td ng-repeat="group in groups">{{group.decision_organisms | checkmark}}</td>
+            <td ng-repeat="group in groups">{{group.decision.organisms | checkmark}}</td>
         </tr>
         <tr>
             <th colspan="2" rowspan="5">Übersicht</th>
             <th>Einsatz von Maschinen</th>
-            <td ng-repeat="group in groups">{{group.overview_machines}}</td>
+            <td ng-repeat="group in groups">{{group.overview.machines}}</td>
         </tr>
         <tr>
             <th>Tiere pro Landfläche</th>
-            <td ng-repeat="group in groups">{{group.overview_animals}}</td>
+            <td ng-repeat="group in groups">{{group.overview.animals}}</td>
         </tr>
         <tr>
             <th>Bio Siegel</th>
-            <td ng-repeat="group in groups">{{group.overview_organic | checkmark}}</td>
+            <td ng-repeat="group in groups">{{group.overview.organic | checkmark}}</td>
         </tr>
         <tr>
             <th>Wetter</th>
-            <td ng-repeat="group in groups">{{group.overview_weather}}</td>
+            <td ng-repeat="group in groups">{{group.overview.weather}}</td>
         </tr>
         <tr>
             <th>Schädlinge</th>
-            <td ng-repeat="group in groups">{{group.overview_vermin}}</td>
+            <td ng-repeat="group in groups">{{group.overview.vermin}}</td>
         </tr>
         <tr>
             <th colspan="3">Startkapital</th>
@@ -62,21 +62,27 @@
         </tr>
         <tr>
             <th>Hafer</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_oat}}</td>
         </tr>
         <tr>
             <th>Kartoffeln</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_potatoes}}</td>
         </tr>
         <tr>
             <th>Mais</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_corn}}</td>
         </tr>
         <tr>
             <th>Roggen</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_rye}}</td>
         </tr>
         <tr>
             <th>Weizen</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_wheat}}</td>
         </tr>
         <tr>
             <th>Zuckerrüben</th>
+            <td ng-repeat="group in groups">{{group.expenses_seeds_beet}}</td>
         </tr>
         <tr>
             <th rowspan="3">Investitionen</th>

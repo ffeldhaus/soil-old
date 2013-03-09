@@ -1,0 +1,28 @@
+<% @page_title = "GroupAuth | Signup" %>
+<%= form_for(@group) do |f| %>
+    <% if @group.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+          <ul>
+            <% @group.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <p><%= f.label :name %><br/>
+        <%= f.text_field :name %></p>
+
+      <p><%= f.label :password %><br/>
+        <%= f.password_field :password %></p>
+
+      <p><%= f.label :password_confirmation %><br/>
+        <%= f.password_field :password_confirmation %></p>
+    </div>
+    <div class="actions">
+      <%= f.submit "Sign Up" %>
+    </div>
+<% end %>

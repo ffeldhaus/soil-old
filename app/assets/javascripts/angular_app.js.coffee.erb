@@ -1,0 +1,16 @@
+'use strict'
+
+angular
+    .module('soil', ['ui', 'ui.bootstrap', 'ngResource', 'soil.filters', 'soil.directives', 'soil.services'])
+    .config ($routeProvider) ->
+        $routeProvider
+            .when('/field',
+                  templateUrl: '<%= asset_path('field.html') %>'
+                  controller: FieldCtrl)
+            .when('/finance',
+                  templateUrl: '<%= asset_path('finance.html') %>'
+                  controller: FinanceCtrl)
+            .when('/endRound',
+                  templateUrl: '<%= asset_path('endRound.html') %>'
+                  controller: EndRoundCtrl)
+            .otherwise(redirectTo: '/field')

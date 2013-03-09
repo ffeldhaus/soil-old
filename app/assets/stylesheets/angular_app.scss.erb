@@ -1,12 +1,11 @@
-/* app css stylesheet */
-
 body {
-    background-image: url(../img/bauernhof.jpg);
+    background-image: url(<%= asset_path('bauernhof.jpg')%>);
     background-size: 100% auto;
     background-attachment: fixed;
     background-position: bottom;
     background-repeat: no-repeat;
     background-color: #00A;
+    padding-top: 50px;
 }
 
 td {
@@ -17,8 +16,36 @@ td {
     position: relative;
 }
 
+.pagination {
+    margin: 0 0 10px 0;
+}
+
+.pagination ul {
+    background-color: #CCC;
+}
+
+.login-form {
+    margin-left: 65px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 -20px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+legend {
+    margin-right: -50px;
+    font-weight: bold;
+    color: #404040;
+}
+
 .field, .soil, .nutrition, .cropsequence, .harvest {
     position: absolute;
+    width: 100%;
 }
 
 .soil, .nutrition, .cropsequence, .harvest {
@@ -124,7 +151,6 @@ body {
     display: block;
 }
 
-# show hide
 .ui-show {
     color: blue;
 }
