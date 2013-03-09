@@ -1,3 +1,3 @@
 class Game < ActiveRecord::Base
-  has_many :groups, :autosave => true
+  has_many :groups, :autosave => true, :dependent => :destroy
 end

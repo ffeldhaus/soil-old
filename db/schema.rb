@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20130303154841) do
 
   create_table "decisions", force: true do |t|
-    t.decimal  "machines"
+    t.string  "machines"
     t.boolean  "organic"
     t.boolean  "pesticide"
     t.boolean  "fertilize"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20130303154841) do
   add_index "parcels", ["field_id"], name: "index_parcels_on_field_id"
 
   create_table "results", force: true do |t|
-    t.integer  "machines"
+    t.string  "machines"
     t.boolean  "organic"
     t.integer  "round_id"
     t.datetime "created_at"

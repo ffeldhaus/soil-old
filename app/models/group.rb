@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  has_many :rounds, :autosave => true
+  has_many :rounds, :autosave => true, :dependent => :destroy
   has_secure_password
 
   validates_presence_of :password, :on => :create

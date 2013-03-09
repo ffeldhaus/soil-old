@@ -11,9 +11,10 @@ group = game.groups.create(:groupname => 'test', :password => 'testing')
 7.times do |i|
   game.save!
   round = group.rounds.create(:number => i)
+  decision = round.create_decision(:machines=>'0%',:organic=>false,:pesticide=>false,:fertilize=>false,:organisms=>false)
   field = round.create_field
   40.times do |p|
     field.parcels.create(:nutrition => (80 - i*10), :soil => (80 - i*10), :cropsequence => 'gut', :harvest => 'gut', :plantation => 'Brachland')
   end
-  result = round.create_result(:machines => '100', :organic => 'false')
+  result = round.create_result(:machines => '100%', :organic => 'false')
 end

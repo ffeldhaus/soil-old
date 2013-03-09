@@ -10,6 +10,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <script src="//angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
 </head>
@@ -44,7 +45,6 @@
       <div class="content">
         <div class="row">
           <div class="span12">
-            Test{{test}}Test
             <div>
               <pagination num-pages="group.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="getRound(page)" ></pagination>
             </div>

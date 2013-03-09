@@ -7,7 +7,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log) {
     $scope.rounds = [null, null, null, null, null, null, null];
 
     var Groups = $resource('/groups/:group_id', {group_id: '@id'});
-    var Rounds = $resource('/rounds/:round_id', {round_id: '@id'});
+    var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
 
     $scope.getGroup = function (group) {
         $scope.group = Groups.get({group_id: group}, function () {
@@ -20,14 +20,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log) {
         if ($scope.rounds[round] == null) $scope.rounds[round] = Rounds.get({round_id: round});
     };
 
-    $scope.percentages = [
-        {percent: '0%'},
-        {percent: '10%'},
-        {percent: '20%'},
-        {percent: '30%'},
-        {percent: '40%'},
-        {percent: '50%'}
-    ];
+    $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
 
     $scope.fertilize = false;
     $scope.pesicide = false;
@@ -270,7 +263,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log) {
                 .open()
                 .then(function (result) {
                     $log.info('End round');
-                    $log.info($scope.rounds[$scope.rounds.length-1].$save());
+                    $log.info($scope.rounds[$scope.rounds.length - 1].$update());
                 });
     }
 }
