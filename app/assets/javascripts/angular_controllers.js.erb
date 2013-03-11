@@ -91,8 +91,6 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
     }
 }
 
-SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
-
 function FieldCtrl() {
 }
 
@@ -106,8 +104,6 @@ function selectPlantationCtrl($scope, dialog) {
         dialog.close(plantation);
     }
 }
-
-selectPlantationCtrl.$inject = ['$scope', '$dialog'];
 
 function FinanceCtrl() {
 }
