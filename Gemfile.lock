@@ -62,6 +62,7 @@ GEM
     mime-types (1.21)
     minitest (4.6.1)
     multi_json (1.6.1)
+    pg (0.14.1)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -125,6 +126,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json_builder
+  pg
   rails (= 4.0.0.beta1)
   sass-rails (~> 4.0.0.beta1)
   sqlite3

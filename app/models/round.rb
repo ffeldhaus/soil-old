@@ -112,8 +112,8 @@ class Round < ActiveRecord::Base
 
 
     self.field.parcels.each do |new_parcel|
-      current_parcel = current_round.field.parcels[new_parcel.number-1]
-      previous_parcel = previous_round.field.parcels[new_parcel.number-1]
+      current_parcel = current_round.field.parcels[new_parcel.number]
+      previous_parcel = previous_round.field.parcels[new_parcel.number]
 
       # copy values from parcel of current round to parcel of new round
       new_parcel.plantation = current_parcel.plantation
@@ -159,7 +159,7 @@ class Round < ActiveRecord::Base
         while monoculture
           round_counter += 1
           if rounds.count > round_counter + 1
-            monoculture = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcel[new_parcel.number-1].plantation)
+            monoculture = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcels[new_parcel.number].plantation)
           else
             monoculture = false
           end
@@ -218,7 +218,7 @@ class Round < ActiveRecord::Base
       while efficiency
         round_counter += 1
         if rounds.count > round_counter + 1
-          efficiency = (current_parcel.plantation == rounds[self.number - 3 - round_counter].plantation)
+          efficiency = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcels[new_parcel.number].plantation)
         else
           efficiency = false
         end

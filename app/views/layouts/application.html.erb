@@ -37,7 +37,7 @@
                 href="#/field">Ernteertrag
   </nav-location>
   <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
-  <a ng-click="endRound()" class="btn" href="#/endRound">Runde abschicken &raquo;</a>
+  <a ng-click="endRound()" class="btn" ng-disabled="currentRound != rounds.length" href="#/endRound">Runde abschicken &raquo;</a>
 </nav-bar-top>
 
   <div id="main" role="main">

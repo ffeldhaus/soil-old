@@ -1,6 +1,6 @@
 {
   "name": "soil",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Soil Simulation Game",
   "main": "web.js",
   "directories": {

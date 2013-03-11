@@ -23,7 +23,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
     $scope.wait_for_other_groups = function () {
         $log.info('Wait for others');
-        $scope.startNewRound = false
+        $scope.startNewRound = false;
 
         var t = '<div ng-show="!startNewRound" class="modal-header">' +
                 '<h1>Auf andere Gruppen warten</h1>' +
@@ -47,15 +47,14 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
         dialog.open().then();
 
         (function tick() {
-            $scope.group = Groups.get({group_id: $scope.group.id}, function () {
+            $scope.group = Groups.get({group_id: $scope.group.id}, function ($scope) {
                 if ($scope.group.wait_for_other_groups) {
                     $timeout(tick, 1000)
                 }
                 else {
                     $log.info('Start new Round');
-                    $scope.$apply($scope.startNewRound=true)
+                    $scope.$apply('startNewRound=true');
                 }
-                ;
             });
         })();
 
@@ -67,8 +66,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
     $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
 
     $scope.endRound = function () {
-        $scope.test = $location.url()
-        if ($location.url() == '/endRound') {
+        if ($location.url() == '/endRound' && $scope.currentRound == $scope.rounds.length) {
             $scope.endRoundAcknowledgement()
         }
         ;
@@ -85,8 +83,10 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
         $dialog.messageBox(title, msg, btns)
                 .open()
                 .then(function (result) {
-                    $scope.rounds[$scope.rounds.length - 1].$update();
-                    $scope.wait_for_other_groups();
+                    if (result == 'send') {
+                        $scope.rounds[$scope.rounds.length - 1].$update();
+                        $scope.wait_for_other_groups();
+                    }
                 });
     }
 }
@@ -97,7 +97,7 @@ function FieldCtrl($scope) {
 // the dialog is injected in the specified controller
 function selectPlantationCtrl($scope, dialog) {
     $scope.plantations = [
-        'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tier', 'Brachland'
+        'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
 
     $scope.click = function (plantation) {
@@ -106,15 +106,6 @@ function selectPlantationCtrl($scope, dialog) {
 }
 
 function FinanceCtrl($scope) {
-    $scope.groups = [
-        {name: "Gruppe 1", decision: {machines: '0%', organic: true, fertilize: true, pesticide: true, organisms: true}, overview: {machines: '120%', animals: 0, organic: true, weather: 'normal', vermin: 'keine'}, seedcapital: '20000', expenses_seeds_fieldbean: '0', expenses_seeds_barley: '0', expenses_seeds_oat: '0', expenses_seeds_potatoes: '0', expenses_seeds_corn: '0', expenses_seeds_rye: '0', expenses_seeds_wheat: '0', expenses_seeds_beet: '0'},
-        {name: "Gruppe 2", decision_machines: '0%', decision_organic: true, decision_fertilize: true, decision_pesticide: true, decision_organisms: true, overview_machines: '120%', overview_animals: 0, overview_organic: true, overview_weather: 'normal', overview_vermin: 'keine'},
-        {name: "Gruppe 3", decision_machines: '0%', decision_organic: true, decision_fertilize: true, decision_pesticide: true, decision_organisms: true, overview_machines: '120%', overview_animals: 0, overview_organic: true, overview_weather: 'normal', overview_vermin: 'keine'},
-        {name: "Gruppe 4", decision_machines: '0%', decision_organic: true, decision_fertilize: true, decision_pesticide: true, decision_organisms: true, overview_machines: '120%', overview_animals: 0, overview_organic: true, overview_weather: 'normal', overview_vermin: 'keine'},
-        {name: "Gruppe 5", decision_machines: '0%', decision_organic: true, decision_fertilize: true, decision_pesticide: true, decision_organisms: true, overview_machines: '120%', overview_animals: 0, overview_organic: true, overview_weather: 'normal', overview_vermin: 'keine'},
-        {name: "Gruppe 6", decision_machines: '0%', decision_organic: true, decision_fertilize: true, decision_pesticide: true, decision_organisms: true, overview_machines: '120%', overview_animals: 0, overview_organic: true, overview_weather: 'normal', overview_vermin: 'keine'}
-
-    ];
 }
 
 function EndRoundCtrl($scope) {
