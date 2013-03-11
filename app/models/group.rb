@@ -1,4 +1,5 @@
 class Group < ActiveRecord::Base
+  belongs_to :game
   has_many :rounds, :autosave => true, :dependent => :destroy
   has_secure_password
 

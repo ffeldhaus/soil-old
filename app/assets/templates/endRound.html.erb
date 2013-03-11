@@ -2,27 +2,27 @@
     <div style="position: relative;float: left;width: 48%;">
         <table cellpadding="5px" >
             <tr>
-                <th>Düngen</th>
+                <th>Konventioneller Dünger</th>
                 <td>
                     <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.fertilize=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound].decision_attributes.fertilize}">Ja
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize}">Ja
                         </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.fertilize=false" type="button" class="btn" value="false"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound].decision_attributes.fertilize}">Nein
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize=false" type="button" class="btn" value="false"
+                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize}">Nein
                         </button>
                     </div>
                 </td>
             </tr>
             <tr>
-                <th>Pflanzenschutzmittel</th>
+                <th>Pestizide</th>
                 <td>
                     <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.pesticide=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound].decision_attributes.pesticide}">Ja
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide}">Ja
                         </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.pesticide=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound].decision_attributes.pesticide}">Nein
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide}">Nein
                         </button>
                     </div>
                 </td>
@@ -31,11 +31,11 @@
                 <th>Nützlinge</th>
                 <td>
                     <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.organisms=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound].decision_attributes.organisms}">Ja
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms}">Ja
                         </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.organisms=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound].decision_attributes.organisms}">Nein
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms}">Nein
                         </button>
                     </div>
                 </td>
@@ -43,18 +43,18 @@
             <tr>
                 <th>Maschineneinsatz steigern</th>
                 <td>
-                    <select ng-model="$parent.rounds[$parent.currentRound].decision_attributes.machines" ng-options="percent for percent in percentages"></select>
+                    <select ng-model="$parent.rounds[$parent.currentRound - 1].decision_attributes.machines" ng-options="percent for percent in percentages"></select>
                 </td>
             </tr>
             <tr>
                 <th>Bio-Siegel</th>
                 <td>
                     <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.organic=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound].decision_attributes.organic}">Ja
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organic=true" type="button" class="btn" value="true"
+                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.organic}">Ja
                         </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound].decision_attributes.organic=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound].decision_attributes.organic}">Nein
+                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organic=false" type="button" class="btn" value="no"
+                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.organic}">Nein
                         </button>
                     </div>
                 </td>
@@ -63,7 +63,7 @@
     </div>
     <div style="position: relative;float: right;width: 50%" class="field">
         <ol class="ui-selectable">
-          <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound].field_attributes.parcels_attributes"
+          <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes"
                 class="ui-state-default">
                 {{parcel.plantation.charAt(0)}}
             </li>

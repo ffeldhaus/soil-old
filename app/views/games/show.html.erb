@@ -1,2 +1,7 @@
-<div ng-view>
+<div class="span12">
+  <div>
+    <pagination num-pages="group.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="getRound(page)" ></pagination>
+  </div>
+  <div ng-view>
+  </div>
 </div>

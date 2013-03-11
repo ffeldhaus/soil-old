@@ -1,31 +1,27 @@
-<div class="content">
-  <div class="row">
-    <div class="login-form offset2 span6">
-      <%= form_tag sessions_path, :class => 'form-horizontal' do %>
-          <fieldset>
-            <div id="legend">
-              <legend class="">Anmelden</legend>
-            </div>
-            <div class="control-group">
-              <%= label_tag :groupname, nil, :class => 'control-label' %>
-              <%= text_field_tag :groupname, params[:groupname], :class => 'input-large' %>
-            </div>
+<div class="login-form span6 center">
+  <%= form_tag sessions_path, :class => 'form-horizontal' do %>
+      <fieldset>
+        <div id="legend">
+          <legend class="">Anmelden</legend>
+        </div>
+        <div class="control-group">
+          <%= label_tag 'Gruppenname', nil, :class => 'control-label' %>
+          <%= text_field_tag :groupname, params[:groupname], :class => 'input-large' %>
+        </div>
 
-            <div class="control-group">
-              <%= label_tag :password, nil, :class => 'control-label' %>
-              <%= password_field_tag :password, params[:password], :class => 'input-large' %>
-            </div>
+        <div class="control-group">
+          <%= label_tag 'Passwort', nil, :class => 'control-label' %>
+          <%= password_field_tag :password, params[:password], :class => 'input-large' %>
+        </div>
 
-            <div class="control-group">
-              <!-- Button -->
-              <div class="controls">
-                <div class="actions"><%= submit_tag "Anmelden", :class => 'btn btn-large btn-primary' %></div>
-              </div>
-            </div>
-          </fieldset>
-      <% end %>
-    </div>
-  </div>
+        <div class="control-group">
+          <!-- Button -->
+          <div class="controls">
+            <div class="actions"><%= submit_tag "Anmelden", :class => 'btn btn-large btn-primary' %></div>
+          </div>
+        </div>
+      </fieldset>
+  <% end %>
 </div>
 
 <!--

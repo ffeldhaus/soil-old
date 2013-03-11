@@ -1,8 +1,6 @@
-<% flash.each do |name, msg| %>
-    <% if msg.is_a?(String) %>
-        <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-          <a class="close" data-dismiss="alert">&#215;</a>
-          <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        </div>
-    <% end %>
+<% flash.each do |type, message| %>
+    <div ng-show="showAlert" ng-init="showAlert=true">
+    <div class="alert <%= bootstrap_class_for(type) %> fade in">
+      <button class="close" ng-click="showAlert=false" >×</button><%= message %></div>
+    </div>
 <% end %>

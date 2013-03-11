@@ -24,17 +24,17 @@
   <nav-location name="field" show="$parent.show" visible="show!='finance'"
                 href="#/field">Spielfeld
   </nav-location>
+  <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
+                href="#/field">Fruchtfolge
+  </nav-location>
   <nav-location name="soil" show="$parent.show" visible="show=='soil'"
                 href="#/field">Bodenqualität
   </nav-location>
   <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
                 href="#/field">Mineralstoffe
   </nav-location>
-  <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
-                href="#/field">Fruchtfolge
-  </nav-location>
   <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
-                href="#/field">Ertrag
+                href="#/field">Ernteertrag
   </nav-location>
   <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
   <a ng-click="endRound()" class="btn" href="#/endRound">Runde abschicken &raquo;</a>
@@ -44,13 +44,8 @@
     <div class="container" ng-init="getGroup(<%= current_group.id if current_group %>)">
       <div class="content">
         <div class="row">
-          <div class="span12">
-            <div>
-              <pagination num-pages="group.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="getRound(page)" ></pagination>
-            </div>
             <%= render 'layouts/messages' %>
             <%= yield %>
-          </div>
         </div>
       </div>
     </div> <!--! end of .container -->

@@ -7,6 +7,7 @@ class RoundsController < ApplicationController
 
   def new
     @round = Round.new
+    #@round.calculate_attributes(Round.all) if @round.number
   end
 
   # GET /groups/1.json
@@ -28,9 +29,14 @@ class RoundsController < ApplicationController
   def update
     @round = Round.find_by_id(params[:id])
     respond_to do |format|
-      puts round_params
       if @round.update_attributes(round_params)
-        format.json { head :no_content }
+        next_round = @round.group.rounds.create
+        next_round.calculate_attributes
+        if next_round.save
+          format.json { head :no_content }
+        else
+          format.json { render json: @round.errors, status: :calculating_next_round_failed }
+        end
       else
         format.json { render json: @round.errors, status: :unprocessable_entity }
       end
@@ -39,6 +45,6 @@ class RoundsController < ApplicationController
 
   private
   def round_params
-    params.permit(:number, field_attributes: [:id,parcels_attributes: [:id, :nutrition,:soil,:cropsequence,:harvest,:plantation]],decision_attributes: [:id,:machines,:organic,:pesticide,:fertilize,:organisms])
+    params.permit(:number, field_attributes: [:id, parcels_attributes: [:id, :nutrition, :soil, :cropsequence, :harvest, :plantation]], decision_attributes: [:id, :machines, :organic, :pesticide, :fertilize, :organisms])
   end
 end

@@ -1,6 +1,7 @@
 class CreateParcels < ActiveRecord::Migration
   def change
     create_table :parcels do |t|
+      t.integer :number
       t.integer :nutrition
       t.integer :soil
       t.string :cropsequence

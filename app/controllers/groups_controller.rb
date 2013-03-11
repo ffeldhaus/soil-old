@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find_by_id(params[:id])
+    @group.wait_for_other_groups = (@group.game.nextRound == @group.rounds.count)
   end
 
   def create

@@ -1,7 +1,7 @@
 class CreateDecisions < ActiveRecord::Migration
   def change
     create_table :decisions do |t|
-      t.string :machines
+      t.integer :machines
       t.boolean :organic
       t.boolean :pesticide
       t.boolean :fertilize

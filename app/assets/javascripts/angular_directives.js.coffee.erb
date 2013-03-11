@@ -34,16 +34,15 @@ angular.module("soil.directives", []).directive("navBarTop",->
         el.selectable stop: (evt, ui) ->
             selected = el.find(".ui-selected").map(->
                 idx = $(this).index()
-                content: scope.fields[idx].content
                 index: idx
             ).get()
-            if scope.currentRound == (scope.rounds.length - 1)
+            if scope.currentRound == scope.rounds.length
                 d = $dialog.dialog(scope.opts)
                 d.open().then (plantation) ->
                     if plantation
                         i = 0
                         while i < selected.length
-                            scope.rounds[scope.currentRound].field_attributes.parcels_attributes[selected[i].index].plantation = plantation
+                            scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes[selected[i].index].plantation = plantation
                             i++
 
             scope.$apply()

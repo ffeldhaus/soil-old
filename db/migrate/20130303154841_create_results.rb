@@ -1,8 +1,10 @@
 class CreateResults < ActiveRecord::Migration
   def change
     create_table :results do |t|
-      t.string :machines
+      t.integer :machines
       t.boolean :organic
+      t.string  :weather
+      t.string  :vermin
       t.references :round, index: true
 
       t.timestamps

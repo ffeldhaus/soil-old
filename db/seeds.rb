@@ -7,14 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 game = Game.create(:title => 'Soil')
-group = game.groups.create(:groupname => 'test', :password => 'testing')
-7.times do |i|
+game.groups.create(:groupname => 'Gruppe1', :password => 'sinus',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe2', :password => 'cosinus',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe3', :password => 'tangens',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe4', :password => 'sekans',:wait_for_other_groups=>false)
+game.groups.each do |group|
   game.save!
-  round = group.rounds.create(:number => i)
-  decision = round.create_decision(:machines=>'0%',:organic=>false,:pesticide=>false,:fertilize=>false,:organisms=>false)
-  field = round.create_field
-  40.times do |p|
-    field.parcels.create(:nutrition => (80 - i*10), :soil => (80 - i*10), :cropsequence => 'gut', :harvest => 'gut', :plantation => 'Brachland')
-  end
-  result = round.create_result(:machines => '100%', :organic => 'false')
+  group.rounds.create(:number => 1)
 end

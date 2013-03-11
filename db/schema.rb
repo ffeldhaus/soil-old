@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20130303154841) do
 
   create_table "decisions", force: true do |t|
-    t.string  "machines"
+    t.integer  "machines"
     t.boolean  "organic"
     t.boolean  "pesticide"
     t.boolean  "fertilize"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20130303154841) do
 
   create_table "games", force: true do |t|
     t.string   "title"
+    t.string   "weather"
+    t.string   "vermin"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,6 +47,7 @@ ActiveRecord::Schema.define(version: 20130303154841) do
     t.string   "password_digest"
     t.string   "salt"
     t.integer  "game_id"
+    t.boolean  "wait_for_other_groups"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,6 +55,7 @@ ActiveRecord::Schema.define(version: 20130303154841) do
   add_index "groups", ["game_id"], name: "index_groups_on_game_id"
 
   create_table "parcels", force: true do |t|
+    t.integer "number"
     t.integer  "nutrition"
     t.integer  "soil"
     t.string   "cropsequence"
@@ -65,8 +69,10 @@ ActiveRecord::Schema.define(version: 20130303154841) do
   add_index "parcels", ["field_id"], name: "index_parcels_on_field_id"
 
   create_table "results", force: true do |t|
-    t.string  "machines"
+    t.integer  "machines"
     t.boolean  "organic"
+    t.string   "weather"
+    t.string   "vermin"
     t.integer  "round_id"
     t.datetime "created_at"
     t.datetime "updated_at"

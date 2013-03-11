@@ -2,246 +2,36 @@
 
 /* Controllers */
 
-function SoilCtrl($scope, $location, $dialog, $resource, $log) {
+function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
-    $scope.rounds = [null, null, null, null, null, null, null];
+    $scope.rounds = [];
 
     var Groups = $resource('/groups/:group_id', {group_id: '@id'});
     var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
 
     $scope.getGroup = function (group) {
         $scope.group = Groups.get({group_id: group}, function () {
-            $scope.currentRound = $scope.group.rounds.length;
-            $scope.getRound($scope.currentRound);
+            $scope.currentRound = $scope.group.rounds[$scope.group.rounds.length - 1].number;
+            $scope.getRound($scope.group.rounds.length);
+            if ($scope.group.wait_for_other_groups) $scope.wait_for_other_groups();
         });
     }
 
     $scope.getRound = function (round) {
-        if ($scope.rounds[round] == null) $scope.rounds[round] = Rounds.get({round_id: round});
+        if (!$scope.rounds[round-1]) $scope.rounds[round - 1] = Rounds.get({round_id: $scope.group.rounds[round - 1].id});
     };
 
+    $scope.wait_for_other_groups = function () {
+        var title = 'Auf andere Gruppen warten';
+
+        $dialog.messageBox(title)
+                .open()
+                .then(function (result) {
+                    $log.info('Waiting for other groups');
+                });
+    }
+
     $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
-
-    $scope.fertilize = false;
-    $scope.pesicide = false;
-    $scope.nutrition = false;
-    $scope.organic = false;
-    $scope.machine = $scope.percentages[0];
-
-    $scope.fields = [
-        {content: 'Ackerbohne', picture: 'ackerbohne.jpg', short: 'A'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Hafer', picture: 'hafer.jpg', short: 'H'},
-        {content: 'Kartoffel', picture: 'kartoffel.jpg', short: 'K'},
-        {content: 'Mais', picture: 'mais.jpg', short: 'K'},
-        {content: 'Roggen', picture: 'roggen.jpg', short: 'R'},
-        {content: 'Weizen', picture: 'weizen.jpg', short: 'W'},
-        {content: 'Zuckerrübe', picture: 'zuckerruebe.jpg', short: 'Z'},
-        {content: 'Brachland', picture: 'brachland.jpg', short: 'B'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Weizen', picture: 'weizen.jpg', short: 'W'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Weizen', picture: 'weizen.jpg', short: 'W'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Weizen', picture: 'weizen.jpg', short: 'W'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'},
-        {content: 'Gerste', picture: 'gerste.jpg', short: 'G'}
-    ];
-
-    $scope.soil = [
-        {content: '60%', picture: 'medium.jpg'},
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '60%', picture: 'medium.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '60%', picture: 'medium.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '60%', picture: 'medium.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '60%', picture: 'medium.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'},
-        {content: '80%', picture: 'good.jpg'}
-    ];
-
-    $scope.nutrition = [
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '30%', picture: 'bad.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'},
-        {content: '90%', picture: 'good.jpg'}
-    ];
-
-    $scope.cropsequence = [
-        {content: 'schlecht', picture: 'bad.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'schlecht', picture: 'bad.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'schlecht', picture: 'bad.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'schlecht', picture: 'bad.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'schlecht', picture: 'bad.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'},
-        {content: 'gut', picture: 'good.jpg'}
-    ];
-
-    $scope.harvest = [
-        {content: 'niedrig', picture: 'bad.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'niedrig', picture: 'bad.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'niedrig', picture: 'bad.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'niedrig', picture: 'bad.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'niedrig', picture: 'bad.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'},
-        {content: 'hoch', picture: 'good.jpg'}
-    ];
 
     $scope.endRound = function () {
         $scope.test = $location.url()
@@ -253,7 +43,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log) {
 
     $scope.endRoundAcknowledgement = function () {
         var title = 'Runde beenden';
-        var msg = 'Soll die Runde wirklich beendet werden und die Angaben abgeschickt werden?';
+        var msg = 'Soll die Runde wirklich beendet und die Angaben abgeschickt werden?';
         var btns = [
             {result: 'cancel', label: 'Abbrechen'},
             {result: 'send', label: 'Runde beenden', cssClass: 'btn-primary'}
@@ -262,8 +52,8 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log) {
         $dialog.messageBox(title, msg, btns)
                 .open()
                 .then(function (result) {
-                    $log.info('End round');
-                    $log.info($scope.rounds[$scope.rounds.length - 1].$update());
+                    $scope.rounds[$scope.rounds.length - 1].$update();
+                    $scope.wait_for_other_groups();
                 });
     }
 }
