@@ -1,2 +1,1 @@
-web: script/rails server -p $PORT
-console: script/rails console
+web: bundle exec rails server -p $PORT
