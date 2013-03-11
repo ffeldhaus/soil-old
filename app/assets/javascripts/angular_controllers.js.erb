@@ -91,7 +91,9 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
     }
 }
 
-function FieldCtrl($scope) {
+SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
+
+function FieldCtrl() {
 }
 
 // the dialog is injected in the specified controller
@@ -105,8 +107,10 @@ function selectPlantationCtrl($scope, dialog) {
     }
 }
 
-function FinanceCtrl($scope) {
+selectPlantationCtrl.$inject = ['$scope', '$dialog'];
+
+function FinanceCtrl() {
 }
 
-function EndRoundCtrl($scope) {
+function EndRoundCtrl() {
 }
