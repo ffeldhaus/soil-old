@@ -1,15 +1,24 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: [insert your dev database name]
+  database: soil_development
   pool: 5
-  username: [insert your user name]
+  username: ffeldhaus
   password:
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: [insert your test database name]
+  database: soil_test
   pool: 5
-  username: [insert your user name]
+  username: ffeldhaus
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: soil_production
+  pool: 5
+  username: ffeldhaus
   password:
