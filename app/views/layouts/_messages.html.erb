@@ -1,6 +1,7 @@
 <% flash.each do |type, message| %>
     <div ng-show="showAlert" ng-init="showAlert=true">
-    <div class="alert <%= bootstrap_class_for(type) %> fade in">
-      <button class="close" ng-click="showAlert=false" >×</button><%= message %></div>
+      <div class="alert <%= bootstrap_class_for(type) %> fade in">
+        <button class="close" ng-click="showAlert=false">×</button><%= message %>
+      </div>
     </div>
 <% end %>

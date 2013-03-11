@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130303154841) do
+ActiveRecord::Schema.define(version: 20130310224604) do
 
   create_table "decisions", force: true do |t|
     t.integer  "machines"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 20130303154841) do
 
   add_index "decisions", ["round_id"], name: "index_decisions_on_round_id"
 
+  create_table "expenses", force: true do |t|
+    t.integer  "finance_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "expenses", ["finance_id"], name: "index_expenses_on_finance_id"
+
   create_table "fields", force: true do |t|
     t.integer  "round_id"
     t.datetime "created_at"
@@ -33,6 +41,14 @@ ActiveRecord::Schema.define(version: 20130303154841) do
   end
 
   add_index "fields", ["round_id"], name: "index_fields_on_round_id"
+
+  create_table "finances", force: true do |t|
+    t.integer  "round_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "finances", ["round_id"], name: "index_finances_on_round_id"
 
   create_table "games", force: true do |t|
     t.string   "title"
@@ -54,12 +70,36 @@ ActiveRecord::Schema.define(version: 20130303154841) do
 
   add_index "groups", ["game_id"], name: "index_groups_on_game_id"
 
+  create_table "harvests", force: true do |t|
+    t.integer  "income_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "harvests", ["income_id"], name: "index_harvests_on_income_id"
+
+  create_table "incomes", force: true do |t|
+    t.integer  "finance_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "incomes", ["finance_id"], name: "index_incomes_on_finance_id"
+
+  create_table "investitions", force: true do |t|
+    t.integer  "expense_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "investitions", ["expense_id"], name: "index_investitions_on_expense_id"
+
   create_table "parcels", force: true do |t|
-    t.integer "number"
+    t.integer  "number"
     t.integer  "nutrition"
     t.integer  "soil"
     t.string   "cropsequence"
-    t.string  "harvest"
+    t.string   "harvest"
     t.string   "plantation"
     t.integer  "field_id"
     t.datetime "created_at"
@@ -88,5 +128,21 @@ ActiveRecord::Schema.define(version: 20130303154841) do
   end
 
   add_index "rounds", ["group_id"], name: "index_rounds_on_group_id"
+
+  create_table "running_costs", force: true do |t|
+    t.integer  "expense_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "running_costs", ["expense_id"], name: "index_running_costs_on_expense_id"
+
+  create_table "seeds", force: true do |t|
+    t.integer  "expense_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "seeds", ["expense_id"], name: "index_seeds_on_expense_id"
 
 end

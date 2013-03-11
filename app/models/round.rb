@@ -159,7 +159,7 @@ class Round < ActiveRecord::Base
         while monoculture
           round_counter += 1
           if rounds.count > round_counter + 1
-            monoculture = (current_parcel.plantation == rounds[self.number - 3 - round_counter].plantation)
+            monoculture = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcel[new_parcel.number-1].plantation)
           else
             monoculture = false
           end

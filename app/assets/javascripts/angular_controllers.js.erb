@@ -18,18 +18,51 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
     }
 
     $scope.getRound = function (round) {
-        if (!$scope.rounds[round-1]) $scope.rounds[round - 1] = Rounds.get({round_id: $scope.group.rounds[round - 1].id});
+        if (!$scope.rounds[round - 1]) $scope.rounds[round - 1] = Rounds.get({round_id: $scope.group.rounds[round - 1].id});
     };
 
     $scope.wait_for_other_groups = function () {
-        var title = 'Auf andere Gruppen warten';
+        $log.info('Wait for others');
+        $scope.startNewRound = false
 
-        $dialog.messageBox(title)
-                .open()
-                .then(function (result) {
-                    $log.info('Waiting for other groups');
-                });
-    }
+        var t = '<div ng-show="!startNewRound" class="modal-header">' +
+                '<h1>Auf andere Gruppen warten</h1>' +
+                '</div>' +
+                '<div ng-show="startNewRound" class="modal-header">' +
+                '<h1>Beginn von Runde {{$scope.currentRound}}</h1>' +
+                '</div>' +
+                '<div ng-show="startNewRound" class="modal-footer">' +
+                '<button ng-click="close()" class="btn btn-primary" >Close</button>' +
+                '</div>';
+
+        $scope.opts = {
+            backdrop: true,
+            dialogFade: true,
+            keyboard: false,
+            backdropClick: false,
+            template: t // OR: templateUrl: 'path/to/view.html',
+        };
+
+        var dialog = $dialog.dialog($scope.opts);
+        dialog.open().then();
+
+        (function tick() {
+            $scope.group = Groups.get({group_id: $scope.group.id}, function () {
+                if ($scope.group.wait_for_other_groups) {
+                    $timeout(tick, 1000)
+                }
+                else {
+                    $log.info('Start new Round');
+                    $scope.$apply($scope.startNewRound=true)
+                }
+                ;
+            });
+        })();
+
+        $scope.close = function () {
+            dialog.close();
+        };
+    };
 
     $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
 
