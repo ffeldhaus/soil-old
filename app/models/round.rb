@@ -202,9 +202,9 @@ class Round < ActiveRecord::Base
       puts harvest
       # Schädlinge
       if HARVEST_VERMIN[current_parcel.plantation][self.result.vermin]
-        if self.decision.pesticide
+        if current_round.decision.pesticide
           harvest *= 1
-        elsif self.decision.organisms
+        elsif current_round.decision.organisms
           harvest *= 0.8
         else
           harvest *= 0.5

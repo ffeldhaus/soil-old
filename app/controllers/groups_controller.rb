@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @group = Group.includes.all
+    @group = Group.includes(:rounds=>[:decision,:result]).all
   end
 
   def new
