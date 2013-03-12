@@ -80,20 +80,20 @@ class Round < ActiveRecord::Base
 
   def calculate_attributes
     rounds = self.group.rounds
-    # self is the next round,
+    # self is the new round,
     # the current round is the round before it
     # the previous round is the round before the current one
-    current_round = rounds[self.number-2]
-    if rounds.length > 1
-      previous_round = rounds[self.number-3]
+    current_round = rounds.find_by_number(self.number-1)
+    if rounds.length > 2
+      previous_round = rounds.find_by_number(self.number-2)
     else
-      previous_round = Round.new
+      previous_round = Round.new(:number => 0)
     end
 
     ## overview
     animals = field.parcels.select { |parcel| parcel.plantation=='Tier' }.length
     if animals > 0
-      animals_per_parcel = 40/(animals*8)
+      animals_per_parcel = 40.to_f/(animals*8)
     else
       animals_per_parcel = 0
     end
@@ -110,10 +110,9 @@ class Round < ActiveRecord::Base
     ### vermin
     self.result.vermin = self.group.game.vermin[self.number-2]
 
-
     self.field.parcels.each do |new_parcel|
-      current_parcel = current_round.field.parcels[new_parcel.number]
-      previous_parcel = previous_round.field.parcels[new_parcel.number]
+      current_parcel = current_round.field.parcels.find_by_number(new_parcel.number)
+      previous_parcel = previous_round.field.parcels.find_by_number(new_parcel.number)
 
       # copy values from parcel of current round to parcel of new round
       new_parcel.plantation = current_parcel.plantation
@@ -126,11 +125,11 @@ class Round < ActiveRecord::Base
       # calculate soil
       soil_factor = 0
       # Tiere
-      if current_parcel.plantation == 'Tier'
+      if current_parcel.plantation == 'Tiere'
         soil_factor = soil_factor
       elsif current_parcel.plantation == 'Brachland'
         # Brachland
-        soil_factor += [SOIL - current_parcel.soil, 0].max * SOIL_FALLOW
+        soil_factor += 0.01 * [SOIL - current_parcel.soil, 0].max * SOIL_FALLOW
       else
         # Fruchtfolge
         soil_factor += SOIL_CROPSEQUENCE if new_parcel.cropsequence == 'gut'
@@ -152,14 +151,14 @@ class Round < ActiveRecord::Base
         # Pflanzenschutz
         soil_factor -= SOIL_PESTICIDE if current_round.decision.pesticide
         # Maschineneinsatz
-        soil_factor -= (0.01 * (self.result.machines - MACHINES)) * (0.02 * current_parcel.soil - 0.5) * SOIL_MACHINE
+        soil_factor -= (0.01 * (self.result.machines - MACHINES)) * (0.01 * 2 * current_parcel.soil - 0.5) * SOIL_MACHINE
         # Monokultur
         round_counter = 0
         monoculture = (current_parcel.plantation == previous_parcel.plantation)
         while monoculture
           round_counter += 1
-          if rounds.count > round_counter + 1
-            monoculture = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcels[new_parcel.number].plantation)
+          if rounds.count > round_counter + 2
+            monoculture = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
           else
             monoculture = false
           end
@@ -170,29 +169,36 @@ class Round < ActiveRecord::Base
         soil_factor -= SOIL_FLOOD if self.result.weather == 'Überschwemmung'
       end
       # Berechnung Bodenqualität
-      new_parcel.soil += new_parcel.soil * soil_factor
+      new_parcel.soil += current_parcel.soil * soil_factor
 
       # calculate nutrition
-      nutrition_factor = 0
       # Brachland oder Tiere
       if current_parcel.plantation == 'Tiere' || current_parcel.plantation == 'Brachland'
         new_parcel.nutrition = NUTRITION if current_parcel.nutrition > NUTRITION
       else
+        nutrition_factor = 0
         nutrition_factor -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
+        nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
+        nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
+        nutrition_factor += 0.01 * current_parcel.soil * NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
+        new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
       end
-      nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
-      nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
-      nutrition_factor += 0.01 * current_parcel.soil * NUTRITION_FIELDBEAN
-      new_parcel.nutrition += new_parcel.nutrition * nutrition_factor
 
       # calculate harvest
+      puts current_parcel.plantation
       harvest = HARVEST[current_parcel.plantation]
+      puts harvest
       # Nährstoffe
-      harvest *= ((current_parcel.nutrition/NUTRITION) ** HARVEST_NUTRITION[current_parcel.plantation])
+      harvest *= (current_parcel.nutrition.to_f/NUTRITION) ** HARVEST_NUTRITION[current_parcel.plantation]
+      puts "Nutrition: " + current_parcel.nutrition.to_s
+      puts harvest
       # Bodenqualität
-      harvest *= ((current_parcel.soil/SOIL) ** HARVEST_SOIL[current_parcel.plantation])
+      harvest *= (current_parcel.soil.to_f/SOIL) ** HARVEST_SOIL[current_parcel.plantation]
+      puts "Soil: " + current_parcel.soil.to_s
+      puts harvest
       # Wetter
       harvest *= HARVEST_WEATHER[current_parcel.plantation][self.result.weather] unless self.result.weather == 'Normal'
+      puts harvest
       # Schädlinge
       if HARVEST_VERMIN[current_parcel.plantation][self.result.vermin]
         if self.decision.pesticide
@@ -203,6 +209,7 @@ class Round < ActiveRecord::Base
           harvest *= 0.5
         end
       end
+      puts harvest
       # Fruchtfolge
       case new_parcel.cropsequence
         when 'gut'
@@ -212,24 +219,45 @@ class Round < ActiveRecord::Base
         when 'schlecht'
           harvest *= 1 - HARVEST_CROPSEQUENCE
       end
+      puts harvest
       # Vorfrucht / Effizienz
       round_counter = 0
       efficiency = (current_parcel.plantation == previous_parcel.plantation)
       while efficiency
         round_counter += 1
-        if rounds.count > round_counter + 1
-          efficiency = (current_parcel.plantation == rounds[self.number - 3 - round_counter].field.parcels[new_parcel.number].plantation)
+        if rounds.count > round_counter + 2
+          efficiency = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
         else
           efficiency = false
         end
       end
+      puts harvest
       harvest *= 1 + round_counter * HARVEST_EFFICIENCY
+      puts harvest
       harvest *= 1 + HARVEST_EFFICIENCY**2 * (current_round.field.parcels.select { |parcel| parcel.plantation == current_parcel.plantation }.length - 1)
+      puts harvest
       # Maschineneinsatz
-      harvest *= self.result.machines**HARVEST_MACHINES
+      harvest *= (0.01 * self.result.machines)**HARVEST_MACHINES
+      puts harvest
       # Nahrung Tiere
       harvest *= (1 - animals_per_parcel / HARVEST_ANIMALS)
-      new_parcel.harvest = harvest
+      puts harvest
+      new_parcel.harvest_yield = harvest.to_i
+      puts "Harvest am ende:" + new_parcel.harvest_yield.to_s
+      harvest_ratio = harvest/HARVEST[current_parcel.plantation]
+      if harvest_ratio > 1.2
+        new_parcel.harvest = 'sehr_hoch'
+      elsif harvest_ratio > 0.9
+        new_parcel.harvest = 'hoch'
+      elsif harvest_ratio > 0.6
+        new_parcel.harvest = 'maessig'
+      elsif harvest_ratio > 0.3
+        new_parcel.harvest = 'niedrig'
+      elsif harvest_ratio > 0
+        new_parcel.harvest = 'sehr_niedrig'
+      else
+        new_parcel.harves = 'keiner'
+      end
     end
     # finance
     ## seeds

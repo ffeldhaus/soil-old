@@ -63,7 +63,7 @@
     </div>
     <div style="position: relative;float: right;width: 50%" class="field">
         <ol class="ui-selectable">
-          <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes"
+          <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
                 class="ui-state-default">
                 {{parcel.plantation.charAt(0)}}
             </li>

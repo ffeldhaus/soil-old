@@ -21,7 +21,7 @@ angular.module("soil.directives", []).directive("navBarTop",->
 
     template: "<li ng-class=\"{active: location(href) && visible()}\">" + "<a ng-click=\"show=name\" href=\"{{href}}\" ng-transclude></a>" + "</li>"
     replace: true
-).directive "uiSelectable", ($dialog) ->
+).directive "uiSelectable", ($dialog,$filter) ->
     (scope, el, attrs) ->
         scope.opts =
             backdrop: true
@@ -42,7 +42,8 @@ angular.module("soil.directives", []).directive("navBarTop",->
                     if plantation
                         i = 0
                         while i < selected.length
-                            scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes[selected[i].index].plantation = plantation
+                            parcels = $filter('orderBy')(scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes,'number')
+                            parcels[selected[i].index].plantation = plantation
                             i++
 
             scope.$apply()

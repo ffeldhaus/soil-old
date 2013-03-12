@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @group = Group.all
+    @group = Group.includes.all
   end
 
   def new

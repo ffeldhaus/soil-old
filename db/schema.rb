@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.integer  "nutrition"
     t.integer  "soil"
     t.string   "cropsequence"
+    t.integer  "harvest_yield"
     t.string   "harvest"
     t.string   "plantation"
     t.integer  "field_id"
