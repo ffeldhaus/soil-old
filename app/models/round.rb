@@ -62,7 +62,7 @@ class Round < ActiveRecord::Base
 
   CROPSEQUENCE = {'Ackerbohne' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'},
                   'Gerste' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'schlecht', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'ok'},
-                  'Hafer' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'schlecht', 'Kartoffel' => 'ok', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'ok'},
+                  'Hafer' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'schlecht', 'Kartoffel' => 'ok', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'ok'},
                   'Kartoffel' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'ok', 'Kartoffel' => 'schlecht', 'Mais' => 'ok', 'Roggen' => 'ok', 'Weizen' => 'ok', 'Zuckerruebe' => 'ok'},
                   'Mais' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'schlecht', 'Hafer' => 'ok', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'schlecht', 'Weizen' => 'schlecht', 'Zuckerruebe' => 'gut'},
                   'Roggen' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'ok', 'Roggen' => 'gut', 'Weizen' => 'ok', 'Zuckerruebe' => 'ok'},
@@ -177,11 +177,12 @@ class Round < ActiveRecord::Base
         new_parcel.nutrition = NUTRITION if current_parcel.nutrition > NUTRITION
       else
         nutrition_factor = 0
-        nutrition_factor -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
         nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
         nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
-        nutrition_factor += 0.01 * current_parcel.soil * NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
+        nutrition_factor +=  NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
+        nutrition_factor *= 0.01 * current_parcel.soil
         new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
+        new_parcel.nutrition -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
       end
 
       # calculate harvest
