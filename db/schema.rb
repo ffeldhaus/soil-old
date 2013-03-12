@@ -27,12 +27,13 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   add_index "decisions", ["round_id"], name: "index_decisions_on_round_id"
 
   create_table "expenses", force: true do |t|
-    t.integer  "finance_id"
+    t.integer  "sum"
+    t.integer  "result_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "expenses", ["finance_id"], name: "index_expenses_on_finance_id"
+  add_index "expenses", ["result_id"], name: "index_expenses_on_result_id"
 
   create_table "fields", force: true do |t|
     t.integer  "round_id"
@@ -41,14 +42,6 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   end
 
   add_index "fields", ["round_id"], name: "index_fields_on_round_id"
-
-  create_table "finances", force: true do |t|
-    t.integer  "round_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "finances", ["round_id"], name: "index_finances_on_round_id"
 
   create_table "games", force: true do |t|
     t.string   "title"
@@ -60,6 +53,7 @@ ActiveRecord::Schema.define(version: 20130310224604) do
 
   create_table "groups", force: true do |t|
     t.string   "groupname"
+    t.integer  "seedcapital"
     t.string   "password_digest"
     t.string   "salt"
     t.integer  "game_id"
@@ -71,6 +65,14 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   add_index "groups", ["game_id"], name: "index_groups_on_game_id"
 
   create_table "harvests", force: true do |t|
+    t.integer "fieldbean"
+    t.integer "barley"
+    t.integer "oat"
+    t.integer "potatoe"
+    t.integer "corn"
+    t.integer "rye"
+    t.integer "wheat"
+    t.integer "beet"
     t.integer  "income_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -79,20 +81,23 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   add_index "harvests", ["income_id"], name: "index_harvests_on_income_id"
 
   create_table "incomes", force: true do |t|
-    t.integer  "finance_id"
+    t.integer :sum
+    t.integer  "result_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "incomes", ["finance_id"], name: "index_incomes_on_finance_id"
+  add_index "incomes", ["result_id"], name: "index_incomes_on_result_id"
 
-  create_table "investitions", force: true do |t|
+  create_table "investments", force: true do |t|
     t.integer  "expense_id"
+    t.integer  "animals"
+    t.integer  "machines"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "investitions", ["expense_id"], name: "index_investitions_on_expense_id"
+  add_index "investments", ["expense_id"], name: "index_investments_on_expense_id"
 
   create_table "parcels", force: true do |t|
     t.integer  "number"
@@ -114,6 +119,8 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.boolean  "organic"
     t.string   "weather"
     t.string   "vermin"
+    t.integer  "profit"
+    t.integer  "capital"
     t.integer  "round_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -131,6 +138,12 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   add_index "rounds", ["group_id"], name: "index_rounds_on_group_id"
 
   create_table "running_costs", force: true do |t|
+    t.integer "organic_control"
+    t.integer "fertilize"
+    t.integer "pesticide"
+    t.integer "organisms"
+    t.integer "animals"
+    t.integer "base"
     t.integer  "expense_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -139,6 +152,14 @@ ActiveRecord::Schema.define(version: 20130310224604) do
   add_index "running_costs", ["expense_id"], name: "index_running_costs_on_expense_id"
 
   create_table "seeds", force: true do |t|
+    t.integer "fieldbean"
+    t.integer "barley"
+    t.integer "oat"
+    t.integer "potatoe"
+    t.integer "corn"
+    t.integer "rye"
+    t.integer "wheat"
+    t.integer "beet"
     t.integer  "expense_id"
     t.datetime "created_at"
     t.datetime "updated_at"

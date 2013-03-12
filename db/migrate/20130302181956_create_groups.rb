@@ -2,6 +2,7 @@ class CreateGroups < ActiveRecord::Migration
   def change
     create_table :groups do |t|
       t.string :groupname
+      t.integer :seedcapital
       t.string :password_digest
       t.string :salt
       t.boolean :wait_for_other_groups

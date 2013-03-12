@@ -71,6 +71,34 @@ class Round < ActiveRecord::Base
                   'Brachland' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'},
                   'Tiere' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'}}
 
+  SEED_FIELDBEAN = {false => 120, true => 144}
+  SEED_BARLEY = {false => 68, true => 85}
+  SEED_OAT = {false => 60, true => 75}
+  SEED_POTATOE = {false => 110, true => 133}
+  SEED_CORN = {false => 70, true => 84}
+  SEED_RYE = {false => 76, true => 95}
+  SEED_WHEAT = {false => 72, true => 90}
+  SEED_BEET = {false => 120, true => 144}
+
+  INVESTMENT_ANIMALS = 1000
+  INVESTMENT_MACHINES = 1000
+
+  RUNNINGCOSTS_ORGANIC_CONTROL = 200
+  RUNNINGCOSTS_FERTILIZE = 50
+  RUNNINGCOSTS_PESTICIDE = 50
+  RUNNINGCOSTS_ORGANISMS = 100
+  RUNNINGCOSTS_ANIMALS = 200
+  RUNNINGCOSTS_BASE = {false => 500, true => 700}
+
+  HARVEST_FIELDBEAN = {false => 18, true => 21}
+  HARVEST_BARLEY = {false => 13, true => 14.5}
+  HARVEST_OAT = {false => 12, true => 14}
+  HARVEST_POTATOE = {false => 4, true => 5}
+  HARVEST_CORN = {false => 15, true => 18}
+  HARVEST_RYE = {false => 13, true => 14.5}
+  HARVEST_WHEAT = {false => 15, true => 18}
+  HARVEST_BEET = {false => 3, true => 4}
+
   after_initialize do
     self.number ||= self.group.game.nextRound
     self.create_decision(:machines => '0', :organic => false, :pesticide => false, :fertilize => false, :organisms => false) unless self.decision
@@ -91,17 +119,17 @@ class Round < ActiveRecord::Base
     end
 
     ## overview
-    animals = field.parcels.select { |parcel| parcel.plantation=='Tier' }.length
+    animals = current_round.field.parcels.select { |parcel| parcel.plantation=='Tier' }.length
     if animals > 0
       animals_per_parcel = 40.to_f/(animals*8)
     else
       animals_per_parcel = 0
     end
     ### machines
-    if previous_round.decision.machines.to_i > 0
-      self.result.machines = previous_round.result.machines + previous_round.decision.machines
+    if current_round.decision.machines.to_i > 0
+      self.result.machines = current_round.result.machines + current_round.decision.machines
     else
-      self.result.machines -= MACHINE_AGING
+      self.result.machines = current_round.result.machines - MACHINE_AGING
     end
     ### organic
     self.result.organic = true if animals_per_parcel.between?(0.8, 1.2) && previous_round.decision.fertilize == false && previous_round.decision.pesticide == false
@@ -179,7 +207,7 @@ class Round < ActiveRecord::Base
         nutrition_factor = 0
         nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
         nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
-        nutrition_factor +=  NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
+        nutrition_factor += NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
         nutrition_factor *= 0.01 * current_parcel.soil * (1 - 0.01 * current_parcel.nutrition)
         new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
         new_parcel.nutrition -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
@@ -260,37 +288,99 @@ class Round < ActiveRecord::Base
         new_parcel.harvest = 'keiner'
       end
     end
-    # finance
+
+    # expenses
     ## seeds
     ### fieldbean
-
+    self.result.expense.seed.fieldbean = current_round.field.parcels.find_all_by_plantation('Ackerbohne').count * SEED_FIELDBEAN[current_round.decision.organic]
+    puts "fieldbean " + self.result.expense.seed.fieldbean.to_s
     ### barley
+    self.result.expense.seed.barley = current_round.field.parcels.find_all_by_plantation('Gerste').count * SEED_BARLEY[current_round.decision.organic]
     ### oat
-    ### potatoes
+    self.result.expense.seed.oat = current_round.field.parcels.find_all_by_plantation('Hafer').count * SEED_OAT[current_round.decision.organic]
+    ### potatoe
+    self.result.expense.seed.potatoe = current_round.field.parcels.find_all_by_plantation('Kartoffel').count * SEED_POTATOE[current_round.decision.organic]
     ### corn
+    self.result.expense.seed.corn = current_round.field.parcels.find_all_by_plantation('Mais').count * SEED_CORN[current_round.decision.organic]
     ### rye
+    self.result.expense.seed.rye = current_round.field.parcels.find_all_by_plantation('Roggen').count * SEED_RYE[current_round.decision.organic]
     ### wheat
+    self.result.expense.seed.wheat = current_round.field.parcels.find_all_by_plantation('Weizen').count * SEED_WHEAT[current_round.decision.organic]
     ### beet
+    self.result.expense.seed.beet = current_round.field.parcels.find_all_by_plantation('Zuckerruebe').count * SEED_BEET[current_round.decision.organic]
+    ## save seeds
+    self.result.expense.seed.save
     ## investments
     ### animals
+    self.result.expense.investment.animals = animals * INVESTMENT_ANIMALS
     ### machines
+    self.result.expense.investment.machines = 0.1 * current_round.decision.machines * INVESTMENT_MACHINES
+    ## save investments
+    self.result.expense.investment.save
     ## running costs
     ### organic control
+    self.result.expense.running_cost.organic_control = RUNNINGCOSTS_ORGANIC_CONTROL if current_round.decision.organic
     ### fertilize
+    self.result.expense.running_cost.fertilize = 40 * RUNNINGCOSTS_FERTILIZE if current_round.decision.fertilize
     ### pesticide
+    self.result.expense.running_cost.pesticide = 40 * RUNNINGCOSTS_PESTICIDE if current_round.decision.pesticide
     ### organisms
+    self.result.expense.running_cost.organisms = 40 * RUNNINGCOSTS_ORGANISMS if current_round.decision.organisms
     ### animals
+    self.result.expense.running_cost.animals = animals * RUNNINGCOSTS_ANIMALS
     ### basic cost
+    self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic]
+    ## save running costs
+    self.result.expense.running_cost.save
+    # sum up expenses and save them
+    self.result.expense.sum = self.result.expense.seed.fieldbean +
+        self.result.expense.seed.barley +
+        self.result.expense.seed.oat +
+        self.result.expense.seed.potatoe +
+        self.result.expense.seed.corn +
+        self.result.expense.seed.rye +
+        self.result.expense.seed.wheat +
+        self.result.expense.seed.beet +
+        self.result.expense.investment.animals +
+        self.result.expense.investment.machines +
+        self.result.expense.running_cost.organic_control +
+        self.result.expense.running_cost.fertilize +
+        self.result.expense.running_cost.pesticide +
+        self.result.expense.running_cost.organisms +
+        self.result.expense.running_cost.animals +
+        self.result.expense.running_cost.base
+    self.result.expense.save
     ## harvest
     ### fieldbean
+    self.result.income.harvest.fieldbean = self.field.parcels.find_all_by_plantation('Ackerbohne').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Ackerbohne').count * HARVEST_FIELDBEAN[self.result.organic]
     ### barley
+    self.result.income.harvest.barley = self.field.parcels.find_all_by_plantation('Gerste').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Gerste').count * HARVEST_BARLEY[self.result.organic]
     ### oat
-    ### potatoes
+    self.result.income.harvest.oat = self.field.parcels.find_all_by_plantation('Hafer').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Hafer').count * HARVEST_OAT[self.result.organic]
+    ### potatoe
+    self.result.income.harvest.potatoe = self.field.parcels.find_all_by_plantation('Kartoffel').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Kartoffel').count * HARVEST_POTATOE[self.result.organic]
     ### corn
+    self.result.income.harvest.corn = self.field.parcels.find_all_by_plantation('Mais').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Mais').count * HARVEST_CORN[self.result.organic]
     ### rye
+    self.result.income.harvest.rye = self.field.parcels.find_all_by_plantation('Roggen').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Roggen').count * HARVEST_RYE[self.result.organic]
     ### wheat
+    self.result.income.harvest.wheat = self.field.parcels.find_all_by_plantation('Weizen').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Weizen').count * HARVEST_WHEAT[self.result.organic]
     ### beet
+    self.result.income.harvest.beet = self.field.parcels.find_all_by_plantation('Zuckerruebe').collect {|parcel| parcel.harvest_yield}.inject(:+) * current_round.field.parcels.find_all_by_plantation('Zuckerruebe').count * HARVEST_BEET[self.result.organic]
+    ## save harvest and income
+    self.result.income.harvest.save
+    self.result.income.sum = self.result.income.harvest.fieldbean +
+        self.result.income.harvest.barley +
+        self.result.income.harvest.oat +
+        self.result.income.harvest.potatoe +
+        self.result.income.harvest.corn +
+        self.result.income.harvest.rye +
+        self.result.income.harvest.wheat +
+        self.result.income.harvest.beet
+    self.result.income.save
     ## profit
+    self.result.profit = self.result.income.sum - self.result.expense.sum
     ## capital
+    self.result.capital = current_round.result.capital + self.result.profit
   end
 end

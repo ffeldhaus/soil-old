@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   belongs_to :game
   has_many :rounds, :autosave => true, :dependent => :destroy
+  accepts_nested_attributes_for :rounds
   has_secure_password
 
   validates_presence_of :password, :on => :create

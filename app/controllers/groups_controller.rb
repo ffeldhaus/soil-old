@@ -1,6 +1,9 @@
 class GroupsController < ApplicationController
   def index
-    @group = Group.includes(:rounds=>[:decision,:result]).all
+    @group = Group.includes(:rounds => :decision).all
+    respond_to do |format|
+      format.json { render :json => @group, :include => {:rounds => {:include => {:decision => {}, :result => {:include => {:income => {:include => :harvest},:expense => {:include => [:seed, :investment, :running_cost]}}}}}} }
+    end
   end
 
   def new

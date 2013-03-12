@@ -5,6 +5,8 @@ class CreateResults < ActiveRecord::Migration
       t.boolean :organic
       t.string  :weather
       t.string  :vermin
+      t.integer :profit
+      t.integer :capital
       t.references :round, index: true
 
       t.timestamps
