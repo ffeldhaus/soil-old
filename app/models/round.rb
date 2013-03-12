@@ -180,7 +180,7 @@ class Round < ActiveRecord::Base
         nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
         nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
         nutrition_factor +=  NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
-        nutrition_factor *= 0.01 * current_parcel.soil
+        nutrition_factor *= 0.01 * current_parcel.soil * (1 - 0.01 * current_parcel.nutrition)
         new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
         new_parcel.nutrition -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
       end
@@ -257,7 +257,7 @@ class Round < ActiveRecord::Base
       elsif harvest_ratio > 0
         new_parcel.harvest = 'sehr_niedrig'
       else
-        new_parcel.harves = 'keiner'
+        new_parcel.harvest = 'keiner'
       end
     end
     # finance
