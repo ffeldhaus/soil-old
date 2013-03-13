@@ -43,10 +43,6 @@
             <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.vermin}}</td>
         </tr>
         <tr>
-            <th colspan="3">Startkapital</th>
-            <td ng-repeat="group in groups">{{group.group.seedcapital}}</td>
-        </tr>
-        <tr>
             <th rowspan="17">Ausgaben</th>
             <th rowspan="8">Saatgut</th>
             <th>Ackerbohnen</th>
