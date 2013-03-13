@@ -1,4 +1,4 @@
-class CreateInvestitions < ActiveRecord::Migration
+class CreateInvestments < ActiveRecord::Migration
   def change
     create_table :investments do |t|
       t.integer :animals
