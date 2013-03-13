@@ -14,6 +14,8 @@ game.groups.create(:groupname => 'Gruppe1', :seedcapital => SEEDCAPITAL, :passwo
 game.groups.create(:groupname => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password => 'cosinus',:wait_for_other_groups=>false)
 game.groups.create(:groupname => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens',:wait_for_other_groups=>false)
 game.groups.create(:groupname => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans',:wait_for_other_groups=>false)
+game.groups.save
+game.save
 game.groups.each do |group|
   game.save!
   group.rounds.create(:number => 1)
