@@ -11,9 +11,9 @@ SEEDCAPITAL=20000
 game = Game.create(:title => 'Soil')
 
 game.groups.create(:groupname => 'Gruppe1', :seedcapital => SEEDCAPITAL, :password => 'sinus',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password => 'cosinus',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password => 'cosinus',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens',:wait_for_other_groups=>false)
+game.groups.create(:groupname => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans',:wait_for_other_groups=>false)
 game.save!
 game.groups.each do |group|
   group.rounds.create(:number => 1)
