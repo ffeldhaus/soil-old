@@ -19,4 +19,5 @@ game.save
 game.groups.each do |group|
   game.save!
   group.rounds.create(:number => 1)
+  group.rounds.save
 end
