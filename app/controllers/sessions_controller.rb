@@ -8,16 +8,16 @@ class SessionsController < ApplicationController
     group = Group.find_by_groupname(params[:groupname])
     if group && group.authenticate(params[:password])
       session[:group_id] = group.id
-      redirect_to root_url, :notice => "Logged in!"
+      redirect_to root_url, :notice => "Sie haben sich erfolgreich angemeldet!"
     else
-      flash.now.alert = "Invalid email or password"
+      flash.now.alert = "Ungültiger Gruppenname oder falsches Passwort"
       render "new"
     end
   end
 
   def destroy
     session[:group_id] = nil
-    redirect_to root_url, :notice => "Logged out!"
+    redirect_to root_url, :notice => "Abgemeldet!"
   end
 
 end

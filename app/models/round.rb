@@ -119,7 +119,7 @@ class Round < ActiveRecord::Base
     end
 
     ## overview
-    animals = current_round.field.parcels.select { |parcel| parcel.plantation=='Tier' }.length
+    animals = current_round.field.parcels.select { |parcel| parcel.plantation=='Tiere' }.count
     if animals > 0
       animals_per_parcel = 40.to_f/(animals*8)
     else
