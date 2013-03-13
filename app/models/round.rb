@@ -175,7 +175,7 @@ class Round < ActiveRecord::Base
         end
         # Dünger
         soil_factor -= SOIL_FERTILIZE if current_round.decision.fertilize
-        soil_factor -= ([animals_per_parcel, 1].max - 1) * SOIL_ANIMAILS if animals_per_parcel > 0
+        soil_factor -= ([animals_per_parcel, 1].max - 1) * SOIL_ANIMALS if animals_per_parcel > 0
         # Pflanzenschutz
         soil_factor -= SOIL_PESTICIDE if current_round.decision.pesticide
         # Maschineneinsatz
