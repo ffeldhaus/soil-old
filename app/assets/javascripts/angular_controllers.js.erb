@@ -5,6 +5,7 @@
 function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
     $scope.rounds = [];
+    $scope.group = {rounds: [,]};
 
     var Groups = $resource('/groups/:group_id', {group_id: '@id'});
     var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
