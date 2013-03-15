@@ -6,7 +6,7 @@ angular.module("soil.directives", []).directive("navBarTop",->
 
     template: "<div class=\"navbar navbar-fixed-top\">" + "<div class=\"navbar-inner\">" + "<div class=\"container\">" + "<div class=\"nav-collapse\">" + "<a class=\"brand\" href=\"#/\">{{title}}</a>" + "<ul class=\"nav\" ng-transclude></ul>" + "</div>" + "</div>" + "</div>" + "</div>"
     replace: true
-).directive("navLocation",($location) ->
+).directive("navLocation", ['$location', ($location) ->
     restrict: "E"
     transclude: true
     scope:
@@ -21,7 +21,8 @@ angular.module("soil.directives", []).directive("navBarTop",->
 
     template: "<li ng-class=\"{active: location(href) && visible()}\">" + "<a ng-click=\"show=name\" href=\"{{href}}\" ng-transclude></a>" + "</li>"
     replace: true
-).directive "uiSelectable", ($dialog,$filter) ->
+]
+).directive "uiSelectable", ['$dialog', '$filter', ($dialog, $filter) ->
     (scope, el, attrs) ->
         scope.opts =
             backdrop: true
@@ -42,8 +43,9 @@ angular.module("soil.directives", []).directive("navBarTop",->
                     if plantation
                         i = 0
                         while i < selected.length
-                            parcels = $filter('orderBy')(scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes,'number')
+                            parcels = $filter('orderBy')(scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes,
+                                                         'number')
                             parcels[selected[i].index].plantation = plantation
                             i++
-
             scope.$apply()
+]

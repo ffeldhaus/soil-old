@@ -5,7 +5,6 @@
 function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
     $scope.rounds = [];
-    $scope.group = {rounds: [,]};
 
     var Groups = $resource('/groups/:group_id', {group_id: '@id'});
     var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
@@ -96,8 +95,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
     }
 }
 
-function FieldCtrl() {
-}
+SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
 
 // the dialog is injected in the specified controller
 function selectPlantationCtrl($scope, dialog) {
@@ -110,8 +108,4 @@ function selectPlantationCtrl($scope, dialog) {
     }
 }
 
-function FinanceCtrl() {
-}
-
-function EndRoundCtrl() {
-}
+selectPlantationCtrl.$inject = ['$scope', 'dialog'];

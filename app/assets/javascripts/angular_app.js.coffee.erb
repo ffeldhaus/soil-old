@@ -2,15 +2,13 @@
 
 angular
     .module('soil', ['ui', 'ui.bootstrap', 'ngResource', 'soil.filters', 'soil.directives', 'soil.services'])
-    .config ($routeProvider) ->
+    .config ['$routeProvider', ($routeProvider) ->
         $routeProvider
             .when('/field',
-                  templateUrl: '<%= asset_path('field.html') %>'
-                  controller: FieldCtrl)
+                  templateUrl: '<%= asset_path('field.html') %>')
             .when('/finance',
-                  templateUrl: '<%= asset_path('finance.html') %>'
-                  controller: FinanceCtrl)
+                  templateUrl: '<%= asset_path('finance.html') %>')
             .when('/endRound',
-                  templateUrl: '<%= asset_path('endRound.html') %>'
-                  controller: EndRoundCtrl)
+                  templateUrl: '<%= asset_path('endRound.html') %>')
             .otherwise(redirectTo: '/field')
+    ]

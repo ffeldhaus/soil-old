@@ -1,7 +1,7 @@
 <div class="field">
     <ol ui-selectable>
-        <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
-            class="ui-state-default">
+        <li ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
+            class="{{parcel.plantation | lowercase}} ui-state-default">
             {{parcel.plantation}}
         </li>
     </ol>
@@ -24,16 +24,16 @@
 </div>
 <div class="cropsequence" ui-if="show=='cropsequence'">
     <ol class="ui-selectable">
-      <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.cropsequence | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
-            class="ui-state-default">
+      <li ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
+            class="{{parcel.cropsequence | lowercase}} ui-state-default">
             {{parcel.cropsequence}}
         </li>
     </ol>
 </div>
 <div class="harvest" ui-if="show=='harvest'">
     <ol class="ui-selectable">
-      <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.harvest | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
-            class="ui-state-default">
+      <li ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
+            class="{{parcel.cropsequence | lowercase}} ui-state-default">
         {{parcel.harvest.split('_').join(' ');}}</br><div style="line-height: 0em;">({{parcel.harvest_yield}} dT)</div>
         </li>
     </ol>
