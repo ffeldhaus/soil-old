@@ -24,7 +24,7 @@ class Round < ActiveRecord::Base
   SOIL_DROUGHT = 0.03
 
   NUTRITION = 80
-  NUTRITION_DECLINE = 0.5
+  NUTRITION_DECLINE = 0.6
   NUTRITION_FERTILIZE = 0.5
   NUTRITION_ANIMALS = 0.4
   NUTRITION_FIELDBEAN = 0.2
@@ -88,7 +88,7 @@ class Round < ActiveRecord::Base
   RUNNINGCOSTS_PESTICIDE = 50
   RUNNINGCOSTS_ORGANISMS = 100
   RUNNINGCOSTS_ANIMALS = 200
-  RUNNINGCOSTS_BASE = {false => 500, true => 700}
+  RUNNINGCOSTS_BASE = {false => 1000, true => 1300}
 
   HARVEST_FIELDBEAN = {false => 18, true => 21}
   HARVEST_BARLEY = {false => 13, true => 14.5}
@@ -132,7 +132,11 @@ class Round < ActiveRecord::Base
       self.result.machines = current_round.result.machines - MACHINE_AGING
     end
     ### organic
-    self.result.organic = true if animals_per_parcel.between?(0.8, 1.2) && previous_round.decision.fertilize == false && previous_round.decision.pesticide == false
+    if current_round.decision.fertilize == false && current_round.decision.pesticide == false
+      if animals_per_parcel == 0 || animals_per_parcel.between?(0.8, 1.2)
+        self.result.organic = true
+      end
+    end
     ### weather
     self.result.weather = self.group.game.weather[self.number-2]
     ### vermin
@@ -209,6 +213,8 @@ class Round < ActiveRecord::Base
         nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
         nutrition_factor += NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
         nutrition_factor *= 0.01 * current_parcel.soil * (1 - 0.01 * current_parcel.nutrition)
+        # TODO: Harvest
+        nutrition_factor *= 1/((current_parcel.harvest_yield.to_f/HARVEST[current_parcel.plantation])**0.2) if current_parcel.harvest_yield > 0
         new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
         new_parcel.nutrition -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
       end
@@ -354,21 +360,21 @@ class Round < ActiveRecord::Base
     self.save
     self.field.save
     ### fieldbean
-    self.result.income.harvest.fieldbean = self.field.parcels.find_all_by_plantation('Ackerbohne').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_FIELDBEAN[self.result.organic]
+    self.result.income.harvest.fieldbean = self.field.parcels.find_all_by_plantation('Ackerbohne').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_FIELDBEAN[self.result.organic]
     ### barley
-    self.result.income.harvest.barley = self.field.parcels.find_all_by_plantation('Gerste').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_BARLEY[self.result.organic]
+    self.result.income.harvest.barley = self.field.parcels.find_all_by_plantation('Gerste').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BARLEY[self.result.organic]
     ### oat
-    self.result.income.harvest.oat = self.field.parcels.find_all_by_plantation('Hafer').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_OAT[self.result.organic]
+    self.result.income.harvest.oat = self.field.parcels.find_all_by_plantation('Hafer').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_OAT[self.result.organic]
     ### potatoe
-    self.result.income.harvest.potatoe = self.field.parcels.find_all_by_plantation('Kartoffel').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_POTATOE[self.result.organic]
+    self.result.income.harvest.potatoe = self.field.parcels.find_all_by_plantation('Kartoffel').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_POTATOE[self.result.organic]
     ### corn
-    self.result.income.harvest.corn = self.field.parcels.find_all_by_plantation('Mais').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_CORN[self.result.organic]
+    self.result.income.harvest.corn = self.field.parcels.find_all_by_plantation('Mais').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_CORN[self.result.organic]
     ### rye
-    self.result.income.harvest.rye = self.field.parcels.find_all_by_plantation('Roggen').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_RYE[self.result.organic]
+    self.result.income.harvest.rye = self.field.parcels.find_all_by_plantation('Roggen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_RYE[self.result.organic]
     ### wheat
-    self.result.income.harvest.wheat = self.field.parcels.find_all_by_plantation('Weizen').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_WHEAT[self.result.organic]
+    self.result.income.harvest.wheat = self.field.parcels.find_all_by_plantation('Weizen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_WHEAT[self.result.organic]
     ### beet
-    self.result.income.harvest.beet = self.field.parcels.find_all_by_plantation('Zuckerruebe').collect {|parcel| parcel.harvest_yield}.inject(:+).to_i * HARVEST_BEET[self.result.organic]
+    self.result.income.harvest.beet = self.field.parcels.find_all_by_plantation('Zuckerruebe').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BEET[self.result.organic]
     ## save harvest and income
     self.result.income.harvest.save
     self.result.income.sum = self.result.income.harvest.fieldbean +
