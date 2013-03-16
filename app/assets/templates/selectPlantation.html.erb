@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
     <ol class="ui-selectable plantation">
-        <li ng-click="click(plantation)" class="ui-selectee" style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{plantation | lowercase}}.jpg)" ng-repeat="plantation in plantations">{{plantation}}</li>
+        <li ng-click="click(plantation)" class="{{plantation | lowercase}} ui-selectee" ng-repeat="plantation in plantations">{{plantation}}</li>
     </ol>
     {{msg}}
 </div>
