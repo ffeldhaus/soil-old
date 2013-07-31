@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery.ui.all
-//= require angular
-//= require angular-resource
+//= require unstable/angular
+//= require unstable/angular-resource
 //= require angular-ui
 //= require angular-ui-bootstrap-tpls
 //= require turbolinks

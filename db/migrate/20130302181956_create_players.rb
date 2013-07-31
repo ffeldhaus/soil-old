@@ -1,11 +1,10 @@
-class CreateGroups < ActiveRecord::Migration
+class CreatePlayers < ActiveRecord::Migration
   def change
-    create_table :groups do |t|
-      t.string :groupname
+    create_table :players do |t|
+      t.string :name
       t.integer :seedcapital
       t.string :password_digest
       t.string :salt
-      t.boolean :wait_for_other_groups
       t.references :game, index: true
 
       t.timestamps

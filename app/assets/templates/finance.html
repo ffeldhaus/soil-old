@@ -1,165 +1,335 @@
-<div class="finance" ng-init="getGroups()">
-    <table cellpadding="5px" border="1">
-        <thead>
-        <th colspan="3">Runde {{currentRound}}</th>
-        <th ng-repeat="group in groups">{{group.group.groupname}}</th>
-        </thead>
+<div class="finance" ng-init="getPlayers()">
+<accordion close-others="false">
+<accordion-group>
+    <accordion-heading>Entscheidungen</accordion-heading>
+    <table>
         <tr>
-            <th colspan="2" rowspan="5">Entscheidungen</th>
             <th>Konventioneller Dünger</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-2].decision.fertilize | checkmark}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-2].decision.fertilize | checkmark}}
+            </td>
         </tr>
         <tr>
             <th>Pestizide</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-2].decision.pesticide | checkmark}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-2].decision.pesticide | checkmark}}
+            </td>
         </tr>
         <tr>
             <th>Nützlinge</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-2].decision.organisms | checkmark}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-2].decision.organisms | checkmark}}
+            </td>
         </tr>
         <tr>
             <th>Einsatz von Maschinen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-2].decision.machines}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-2].decision.machines}}
+            </td>
         </tr>
         <tr>
             <th>Bio Siegel</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-2].decision.organic | checkmark}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-2].decision.organic | checkmark}}
+            </td>
         </tr>
+    </table>
+</accordion-group>
+<accordion-group>
+    <accordion-heading>Übersicht</accordion-heading>
+    <table>
         <tr>
-            <th colspan="2" rowspan="4">Übersicht</th>
             <th>Einsatz von Maschinen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.machines}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-1].result.machines}}
+            </td>
         </tr>
         <tr>
             <th>Bio-Siegel</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.organic | checkmark}}</td>
+            <td ng-repeat="player in players">{{(player.rounds | orderBy:'number')[currentRound-1].result.organic
+                |
+                checkmark}}
+            </td>
         </tr>
         <tr>
             <th>Wetter</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.weather}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-1].result.weather}}
+            </td>
         </tr>
         <tr>
             <th>Schädlinge</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.vermin}}</td>
-        </tr>
-        <tr>
-            <th rowspan="17">Ausgaben</th>
-            <th rowspan="8">Saatgut</th>
-            <th>Ackerbohnen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.fieldbean}}</td>
-        </tr>
-        <tr>
-            <th>Gerste</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.barley}}</td>
-        </tr>
-        <tr>
-            <th>Hafer</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.oat}}</td>
-        </tr>
-        <tr>
-            <th>Kartoffeln</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.potatoe}}</td>
-        </tr>
-        <tr>
-            <th>Mais</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.corn}}</td>
-        </tr>
-        <tr>
-            <th>Roggen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.rye}}</td>
-        </tr>
-        <tr>
-            <th>Weizen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.wheat}}</td>
-
-        </tr>
-        <tr>
-            <th>Zuckerrüben</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.seed.beet}}</td>
-        </tr>
-        <tr>
-            <th rowspan="2">Investitionen</th>
-            <th>Tiere</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.investment.animals}}</td>
-        </tr>
-        <tr>
-            <th>Einsatz von Maschinen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.investment.machines}}</td>
-        </tr>
-        <tr>
-            <th rowspan="6">Laufende Kosten</th>
-            <th>Kontrollen Bio-Siegel</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.organic_control}}</td>
-        </tr>
-        <tr>
-            <th>Konventioneller Dünger</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.fertilize}}</td>
-        </tr>
-        <tr>
-            <th>Pestizide</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.pesticide}}</td>
-        </tr>
-        <tr>
-            <th>Nützlinge</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.organisms}}</td>
-        </tr>
-        <tr>
-            <th>Tiere</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.animals}}</td>
-        </tr>
-        <tr>
-            <th>Grundkosten</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.running_cost.base}}</td>
-        </tr>
-        <tr>
-            <th colspan="2">Summe</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.expense.sum}}</td>
-        </tr>
-        <tr>
-            <th rowspan="9">Einnahmen</th>
-            <th rowspan="8">Ernteerträge</th>
-            <th>Ackerbohnen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.fieldbean}}</td>
-        </tr>
-        <tr>
-            <th>Gerste</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.barley}}</td>
-        </tr>
-        <tr>
-            <th>Hafer</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.oat}}</td>
-        </tr>
-        <tr>
-            <th>Kartoffeln</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.potatoe}}</td>
-        </tr>
-        <tr>
-            <th>Mais</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.corn}}</td>
-        </tr>
-        <tr>
-            <th>Roggen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.rye}}</td>
-        </tr>
-        <tr>
-            <th>Weizen</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.wheat}}</td>
-        </tr>
-        <tr>
-            <th>Zuckerrüben</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.harvest.beet}}</td>
-        </tr>
-        <tr>
-            <th colspan="2">Summe</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.income.sum}}</td>
-        </tr>
-        <tr>
-            <th colspan="3">Gewinn</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.profit}}</td>
-        </tr>
-        <tr>
-            <th colspan="3">Kapital</th>
-            <td ng-repeat="group in groups">{{(group.group.rounds | orderBy:'number')[currentRound-1].result.capital}}</td>
+            <td ng-repeat="player in players">{{(player.rounds |
+                orderBy:'number')[currentRound-1].result.vermin}}
+            </td>
         </tr>
     </table>
+</accordion-group>
+<accordion-group>
+    <accordion-heading>
+        <table>
+            <tr>
+                <th>Ausgaben</th>
+                <td ng-repeat="player in players">{{(player.rounds |
+                    orderBy:'number')[currentRound-1].result.expense.sum | currency }}
+                </td>
+            </tr>
+        </table>
+    </accordion-heading>
+    <accordion close-others="false">
+        <accordion-group>
+            <accordion-heading>
+                <table>
+                    <tr>
+                        <th>Saatgut</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.sum | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-heading>
+            <accordion-body>
+                <table>
+                    <tr>
+                        <th>Ackerbohnen</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.fieldbean | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Gerste</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.barley | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Hafer</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.oat | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Kartoffeln</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.potatoe | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mais</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.corn | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Roggen</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.rye | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Weizen</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.wheat | currency }}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Zuckerrüben</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.seed.beet | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-body>
+        </accordion-group>
+        <accordion-group>
+            <accordion-heading>
+                <table>
+                    <tr>
+                        <th>Investitionen</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.investment.sum | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-heading>
+            <accordion-body>
+                <table>
+                    <tr>
+                        <th>Tiere</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.investment.animals | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Einsatz von Maschinen</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.investment.machines | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-body>
+        </accordion-group>
+        <accordion-group>
+            <accordion-heading>
+                <table>
+                    <tr>
+                        <th>Laufende Kosten</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.sum | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-heading>
+            <accordion-body>
+                <table>
+                    <tr>
+                        <th>Kontrollen Bio-Siegel</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.organic_control | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Konventioneller Dünger</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.fertilize | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Pestizide</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.pesticide | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nützlinge</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.organisms | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Tiere</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.animals | currency }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Grundkosten</th>
+                        <td ng-repeat="player in players">{{(player.rounds |
+                            orderBy:'number')[currentRound-1].result.expense.running_cost.base | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </accordion-body>
+        </accordion-group>
+    </accordion>
+</accordion-group>
+<accordion-group>
+    <accordion-heading>
+        <table>
+            <tr>
+                <th>Einnahmen</th>
+                <td ng-repeat="player in players">{{(player.rounds |
+                    orderBy:'number')[currentRound-1].result.income.sum | currency }}
+                </td>
+            </tr>
+        </table>
+    </accordion-heading>
+    <accordion-body>
+        <accordion>
+            <accordion-group>
+                <accordion-heading>
+                    <table>
+                        <tr>
+                            <th>Ernteerträge</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.sum | currency }}
+                            </td>
+                        </tr>
+                    </table>
+                </accordion-heading>
+                <accordion-body>
+                    <table>
+                        <tr>
+                            <th>Ackerbohnen</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.fieldbean | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Gerste</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.barley | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Hafer</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.oat | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Kartoffeln</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.potatoe | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Mais</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.corn | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Roggen</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.rye | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Weizen</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.wheat | currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Zuckerrüben</th>
+                            <td ng-repeat="player in players">{{(player.rounds |
+                                orderBy:'number')[currentRound-1].result.income.harvest.beet | currency }}
+                            </td>
+                        </tr>
+                    </table>
+                </accordion-body>
+            </accordion-group>
+        </accordion>
+    </accordion-body>
+</accordion-group>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <div class="accordion-toggle">
+            <table>
+                <tr>
+                    <th>Gewinn</th>
+                    <td ng-repeat="player in players">{{(player.rounds |
+                        orderBy:'number')[currentRound-1].result.profit | currency }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <div class="accordion-toggle">
+            <table>
+                <tr>
+                    <th>Kapital</th>
+                    <td ng-repeat="player in players">{{(player.rounds | orderBy:'number')[currentRound-1].result.capital | currency }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</accordion>
 </div>

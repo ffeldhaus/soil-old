@@ -8,13 +8,18 @@
 
 SEEDCAPITAL=20000
 
-game = Game.create(:title => 'Soil')
+admin = Admin.create(:name => 'administrator', :password => 'administrator', :password_confirmation => 'administrator')
+admin.save!
+supervisor = admin.supervisors.create(:name => 'ffeldhaus', :first_name => 'Florian', :last_name => 'Feldhaus', :email => 'florian.feldhaus@gmail.com', :password => 'ffeldhaus', :password_confirmation => 'ffeldhaus')
+supervisor.save!
 
-game.groups.create(:groupname => 'Gruppe1', :seedcapital => SEEDCAPITAL, :password => 'testing',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password => 'cosinus',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens',:wait_for_other_groups=>false)
-#game.groups.create(:groupname => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans',:wait_for_other_groups=>false)
+game = supervisor.games.create(:name => 'Soil')
+
+game.players.create(:name => 'Gruppe1', :seedcapital => SEEDCAPITAL, :password => 'testing', :password_confirmation => 'testing')
+game.players.create(:name => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password => 'cosinus', :password_confirmation => 'cosinus')
+#game.players.create(:name => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens')
+#game.players.create(:name => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans')
 game.save!
-game.groups.each do |group|
-  group.rounds.create(:number => 1)
+game.players.each do |player|
+  player.rounds.create(:number => 1)
 end

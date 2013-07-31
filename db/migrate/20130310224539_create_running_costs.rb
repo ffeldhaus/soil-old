@@ -1,6 +1,7 @@
 class CreateRunningCosts < ActiveRecord::Migration
   def change
     create_table :running_costs do |t|
+      t.integer :sum
       t.integer :organic_control
       t.integer :fertilize
       t.integer :pesticide

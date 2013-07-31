@@ -3,67 +3,17 @@
 <html ng-app="soil" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="author" content="Florian Feldhaus">
   <title>Soil</title>
-  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
+
 </head>
 
-<body ng-controller="SoilCtrl">
-<span id="corner-banner">
-    <em>beta</em>
-</span>
+<%= yield %>
 
-<nav-bar-top title="Soil">
-  <nav-location name="field" show="$parent.show" visible="show!='finance'"
-                href="#/field">Spielfeld
-  </nav-location>
-  <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
-                href="#/field">Fruchtfolge
-  </nav-location>
-  <nav-location name="soil" show="$parent.show" visible="show=='soil'"
-                href="#/field">Bodenqualität
-  </nav-location>
-  <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
-                href="#/field">Mineralstoffe
-  </nav-location>
-  <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
-                href="#/field">Ernteertrag
-  </nav-location>
-  <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
-  <a ng-click="endRound()" class="btn" ng-disabled="currentRound != rounds.length" href="#/endRound">Runde abschicken &raquo;</a>
-</nav-bar-top>
-
-  <div id="main" role="main">
-    <div class="container" ng-init="getGroup(<%= current_group.id if current_group %>)">
-      <div class="content">
-        <div class="row">
-            <%= render 'layouts/messages' %>
-            <%= yield %>
-        </div>
-      </div>
-    </div> <!--! end of .container -->
-  </div> <!--! end of #main -->
-</body>
 </html>
-
-
-
-<!--  &lt;!&ndash;[if lte IE 8]>
-  <script>
-      // The ieshiv takes care of our ui.directives, bootstrap module directives and
-      // AngularJS's ng-view, ng-include, ng-pluralize and ng-switch directives.
-      // However, IF you have custom directives (yours or someone else's) then
-      // enumerate the list of tags in window.myCustomTags
-
-      window.myCustomTags = [ 'navBarTop', 'navLocation', 'uiSelectable' ]; // optional
-  </script>
-  <script src="lib/angular/angular-ui-ieshiv.min.js"></script>
-  <![endif]&ndash;&gt;-->
-
-

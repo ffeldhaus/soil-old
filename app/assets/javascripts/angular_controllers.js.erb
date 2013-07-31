@@ -2,35 +2,106 @@
 
 /* Controllers */
 
+function AdminCtrl($scope, $resource, $log, $location, $rootScope) {
+    var Games = $resource('/games/:game_id', {game_id: '@id'});
+    var Supervisors = $resource('/supervisors/:supervisor_id', {supervisor_id: '@id'});
+
+    $scope.games = Games.query();
+    $scope.supervisors = Supervisors.query();
+
+    $scope.getSupervisor = function (id) {
+        return Supervisors.get({supervisor_id: id})
+    };
+
+    $scope.show = function () {
+        return ($location.search()).show;
+    };
+
+    $scope.supervisor = {};
+    $scope.supervisor.first_name = '';
+    $scope.supervisor.last_name = '';
+    $scope.supervisor.email = '';
+
+    $scope.createSupervisor = function (supervisor) {
+        Supervisors.save(supervisor);
+        $scope.supervisors = Supervisors.query();
+    };
+
+    $scope.deleteSupervisor = function (supervisor) {
+        Supervisors.delete({supervisor_id: supervisor.id});
+        $scope.supervisors = Supervisors.query();
+    };
+}
+
+AdminCtrl.$inject = ['$scope', '$resource', '$log', '$location', '$rootScope'];
+
+function GamesCtrl($scope, $resource, $log, $location, $rootScope) {
+    var Games = $resource('/games/:game_id', {game_id: '@id'});
+    $scope.games = Games.query();
+    $scope.game = {};
+    $scope.game.name = '';
+
+    function Player() {
+        this.name = '';
+        this.password = Math.random().toString(36).slice(-8);
+    }
+
+    $scope.game.players = [new Player(), new Player(), new Player(), new Player()];
+
+    $scope.setPlayerSize = function (size) {
+        if ($scope.game.players.length < size) {
+            $scope.game.players.push(new Player(size));
+        }
+        else if ($scope.game.players.length > size) {
+            $scope.game.players.pop();
+        }
+    }
+
+    $scope.createGame = function (game) {
+        Games.save(game);
+        $scope.games = Games.query();
+    };
+
+    $scope.deleteGame = function (game) {
+        Games.delete({game_id: game.id});
+        $scope.games = Games.query();
+    };
+
+}
+
+GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location', '$rootScope'];
+
 function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
     $scope.rounds = [];
 
-    var Groups = $resource('/groups/:group_id', {group_id: '@id'});
+    var Players = $resource('/players/:player_id', {player_id: '@id'});
     var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
 
-    $scope.getGroups = function () {
-        $scope.groups = Groups.query()
+    $scope.getPlayers = function () {
+        $scope.players = Players.query()
     }
 
-    $scope.getGroup = function (group) {
-        $scope.group = Groups.get({group_id: group}, function () {
-            $scope.currentRound = $scope.group.rounds[$scope.group.rounds.length - 1].number;
-            $scope.getRound($scope.group.rounds.length);
-            if ($scope.group.wait_for_other_groups) $scope.wait_for_other_groups();
+    $scope.getPlayer = function (player) {
+        $log.debug("Getting player with number: " + player)
+        $scope.player = Players.get({player_id: player}, function () {
+            $log.debug('Inside getPlayer')
+            $scope.currentRound = $scope.player.rounds[$scope.player.rounds.length - 1].number;
+            $scope.getRound($scope.player.rounds.length);
+            if ($scope.player.wait_for_other_players) $scope.wait_for_other_players();
         });
     }
 
     $scope.getRound = function (round) {
-        if (!$scope.rounds[round - 1]) $scope.rounds[round - 1] = Rounds.get({round_id: $scope.group.rounds[round - 1].id});
+        if (!$scope.rounds[round - 1]) $scope.rounds[round - 1] = Rounds.get({round_id: $scope.player.rounds[round - 1].id});
     };
 
-    $scope.wait_for_other_groups = function () {
+    $scope.wait_for_other_players = function () {
         $log.info('Wait for others');
-        $scope.startNewRound = false;
+        var startNewRound = false;
 
         var t = '<div ng-show="!startNewRound" class="modal-header">' +
-                '<h1>Auf andere Gruppen warten</h1>' +
+                '<h1>Auf andere Gruppen warten{{startNewRound}}</h1>' +
                 '</div>' +
                 '<div ng-show="startNewRound" class="modal-header">' +
                 '<h1>Beginn von Runde {{$scope.currentRound}}</h1>' +
@@ -39,28 +110,31 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
                 '<button ng-click="close()" class="btn btn-primary" >Close</button>' +
                 '</div>';
 
+        $scope.tick = function () {
+            $log.info($scope.player.id)
+            var player = Players.get({player_id: $scope.player.id});
+            $log.info(player.wait_for_other_players)
+            if (player.wait_for_other_players) {
+                $timeout($scope.tick, 1000)
+            }
+            else {
+                $log.info('Start new Round');
+                return true;
+            }
+        };
+
         $scope.opts = {
             backdrop: true,
             dialogFade: true,
             keyboard: false,
             backdropClick: false,
-            template: t // OR: templateUrl: 'path/to/view.html',
+            template: t,
+            controller: 'EndRoundCtrl',
+            resolve: { startNewRound: $scope.tick }
         };
 
         var dialog = $dialog.dialog($scope.opts);
-        dialog.open().then();
-
-        (function tick() {
-            $scope.group = Groups.get({group_id: $scope.group.id}, function ($scope) {
-                if ($scope.group.wait_for_other_groups) {
-                    $timeout(tick, 1000)
-                }
-                else {
-                    $log.info('Start new Round');
-                    $scope.$apply('startNewRound=true');
-                }
-            });
-        })();
+        dialog.open();
 
         $scope.close = function () {
             dialog.close();
@@ -73,7 +147,6 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
         if ($location.url() == '/endRound' && $scope.currentRound == $scope.rounds.length) {
             $scope.endRoundAcknowledgement()
         }
-        ;
     }
 
     $scope.endRoundAcknowledgement = function () {
@@ -89,7 +162,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
                 .then(function (result) {
                     if (result == 'send') {
                         $scope.rounds[$scope.rounds.length - 1].$update();
-                        $scope.wait_for_other_groups();
+                        $scope.wait_for_other_players();
                     }
                 });
     }
@@ -98,7 +171,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
 
 // the dialog is injected in the specified controller
-function selectPlantationCtrl($scope, dialog) {
+function SelectPlantationCtrl($scope, dialog) {
     $scope.plantations = [
         'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
@@ -108,4 +181,12 @@ function selectPlantationCtrl($scope, dialog) {
     }
 }
 
-selectPlantationCtrl.$inject = ['$scope', 'dialog'];
+SelectPlantationCtrl.$inject = ['$scope', 'dialog'];
+
+// the dialog is injected in the specified controller
+function EndRoundCtrl($scope, dialog, startNewRound) {
+    $scope.startNewRound = startNewRound;
+    $scope.close = function (result) {
+        dialog.close(result);
+    };
+}

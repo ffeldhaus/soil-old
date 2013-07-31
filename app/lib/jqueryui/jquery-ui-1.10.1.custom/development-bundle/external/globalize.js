@@ -108,7 +108,7 @@ Globalize.cultures[ "default" ] = {
 		pattern: [ "-n" ],
 		// number of decimal places normally shown
 		decimals: 2,
-		// string that separates number groups, as in 1,000,000
+		// string that separates number players, as in 1,000,000
 		",": ",",
 		// string that separates a number from the fractional portion, as in 1.99
 		".": ".",
@@ -135,7 +135,7 @@ Globalize.cultures[ "default" ] = {
 			// array of numbers indicating the size of each number group.
 			// TODO: more detailed description and example
 			groupSizes: [ 3 ],
-			// string that separates number groups, as in 1,000,000
+			// string that separates number players, as in 1,000,000
 			",": ",",
 			// string that separates a number from the fractional portion, as in 1.99
 			".": ".",
@@ -152,7 +152,7 @@ Globalize.cultures[ "default" ] = {
 			// array of numbers indicating the size of each number group.
 			// TODO: more detailed description and example
 			groupSizes: [ 3 ],
-			// string that separates number groups, as in 1,000,000
+			// string that separates number players, as in 1,000,000
 			",": ",",
 			// string that separates a number from the fractional portion, as in 1.99
 			".": ".",
@@ -934,7 +934,7 @@ getEraYear = function( date, cal, era, sortable ) {
 	};
 
 	getParseRegExp = function( cal, format ) {
-		// converts a format string into a regular expression with groups that
+		// converts a format string into a regular expression with players that
 		// can be used to extract date fields from a date string.
 		// check for a cached parse regex.
 		var re = cal._parseRegExp;
@@ -1060,7 +1060,7 @@ getEraYear = function( date, cal, era, sortable ) {
 			era = null, year = null, month = null, date = null, weekDay = null,
 			hour = 0, hourOffset, min = 0, sec = 0, msec = 0, tzMinOffset = null,
 			pmHour = false;
-		// iterate the format groups to extract and set the date fields.
+		// iterate the format players to extract and set the date fields.
 		for ( var j = 0, jl = groups.length; j < jl; j++ ) {
 			var matchGroup = match[ j + 1 ];
 			if ( matchGroup ) {
@@ -1537,7 +1537,7 @@ Globalize.parseFloat = function( value, radix, cultureSelector ) {
 			integer = intAndFraction.substr( 0, decimalPos );
 			fraction = intAndFraction.substr( decimalPos + decSep.length );
 		}
-		// handle groups (e.g. 1,000,000)
+		// handle players (e.g. 1,000,000)
 		var groupSep = nf[ "," ];
 		integer = integer.split( groupSep ).join( "" );
 		var altGroupSep = groupSep.replace( /\u00A0/g, " " );

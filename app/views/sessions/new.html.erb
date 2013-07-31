@@ -1,40 +1,46 @@
-<div class="login-form span6 center">
-  <%= form_tag sessions_path, :class => 'form-horizontal' do %>
-      <fieldset>
-        <div id="legend">
-          <legend class="">Anmelden</legend>
-        </div>
-        <div class="control-group">
-          <%= label_tag 'Gruppenname', nil, :class => 'control-label' %>
-          <%= text_field_tag :groupname, params[:groupname], :class => 'input-large' %>
-        </div>
+<body ng-controller="SoilCtrl">
 
-        <div class="control-group">
-          <%= label_tag 'Passwort', nil, :class => 'control-label' %>
-          <%= password_field_tag :password, params[:password], :class => 'input-large' %>
-        </div>
+<div id="main" role="main">
+  <div class="content">
+    <div class="row span6 center">
+      <%= render 'layouts/messages' %>
 
-        <div class="control-group">
-          <!-- Button -->
-          <div class="controls">
-            <div class="actions"><%= submit_tag "Anmelden", :class => 'btn btn-large btn-primary' %></div>
-          </div>
-        </div>
-      </fieldset>
-  <% end %>
+      <div class="login-form">
+        <%= form_tag sessions_path, :class => 'form-horizontal' do %>
+            <fieldset>
+              <div id="legend">
+                <legend class="">Anmelden</legend>
+              </div>
+              <div class="control-group">
+                <%= label_tag 'name', 'Benutzername', :class => 'control-label' %>
+                <div class="control">
+                  <%= text_field_tag :name, params[:name], :placeholder => 'Benutzername' %>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <%= label_tag 'password', 'Passwort', :class => 'control-label' %>
+                <div class="control">
+                  <%= password_field_tag :password, params[:password], :placeholder => 'Passwort' %>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <!-- Button -->
+                <div class="controls">
+                  <div class="checkbox">
+                    <label>
+                      <%= check_box_tag :remindme %> Erinnere dich an mich
+                    </label>
+                  </div>
+                  <%= submit_tag "Anmelden", :class => 'btn btn-primary' %>
+                </div>
+              </div>
+            </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!--
-<h1>Log In</h1>
-
-<%= form_tag sessions_path do %>
-    <div class="field">
-      <%= label_tag :name %><br />
-      <%= text_field_tag :name, params[:name] %>
-    </div>
-    <div class="field">
-      <%= label_tag :password %><br />
-      <%= password_field_tag :password %>
-    </div>
-    <div class="actions"><%= submit_tag "Log In" %></div>
-<% end %>-->
+</body>

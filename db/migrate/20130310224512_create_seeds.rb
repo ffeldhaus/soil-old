@@ -1,6 +1,7 @@
 class CreateSeeds < ActiveRecord::Migration
   def change
     create_table :seeds do |t|
+      t.integer :sum
       t.integer :fieldbean
       t.integer :barley
       t.integer :oat

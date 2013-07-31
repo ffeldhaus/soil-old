@@ -1,6 +1,7 @@
 class CreateHarvests < ActiveRecord::Migration
   def change
     create_table :harvests do |t|
+      t.integer :sum
       t.integer :fieldbean
       t.integer :barley
       t.integer :oat

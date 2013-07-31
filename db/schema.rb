@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130310224604) do
+ActiveRecord::Schema.define(version: 20130731151717) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "admins", force: true do |t|
+    t.string   "name"
+    t.string   "password_digest"
+    t.string   "salt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "decisions", force: true do |t|
     t.integer  "machines"
@@ -24,7 +35,7 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.datetime "updated_at"
   end
 
-  add_index "decisions", ["round_id"], name: "index_decisions_on_round_id"
+  add_index "decisions", ["round_id"], name: "index_decisions_on_round_id", using: :btree
 
   create_table "expenses", force: true do |t|
     t.integer  "sum"
@@ -33,7 +44,7 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.datetime "updated_at"
   end
 
-  add_index "expenses", ["result_id"], name: "index_expenses_on_result_id"
+  add_index "expenses", ["result_id"], name: "index_expenses_on_result_id", using: :btree
 
   create_table "fields", force: true do |t|
     t.integer  "round_id"
@@ -41,63 +52,59 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.datetime "updated_at"
   end
 
-  add_index "fields", ["round_id"], name: "index_fields_on_round_id"
+  add_index "fields", ["round_id"], name: "index_fields_on_round_id", using: :btree
 
   create_table "games", force: true do |t|
-    t.string   "title"
-    t.string   "weather"
-    t.string   "vermin"
+    t.integer  "current_round"
+    t.string   "name"
+    t.integer  "supervisor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "groups", force: true do |t|
-    t.string   "groupname"
-    t.integer  "seedcapital"
-    t.string   "password_digest"
-    t.string   "salt"
-    t.integer  "game_id"
-    t.boolean  "wait_for_other_groups"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "groups", ["game_id"], name: "index_groups_on_game_id"
+  add_index "games", ["supervisor_id"], name: "index_games_on_supervisor_id", using: :btree
 
   create_table "harvests", force: true do |t|
-    t.integer "fieldbean"
-    t.integer "barley"
-    t.integer "oat"
-    t.integer "potatoe"
-    t.integer "corn"
-    t.integer "rye"
-    t.integer "wheat"
-    t.integer "beet"
+    t.integer  "sum"
+    t.integer  "fieldbean"
+    t.integer  "barley"
+    t.integer  "oat"
+    t.integer  "potatoe"
+    t.integer  "corn"
+    t.integer  "rye"
+    t.integer  "wheat"
+    t.integer  "beet"
     t.integer  "income_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "harvests", ["income_id"], name: "index_harvests_on_income_id"
+  add_index "harvests", ["income_id"], name: "index_harvests_on_income_id", using: :btree
 
   create_table "incomes", force: true do |t|
-    t.integer :sum
+    t.integer  "sum"
     t.integer  "result_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "incomes", ["result_id"], name: "index_incomes_on_result_id"
+  add_index "incomes", ["result_id"], name: "index_incomes_on_result_id", using: :btree
 
   create_table "investments", force: true do |t|
-    t.integer  "expense_id"
+    t.integer  "sum"
     t.integer  "animals"
     t.integer  "machines"
+    t.integer  "expense_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "investments", ["expense_id"], name: "index_investments_on_expense_id"
+  add_index "investments", ["expense_id"], name: "index_investments_on_expense_id", using: :btree
+
+  create_table "materials", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "parcels", force: true do |t|
     t.integer  "number"
@@ -112,7 +119,19 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.datetime "updated_at"
   end
 
-  add_index "parcels", ["field_id"], name: "index_parcels_on_field_id"
+  add_index "parcels", ["field_id"], name: "index_parcels_on_field_id", using: :btree
+
+  create_table "players", force: true do |t|
+    t.string   "name"
+    t.integer  "seedcapital"
+    t.string   "password_digest"
+    t.string   "salt"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
 
   create_table "results", force: true do |t|
     t.integer  "machines"
@@ -126,45 +145,61 @@ ActiveRecord::Schema.define(version: 20130310224604) do
     t.datetime "updated_at"
   end
 
-  add_index "results", ["round_id"], name: "index_results_on_round_id"
+  add_index "results", ["round_id"], name: "index_results_on_round_id", using: :btree
 
   create_table "rounds", force: true do |t|
     t.integer  "number"
-    t.integer  "group_id"
+    t.integer  "player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rounds", ["group_id"], name: "index_rounds_on_group_id"
+  add_index "rounds", ["player_id"], name: "index_rounds_on_player_id", using: :btree
 
   create_table "running_costs", force: true do |t|
-    t.integer "organic_control"
-    t.integer "fertilize"
-    t.integer "pesticide"
-    t.integer "organisms"
-    t.integer "animals"
-    t.integer "base"
+    t.integer  "sum"
+    t.integer  "organic_control"
+    t.integer  "fertilize"
+    t.integer  "pesticide"
+    t.integer  "organisms"
+    t.integer  "animals"
+    t.integer  "base"
     t.integer  "expense_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "running_costs", ["expense_id"], name: "index_running_costs_on_expense_id"
+  add_index "running_costs", ["expense_id"], name: "index_running_costs_on_expense_id", using: :btree
 
   create_table "seeds", force: true do |t|
-    t.integer "fieldbean"
-    t.integer "barley"
-    t.integer "oat"
-    t.integer "potatoe"
-    t.integer "corn"
-    t.integer "rye"
-    t.integer "wheat"
-    t.integer "beet"
+    t.integer  "sum"
+    t.integer  "fieldbean"
+    t.integer  "barley"
+    t.integer  "oat"
+    t.integer  "potatoe"
+    t.integer  "corn"
+    t.integer  "rye"
+    t.integer  "wheat"
+    t.integer  "beet"
     t.integer  "expense_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "seeds", ["expense_id"], name: "index_seeds_on_expense_id"
+  add_index "seeds", ["expense_id"], name: "index_seeds_on_expense_id", using: :btree
+
+  create_table "supervisors", force: true do |t|
+    t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "salt"
+    t.integer  "admin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "supervisors", ["admin_id"], name: "index_supervisors_on_admin_id", using: :btree
 
 end

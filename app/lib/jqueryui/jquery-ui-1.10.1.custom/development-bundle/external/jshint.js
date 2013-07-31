@@ -158,7 +158,7 @@
  Debug, Draggable, Draggables, Droppables, Document, DomReady, DOMEvent, DOMReady, DOMParser,
  Drag, E, Enumerator, Enumerable, Element, Elements, Error, Effect, EvalError, Event,
  Events, FadeAnimation, Field, Flash, Float32Array, Float64Array, Form,
- FormField, Frame, FormData, Function, Fx, GetObject, Group, Hash, HotKey,
+ FormField, Frame, FormData, Function, Fx, GetObject, Player, Hash, HotKey,
  HTMLElement, HTMLAnchorElement, HTMLBaseElement, HTMLBlockquoteElement,
  HTMLBodyElement, HTMLBRElement, HTMLButtonElement, HTMLCanvasElement, HTMLDirectoryElement,
  HTMLDivElement, HTMLDListElement, HTMLFieldSetElement,

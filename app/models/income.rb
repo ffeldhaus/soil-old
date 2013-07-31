@@ -3,6 +3,7 @@ class Income < ActiveRecord::Base
   has_one :harvest
 
   after_initialize do
+    self.sum ||= 0
     self.create_harvest unless self.harvest
   end
 end

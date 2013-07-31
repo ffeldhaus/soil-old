@@ -6913,7 +6913,7 @@ function $RouteProvider(){
    *    `$location.path` will be updated to add or drop the trailing slash to exactly match the
    *    route definition.
    *
-   *    `path` can contain named groups starting with a colon (`:name`). All characters up to the
+   *    `path` can contain named players starting with a colon (`:name`). All characters up to the
    *    next slash are matched and stored in `$routeParams` under the given `name` when the route
    *    matches.
    *
@@ -14326,7 +14326,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
             groupByFn = $parse(match[3] || ''),
             valueFn = $parse(match[2] ? match[1] : valueName),
             valuesFn = $parse(match[7]),
-            // This is an array of array of existing option groups in DOM. We try to reuse these if possible
+            // This is an array of array of existing option players in DOM. We try to reuse these if possible
             // optionGroupsCache[0] is the options with no option group
             // optionGroupsCache[?][0] is the parent: either the SELECT or OPTGROUP element
             optionGroupsCache = [[{element: selectElement, label:''}]];
@@ -14393,7 +14393,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
         scope.$watch(render);
 
         function render() {
-          var optionGroups = {'':[]}, // Temporary location for the option groups before we render them
+          var optionGroups = {'':[]}, // Temporary location for the option players before we render them
               optionGroupNames = [''],
               optionGroupName,
               optionGroup,

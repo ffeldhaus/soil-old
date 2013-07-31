@@ -1,4 +1,4 @@
-<body ng-controller="GamesCtrl">
+<body ng-controller="AdminCtrl">
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -7,12 +7,13 @@
         <%= t '.title' %>
       </div>
       <ul class="nav">
+        <nav-location name="supervisors" show="$parent.show" visible="show!='finance'"
+                      href="#/supervisors">
+          <%= t '.supervisors' %>
+        </nav-location>
         <nav-location name="games" show="$parent.show" visible="show!='finance'"
                       href="#/games">
-          <%= t 'games_title' %>
-        </nav-location>
-        <nav-location name="materials" show="$parent.show" visible="show!='finance'" href="#/materials">
-          <%= t 'materials' %>
+          <%= t '.games' %>
         </nav-location>
       </ul>
       <ul class="nav pull-right">
@@ -22,7 +23,7 @@
   </div>
 </div>
 
-<div id="main" role="main">
+<div id="main" role="main" ng-init="admin=true">
   <div class="container">
     <div class="content row">
       <div class="span12">

@@ -1,0 +1,26 @@
+de:
+  first_name: 'Vorname'
+  last_name: 'Nachname'
+  name: 'Benutzername'
+  email: 'E-Mail Adresse'
+  new_supervisor: 'Neuen Spielleiter erstellen'
+  access_denied: 'Zugriff verweigert'
+  games_title: 'Spiele'
+  new_game: 'Neues Spiel erstellen'
+  game_name: 'Spielbezeichnung'
+  game_group_count: 'Anzahl Gruppen'
+  group_name: 'Gruppenname'
+  group: 'Gruppe'
+  password: 'Passwort'
+  materials: 'Spielmaterialien'
+  supervisors: 'Spielleiter'
+  supervisor: 'Spielleiter'
+  logout: 'Ausloggen'
+  current_round: 'Aktuelle Runde'
+  admin:
+    show:
+      title: 'Soil Administration'
+      games: 'Spiele'
+  games:
+    index:
+      title: 'Soil Spielverwaltung'

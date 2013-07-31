@@ -2,6 +2,7 @@ class RunningCost < ActiveRecord::Base
   belongs_to :expense
 
   after_initialize do
+    self.sum ||= 0
     self.organic_control ||= 0
     self.fertilize ||= 0
     self.pesticide ||= 0

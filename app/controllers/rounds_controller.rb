@@ -10,7 +10,6 @@ class RoundsController < ApplicationController
     #@round.calculate_attributes(Round.all) if @round.number
   end
 
-  # GET /groups/1.json
   def show
     @round = Round.find_by_id(params[:id])
   end
@@ -30,7 +29,7 @@ class RoundsController < ApplicationController
     @round = Round.find_by_id(params[:id])
     respond_to do |format|
       if @round.update_attributes(round_params)
-        next_round = @round.group.rounds.create
+        next_round = @round.player.rounds.create
         next_round.calculate_attributes
         if next_round.save
           format.json { head :no_content }

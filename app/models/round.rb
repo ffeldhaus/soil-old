@@ -1,5 +1,5 @@
 class Round < ActiveRecord::Base
-  belongs_to :group
+  belongs_to :player
   has_one :field, :autosave => true, :dependent => :destroy
   has_one :decision, :autosave => true, :dependent => :destroy
   has_one :result, :autosave => true, :dependent => :destroy
@@ -71,24 +71,24 @@ class Round < ActiveRecord::Base
                   'Brachland' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'},
                   'Tiere' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'}}
 
-  SEED_FIELDBEAN = {false => 120, true => 144}
-  SEED_BARLEY = {false => 68, true => 85}
-  SEED_OAT = {false => 60, true => 75}
-  SEED_POTATOE = {false => 110, true => 133}
-  SEED_CORN = {false => 70, true => 84}
-  SEED_RYE = {false => 76, true => 95}
-  SEED_WHEAT = {false => 72, true => 90}
-  SEED_BEET = {false => 120, true => 144}
+  SEED_FIELDBEAN = {false => -120, true => -144}
+  SEED_BARLEY = {false => -68, true => -85}
+  SEED_OAT = {false => -60, true => -75}
+  SEED_POTATOE = {false => -110, true => -133}
+  SEED_CORN = {false => -70, true => -84}
+  SEED_RYE = {false => -76, true => -95}
+  SEED_WHEAT = {false => -72, true => -90}
+  SEED_BEET = {false => -120, true => -144}
 
-  INVESTMENT_ANIMALS = 1000
-  INVESTMENT_MACHINES = 1000
+  INVESTMENT_ANIMALS = -1000
+  INVESTMENT_MACHINES = -1000
 
   RUNNINGCOSTS_ORGANIC_CONTROL = 200
   RUNNINGCOSTS_FERTILIZE = 50
   RUNNINGCOSTS_PESTICIDE = 50
   RUNNINGCOSTS_ORGANISMS = 100
   RUNNINGCOSTS_ANIMALS = 200
-  RUNNINGCOSTS_BASE = {false => 1000, true => 1300}
+  RUNNINGCOSTS_BASE = {false => -1000, true => -1300}
 
   HARVEST_FIELDBEAN = {false => 18, true => 21}
   HARVEST_BARLEY = {false => 13, true => 14.5}
@@ -100,14 +100,14 @@ class Round < ActiveRecord::Base
   HARVEST_BEET = {false => 3, true => 4}
 
   after_initialize do
-    self.number ||= self.group.game.nextRound
+    self.number ||= self.player.game.nextRound
     self.create_decision(:machines => '0', :organic => false, :pesticide => false, :fertilize => false, :organisms => false) unless self.decision
     self.create_result(:machines => MACHINES, :organic => 'false', :weather => 'Normal', :vermin => 'Keine') unless self.result
     self.create_field unless self.field
   end
 
   def calculate_attributes
-    rounds = self.group.rounds
+    rounds = self.player.rounds
     # self is the new round,
     # the current round is the round before it
     # the previous round is the round before the current one
@@ -138,9 +138,9 @@ class Round < ActiveRecord::Base
       end
     end
     ### weather
-    self.result.weather = self.group.game.weather[self.number-2]
+    self.result.weather = self.player.game.weather[self.number-2]
     ### vermin
-    self.result.vermin = self.group.game.vermin[self.number-2]
+    self.result.vermin = self.player.game.vermin[self.number-2]
 
     self.field.parcels.each do |new_parcel|
       current_parcel = current_round.field.parcels.find_by_number(new_parcel.number)
@@ -299,7 +299,6 @@ class Round < ActiveRecord::Base
     ## seeds
     ### fieldbean
     self.result.expense.seed.fieldbean = current_round.field.parcels.find_all_by_plantation('Ackerbohne').count * SEED_FIELDBEAN[current_round.decision.organic]
-    puts "fieldbean " + self.result.expense.seed.fieldbean.to_s
     ### barley
     self.result.expense.seed.barley = current_round.field.parcels.find_all_by_plantation('Gerste').count * SEED_BARLEY[current_round.decision.organic]
     ### oat
@@ -314,6 +313,8 @@ class Round < ActiveRecord::Base
     self.result.expense.seed.wheat = current_round.field.parcels.find_all_by_plantation('Weizen').count * SEED_WHEAT[current_round.decision.organic]
     ### beet
     self.result.expense.seed.beet = current_round.field.parcels.find_all_by_plantation('Zuckerruebe').count * SEED_BEET[current_round.decision.organic]
+    ### seed sum
+    self.result.expense.seed.sum = self.result.expense.seed.fieldbean + self.result.expense.seed.barley + self.result.expense.seed.oat + self.result.expense.seed.potatoe + self.result.expense.seed.corn + self.result.expense.seed.rye + self.result.expense.seed.wheat + self.result.expense.seed.beet
     ## save seeds
     self.result.expense.seed.save
     ## investments
@@ -321,6 +322,9 @@ class Round < ActiveRecord::Base
     self.result.expense.investment.animals = animals * INVESTMENT_ANIMALS
     ### machines
     self.result.expense.investment.machines = 0.1 * current_round.decision.machines * INVESTMENT_MACHINES
+    ### sum
+    self.result.expense.investment.sum = self.result.expense.investment.animals +
+        self.result.expense.investment.machines
     ## save investments
     self.result.expense.investment.save
     ## running costs
@@ -336,25 +340,19 @@ class Round < ActiveRecord::Base
     self.result.expense.running_cost.animals = animals * RUNNINGCOSTS_ANIMALS
     ### basic cost
     self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic]
-    ## save running costs
-    self.result.expense.running_cost.save
-    # sum up expenses and save them
-    self.result.expense.sum = self.result.expense.seed.fieldbean +
-        self.result.expense.seed.barley +
-        self.result.expense.seed.oat +
-        self.result.expense.seed.potatoe +
-        self.result.expense.seed.corn +
-        self.result.expense.seed.rye +
-        self.result.expense.seed.wheat +
-        self.result.expense.seed.beet +
-        self.result.expense.investment.animals +
-        self.result.expense.investment.machines +
-        self.result.expense.running_cost.organic_control +
+    ### sum
+    self.result.expense.running_cost.sum = self.result.expense.running_cost.organic_control +
         self.result.expense.running_cost.fertilize +
         self.result.expense.running_cost.pesticide +
         self.result.expense.running_cost.organisms +
         self.result.expense.running_cost.animals +
         self.result.expense.running_cost.base
+    ## save running costs
+    self.result.expense.running_cost.save
+    # sum up expenses and save them
+    self.result.expense.sum = self.result.expense.seed.sum +
+        self.result.expense.investment.sum +
+        self.result.expense.running_cost.sum
     self.result.expense.save
     ## harvest
     self.save
@@ -375,9 +373,8 @@ class Round < ActiveRecord::Base
     self.result.income.harvest.wheat = self.field.parcels.find_all_by_plantation('Weizen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_WHEAT[self.result.organic]
     ### beet
     self.result.income.harvest.beet = self.field.parcels.find_all_by_plantation('Zuckerruebe').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BEET[self.result.organic]
-    ## save harvest and income
-    self.result.income.harvest.save
-    self.result.income.sum = self.result.income.harvest.fieldbean +
+    ### sum
+    self.result.income.harvest.sum = self.result.income.harvest.fieldbean +
         self.result.income.harvest.barley +
         self.result.income.harvest.oat +
         self.result.income.harvest.potatoe +
@@ -385,9 +382,12 @@ class Round < ActiveRecord::Base
         self.result.income.harvest.rye +
         self.result.income.harvest.wheat +
         self.result.income.harvest.beet
+    ## save harvest and income
+    self.result.income.harvest.save
+    self.result.income.sum = self.result.income.harvest.sum
     self.result.income.save
     ## profit
-    self.result.profit = self.result.income.sum - self.result.expense.sum
+    self.result.profit = self.result.income.sum + self.result.expense.sum
     ## capital
     self.result.capital = current_round.result.capital + self.result.profit
   end

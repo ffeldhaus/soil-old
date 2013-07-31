@@ -1,7 +1,50 @@
-<div class="span12">
-  <div>
-    <pagination num-pages="group.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="getRound(page)" ></pagination>
-  </div>
-  <div ng-view>
+<body ng-controller="SoilCtrl">
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="">Soil</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+            <nav-location name="field" show="$parent.show" visible="show!='finance'"
+                          href="#/field">Spielfeld
+            </nav-location>
+            <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
+                          href="#/field">Fruchtfolge
+            </nav-location>
+            <nav-location name="soil" show="$parent.show" visible="show=='soil'"
+                          href="#/field">Bodenqualität
+            </nav-location>
+            <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
+                          href="#/field">Mineralstoffe
+            </nav-location>
+            <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
+                          href="#/field">Ernteertrag
+            </nav-location>
+            <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
+        </ul>
+        <a ng-click="endRound()" class="btn pull-right" ng-disabled="currentRound != rounds.length" href="#/endRound">Runde
+          abschicken &raquo;</a>
+      </div>
+    </div>
   </div>
 </div>
+
+<div id="main" role="main">
+  <div class="container" ng-init="getPlayer(<%= current_user.id if current_user %>)">
+    <div class="content row">
+      <div class="span12">
+        <%= render 'layouts/messages' %>
+        <div>
+          <pagination num-pages="player.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="'Vorherige Runde'" next-text="'Nächste Runde'" on-select-page="getRound(page)"></pagination>
+        </div>
+        <div ng-view>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of .container -->
+</div>
+<!-- end of #main -->
+
+</body>

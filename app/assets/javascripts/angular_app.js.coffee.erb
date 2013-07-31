@@ -1,14 +1,24 @@
 'use strict'
 
 angular
-    .module('soil', ['ui', 'ui.bootstrap', 'ngResource', 'soil.filters', 'soil.directives', 'soil.services'])
-    .config ['$routeProvider', ($routeProvider) ->
+    .module('soil', ['ui', 'ui.bootstrap', 'ngResource', 'soil.filters', 'soil.directives', 'soil.services', 'ui.slider'])
+    .config ($routeProvider) ->
         $routeProvider
             .when('/field',
                   templateUrl: '<%= asset_path('field.html') %>')
             .when('/finance',
                   templateUrl: '<%= asset_path('finance.html') %>')
+            .when('/games',
+                templateUrl: '<%= asset_path('games.html') %>')
+            .when('/supervisors',
+                templateUrl: '<%= asset_path('supervisors.html') %>')
+            .when('/materials',
+                templateUrl: '<%= asset_path('materials.html') %>')
+            .when('/admin',
+                redirectTo: '/supervisors')
             .when('/endRound',
                   templateUrl: '<%= asset_path('endRound.html') %>')
             .otherwise(redirectTo: '/field')
-    ]
+    .config ($httpProvider) ->
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+        $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')

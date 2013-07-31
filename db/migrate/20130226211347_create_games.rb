@@ -1,9 +1,9 @@
 class CreateGames < ActiveRecord::Migration
   def change
     create_table :games do |t|
-      t.string :title
-      t.string :weather
-      t.string :vermin
+      t.integer :current_round
+      t.string :name
+      t.references :supervisor, index: true
 
       t.timestamps
     end

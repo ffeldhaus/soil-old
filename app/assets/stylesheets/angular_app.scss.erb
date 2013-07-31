@@ -4,11 +4,61 @@ body {
     background-attachment: fixed;
     background-position: bottom;
     background-repeat: no-repeat;
-    padding-top: 50px;
 }
 
-td {
-    text-align: right;
+red {
+    color: #F00;
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: auto;
+}
+
+* {
+    -webkit-overflow-scrolling: touch;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+input {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: -moz-text;
+    -o-user-select: text;
+    user-select: text;
+}
+
+li {
+    cursor: pointer;
+}
+
+.accordion-body {
+    cursor: default;
+}
+
+.accordion-heading {
+    cursor: pointer;
+}
+
+.accordion-heading .accordion-toggle {
+    padding: 4px 15px;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 10px;
+}
+
+tr {
+    text-align: left;
 }
 
 .container {
@@ -16,24 +66,24 @@ td {
 }
 
 .pagination {
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
 }
 
 .pagination ul {
-    background-color: #CCC;
+    background-color: rgba(30, 30, 30, 0.5);
+    font-size: 120%;
 }
 
-.login-form {
-    margin-left: 65px;
-    background-color: #fff;
-    padding: 20px;
-    margin: 0 -20px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+.pagination a {
+    color: #CCC;
+}
+
+.pagination a:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.pagination .active a {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 legend {
@@ -106,49 +156,6 @@ legend {
     padding-bottom: 19%;
 }
 
-body {
-    padding: 50px;
-    background-color: #ececec;
-}
-
-/* beta banner */
-#corner-banner {
-    z-index: 10000;
-    position: absolute;
-    left: -65px;
-    top: 25px;
-    display: block;
-    width: 200px;
-    background: #FA0; /* old browsers */
-    background: -moz-linear-gradient(top, #FA0 0%, #FD0 100%); /* firefox */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FA0), color-stop(100%, #FD0)); /* webkit */
-    text-align: center;
-    font-size: 11px;
-    line-height: 13px;
-    padding: 3px 3px 4px 3px;
-    text-shadow: #000 1px 1px 0;
-
-    -moz-transform: rotate(-45deg); /* FF3.5+ */
-    -o-transform: rotate(-45deg); /* Opera 10.5 */
-    -webkit-transform: rotate(-45deg); /* Saf3.1+, Chrome */
-    transform: rotate(-45deg); /* CSS3 (for when it gets supported) */
-
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
-    -o-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
-}
-
-#corner-banner em {
-    letter-spacing: 1px;
-    font-style: normal;
-    font-size: 18px !important;
-    color: #fff;
-    text-transform: uppercase;
-    line-height: 12px;
-    display: block;
-}
-
 .ui-show {
     color: blue;
 }
@@ -187,23 +194,91 @@ body {
 }
 
 .finance {
-    width: 100%;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 1%;
+    min-width: 50%;
+    display: table;
+    margin: 0 auto;
+    margin-bottom: 100px;
 }
 
 .finance table {
-    background: white;
-    width: 100%;
+    width: 98%;
+}
+
+.finance td {
+    width: 100px;
+    text-align: right;
+}
+
+.accordion {
+    margin-bottom: 0px;
+}
+
+.accordion-group {
+    overflow: hidden;
+}
+
+.accordion-heading {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+}
+
+.accordion-body {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.accordion-heading a:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: #777;
+}
+
+.accordion-inner, .finance .accordion-heading .accordion-toggle {
+    padding-right: 0;
 }
 
 .navbar {
     font-size: 120%;
 }
 
+.navbar .brand {
+    color: #FFF;
+}
+
+.navbar .brand:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.navbar .navbar-inner {
+    background-color: rgba(50, 50, 100, 0.5);
+    background-image: none;
+}
+
+.navbar .nav li a {
+    color: #DDD;
+}
+
+.navbar .nav .active a {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #eeeeee;
+}
+
+.navbar .nav .active a:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.navbar .nav li a:active {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.navbar .nav li a:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .navbar a {
     font-size: 120%;
+}
+
+.navbar .btn {
+    font-size: 100%;
 }
 
 .center {
@@ -270,4 +345,51 @@ body {
 
 .sehr_niedrig, .schlecht {
     background-image: url(<%= image_path 'sehr_niedrig.jpg' %>) !important;
+}
+
+.supervisor th, .admin th {
+    padding-right: 10px;
+}
+
+.supervisor, .admin {
+    min-width: 50%;
+    display: table;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
+.frontpage {
+    margin: 0 auto;
+    height:200px;
+    background-color: rgba(255,255,255,0.6)
+}
+
+#main {
+    margin-top: 45px;
+}
+
+.ui-slider {
+    width: 80%;
+    float: left;
+    margin-right: 20px;
+}
+
+.form-align {
+    padding-top: 5px;
+}
+
+form {
+    margin: 0;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+.navbar .nav > li > a, .navbar .brand {
+    text-shadow: none;
+}
+
+.navbar .nav>li>a:focus, .navbar .nav>li>a:hover {
+    color: #DDD;
 }

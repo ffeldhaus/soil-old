@@ -2,6 +2,7 @@ class Seed < ActiveRecord::Base
   belongs_to :expense
 
   after_initialize do
+    self.sum ||= 0
     self.fieldbean ||= 0
     self.barley ||= 0
     self.oat ||= 0

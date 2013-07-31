@@ -1,12 +1,16 @@
 Soil::Application.routes.draw do
-  get 'signup', to: 'groups#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'admin', to: 'admin#index', as: 'admin'
+  get 'games', to: 'games#index', as: 'games'
+  get 'sessions', to: 'sessions#new'
 
+  resources :supervisors
   resources :games
   resources :sessions
-  resources :groups
+  resources :players
   resources :rounds
+  resources :materials
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
