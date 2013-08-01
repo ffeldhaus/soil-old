@@ -29,7 +29,6 @@ class GamesController < ApplicationController
   def create
     @game = Game.new({:name => game_params['name']})
     @game.save!
-    puts "saved"
     game_params['players'].each do |player|
       puts player['name']
       puts player['password']
