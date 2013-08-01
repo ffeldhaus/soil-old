@@ -63,6 +63,8 @@ GEM
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
+    ngmin-rails (0.4.0)
+      rails (>= 3.1)
     pg (0.16.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -128,6 +130,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json_builder
+  ngmin-rails
   pg
   rails (>= 4.0.0)
   rails_12factor
