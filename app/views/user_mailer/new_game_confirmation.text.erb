@@ -1,1 +1,6 @@
-Informationen zum Spiel
+Folgende Spieler wurden für das Spiel <%= @game.name %> angelegt:
+
+<% @game.players.each do |player| %>
+Spielername: <%= player.name %>
+Passwort: <%= player.password %>
+<% end %>
