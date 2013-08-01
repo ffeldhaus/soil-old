@@ -17,6 +17,7 @@ de:
   supervisor: 'Spielleiter'
   logout: 'Ausloggen'
   current_round: 'Aktuelle Runde'
+  email_new_game_subject: 'Informationen zum Soil Spiel'
   admin:
     show:
       title: 'Soil Administration'

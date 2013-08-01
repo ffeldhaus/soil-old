@@ -40,6 +40,7 @@ function GamesCtrl($scope, $resource, $log, $location) {
     $scope.games = Games.query();
     $scope.game = {};
     $scope.game.name = '';
+    $scope.game.supervisor_id = null;
 
     function Player() {
         this.name = '';

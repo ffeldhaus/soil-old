@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_filter :authorize_player, only: [:show]
+  before_filter :authorize_supervisor, only: [:index]
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   # GET /games
@@ -27,20 +28,31 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new({:name => game_params['name']})
-    @game.save!
-    game_params['players'].each do |player|
-      puts player['name']
-      puts player['password']
-      puts @game.players.create(:name => player['name'], :password => player['password'], :password_confirmation => player['password'])
-    end
+    @game = Game.new({:name => game_params['name'],:supervisor_id => game_params['supervisor_id']})
 
-    if @game.save
+    if @game.save!
       head :no_content
     else
+      @game.destroy!
       puts @game.errors.full_messages
       render json: @game.errors, status: :unprocessable_entity
     end
+
+    game_params['players'].each do |player|
+      @game.players.create(:name => player['name'], :password => player['password'], :password_confirmation => player['password'])
+      if @game.save!
+        head :no_content
+      else
+        @game.destroy!
+        puts @game.errors.full_messages
+        render json: @game.errors, status: :unprocessable_entity
+      end
+    end
+
+    puts game_params
+    @supervisor = Supervisor.find_by_id(game_params['supervisor_id'])
+    puts @supervisor
+    UserMailer.new_game_confirmation(@supervisor,@game).deliver
 
   end
 
@@ -82,6 +94,18 @@ class GamesController < ApplicationController
     end
   end
 
+  def authorize_supervisor
+    unless supervisor?
+      if admin?
+        redirect_to admin_url, :notice => I18n.t('access_denied')
+      elsif player?
+        redirect_to root_url, :notice => I18n.t('access_denied')
+      else
+        redirect_to login_url, :notice => I18n.t('access_denied')
+      end
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_game
     @game = Game.find(params[:id])
@@ -89,7 +113,8 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.permit(:name, :players => [ :name, :password] )
+    puts params
+    params.permit(:name, :supervisor_id, :players => [ :name, :password] )
   end
 
 end

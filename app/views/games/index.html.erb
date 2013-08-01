@@ -27,7 +27,7 @@
     <div class="content row">
       <div class="span12">
         <%= render 'layouts/messages' %>
-        <div ng-view>
+        <div ng-view ng-init="game.supervisor_id=<%= session[:supervisor_id] %>">
         </div>
       </div>
     </div>
