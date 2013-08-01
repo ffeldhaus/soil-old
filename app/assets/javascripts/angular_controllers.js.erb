@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function AdminCtrl($scope, $resource, $log, $location, $rootScope) {
+function AdminCtrl($scope, $resource, $log, $location) {
     var Games = $resource('/games/:game_id', {game_id: '@id'});
     var Supervisors = $resource('/supervisors/:supervisor_id', {supervisor_id: '@id'});
 
@@ -33,9 +33,9 @@ function AdminCtrl($scope, $resource, $log, $location, $rootScope) {
     };
 }
 
-AdminCtrl.$inject = ['$scope', '$resource', '$log', '$location', '$rootScope'];
+AdminCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
-function GamesCtrl($scope, $resource, $log, $location, $rootScope) {
+function GamesCtrl($scope, $resource, $log, $location) {
     var Games = $resource('/games/:game_id', {game_id: '@id'});
     $scope.games = Games.query();
     $scope.game = {};
@@ -69,7 +69,7 @@ function GamesCtrl($scope, $resource, $log, $location, $rootScope) {
 
 }
 
-GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location', '$rootScope'];
+GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
 function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
@@ -171,7 +171,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
 
 // the dialog is injected in the specified controller
-function SelectPlantationCtrl($scope, dialog) {
+function SelectPlantationCtrl($scope, $dialog) {
     $scope.plantations = [
         'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
@@ -181,14 +181,14 @@ function SelectPlantationCtrl($scope, dialog) {
     }
 }
 
-SelectPlantationCtrl.$inject = ['$scope', 'dialog'];
+SelectPlantationCtrl.$inject = ['$scope', '$dialog'];
 
 // the dialog is injected in the specified controller
-function EndRoundCtrl($scope, dialog, startNewRound) {
+function EndRoundCtrl($scope, $dialog, startNewRound) {
     $scope.startNewRound = startNewRound;
     $scope.close = function (result) {
         dialog.close(result);
     };
 }
 
-EndRoundCtrl.$inject = ['$scope', 'dialog'];
+EndRoundCtrl.$inject = ['$scope', '$dialog', 'startNewRound'];
