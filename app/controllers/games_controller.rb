@@ -73,9 +73,9 @@ class GamesController < ApplicationController
   def authorize_player
     unless player?
       if admin?
-      redirect_to admin_url, :notice => I18n.t('access_denied')
+        redirect_to admin_url, :notice => I18n.t('access_denied')
       elsif supervisor?
-        redirect_to supervisor_url, :notice => I18n.t('access_denied')
+        redirect_to games_url, :notice => I18n.t('access_denied')
       else
         redirect_to login_url, :notice => I18n.t('access_denied')
       end
