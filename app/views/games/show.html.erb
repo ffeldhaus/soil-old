@@ -31,12 +31,12 @@
 </div>
 
 <div id="main" role="main">
-  <div class="container" ng-init="getPlayer(<%= current_user.id if current_user %>)">
+  <div class="container" ng-init="player_id=<%= current_user.game_id %>;getGame(<%= current_user.game_id %>);">
     <div class="content row">
       <div class="span12">
         <%= render 'layouts/messages' %>
         <div>
-          <pagination num-pages="player.rounds.length" current-page="currentRound" class="pagination-centered" previous-text="'Vorherige Runde'" next-text="'Nächste Runde'" on-select-page="getRound(page)"></pagination>
+          <pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="'Vorherige Runde'" next-text="'Nächste Runde'" on-select-page="selectedRound=page"></pagination>
         </div>
         <div ng-view>
         </div>

@@ -20,6 +20,3 @@ game.players.create(:name => 'Gruppe2', :seedcapital => SEEDCAPITAL, :password =
 #game.players.create(:name => 'Gruppe3', :seedcapital => SEEDCAPITAL, :password => 'tangens')
 #game.players.create(:name => 'Gruppe4', :seedcapital => SEEDCAPITAL, :password => 'sekans')
 game.save!
-game.players.each do |player|
-  player.rounds.create(:number => 1)
-end

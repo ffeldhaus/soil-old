@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_login
 
+  def default_serializer_options
+    {root: false}
+  end
+
   private
 
   def current_user

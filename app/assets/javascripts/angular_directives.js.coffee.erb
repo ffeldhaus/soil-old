@@ -29,13 +29,13 @@ angular.module("soil.directives", []).directive("navLocation", ['$location', ($l
                 idx = $(this).index()
                 index: idx
             ).get()
-            if scope.currentRound == scope.rounds.length
+            if scope.selectedRound == scope.player.rounds.length
                 d = $dialog.dialog(scope.opts)
                 d.open().then (plantation) ->
                     if plantation
                         i = 0
                         while i < selected.length
-                            parcels = $filter('orderBy')(scope.rounds[scope.currentRound - 1].field_attributes.parcels_attributes,
+                            parcels = $filter('orderBy')(scope.player.rounds[scope.selectedRound - 1].field.parcels,
                                     'number')
                             parcels[selected[i].index].plantation = plantation
                             i++

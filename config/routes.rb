@@ -11,6 +11,7 @@ Soil::Application.routes.draw do
   resources :players
   resources :rounds
   resources :materials
+  resources :round_tracker
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -16,6 +16,13 @@ class GamesController < ApplicationController
 
   end
 
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @game, root: false }
+    end
+  end
+
   # GET /games/new
   def new
     @game = Game.new

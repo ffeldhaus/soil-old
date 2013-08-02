@@ -7,4 +7,8 @@ class Player < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_length_of :password, :in => 6..20, :on => :create
   validates :name, :presence => true, :length => {:in => 4..64}
+
+  after_create do
+    @first_round ||= self.rounds.create(:number => 1)
+  end
 end

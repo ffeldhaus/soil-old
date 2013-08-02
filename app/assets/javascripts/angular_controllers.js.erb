@@ -74,23 +74,26 @@ GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
 function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 
-    $scope.rounds = [];
-
     var Players = $resource('/players/:player_id', {player_id: '@id'});
+    var Games = $resource('/games/:game_id', {game_id: '@id'});
     var Rounds = $resource('/rounds/:round_id', {round_id: '@id'}, { update: {method: 'PUT'}});
 
-    $scope.getPlayers = function () {
-        $scope.players = Players.query()
-    }
+    $scope.selectedRound = 1;
+    $scope.player_id = null;
 
-    $scope.getPlayer = function (player) {
-        $log.debug("Getting player with number: " + player)
-        $scope.player = Players.get({player_id: player}, function () {
-            $log.debug('Inside getPlayer')
-            $scope.currentRound = $scope.player.rounds[$scope.player.rounds.length - 1].number;
-            $scope.getRound($scope.player.rounds.length);
-            if ($scope.player.wait_for_other_players) $scope.wait_for_other_players();
+    $scope.getGame = function (game) {
+        $log.debug("Getting game with id: " + game);
+        Games.get({game_id: game}, function(response) {
+            $scope.game = response;
+            $scope.player = $scope.game.players.filter(function (player) {
+                return player.id == $scope.player_id;
+            })[0];
+            $log.debug($scope.player);
         });
+
+        // $scope.currentRound = $scope.player.rounds[$scope.player.rounds.length - 1].number;
+        // $scope.getRound($scope.player.rounds.length);
+        // if ($scope.player.wait_for_other_players) $scope.wait_for_other_players();
     }
 
     $scope.getRound = function (round) {
@@ -172,7 +175,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
 SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
 
 // the dialog is injected in the specified controller
-function SelectPlantationCtrl($scope, $dialog) {
+function SelectPlantationCtrl($scope, $log, dialog) {
     $scope.plantations = [
         'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
@@ -182,14 +185,14 @@ function SelectPlantationCtrl($scope, $dialog) {
     }
 }
 
-SelectPlantationCtrl.$inject = ['$scope', '$dialog'];
+SelectPlantationCtrl.$inject = ['$scope', '$log', 'dialog'];
 
 // the dialog is injected in the specified controller
-//function EndRoundCtrl($scope, $dialog, startNewRound) {
-//    $scope.startNewRound = startNewRound;
-//    $scope.close = function (result) {
-//        dialog.close(result);
-//    };
-//}
-//
-//EndRoundCtrl.$inject = ['$scope', '$dialog', 'startNewRound'];
+function EndRoundCtrl($scope, dialog, startNewRound) {
+    $scope.startNewRound = startNewRound;
+    $scope.close = function (result) {
+        dialog.close(result);
+    };
+}
+
+EndRoundCtrl.$inject = ['$scope', 'dialog', 'startNewRound'];

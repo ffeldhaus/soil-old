@@ -1,5 +1,6 @@
 class RoundsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:update]
+  before_action :set_round, only: [:show, :edit, :update, :destroy]
+
 
   def index
     @round = Round.all
@@ -11,7 +12,7 @@ class RoundsController < ApplicationController
   end
 
   def show
-    @round = Round.find_by_id(params[:id])
+    render json: @round, root: false
   end
 
   def create
@@ -43,6 +44,11 @@ class RoundsController < ApplicationController
   end
 
   private
+
+  def set_round
+    @round = Round.find_by_id(params[:id])
+  end
+
   def round_params
     params.permit(:number, field_attributes: [:id, parcels_attributes: [:id, :nutrition, :soil, :cropsequence, :harvest, :plantation]], decision_attributes: [:id, :machines, :organic, :pesticide, :fertilize, :organisms])
   end
