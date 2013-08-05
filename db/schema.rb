@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20130731151717) do
   create_table "games", force: true do |t|
     t.integer  "current_round"
     t.string   "name"
+    t.string   "weather"
+    t.string   "vermin"
     t.integer  "supervisor_id"
     t.datetime "created_at"
     t.datetime "updated_at"

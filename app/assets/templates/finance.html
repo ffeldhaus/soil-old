@@ -1,7 +1,6 @@
 <div class="finance scrollable">
-{{(selectedRound!='1')f}}
 <accordion close-others="false">
-<accordion-group ng-show="(selectedRound!='1')">
+<accordion-group ui-if="selectedRound!='1'">
     <accordion-heading>Getroffene Entscheidungen aus der vorherigen Runde</accordion-heading>
     <table>
         <tr>
@@ -36,7 +35,7 @@
         </tr>
     </table>
 </accordion-group>
-<accordion-group ng-show="selectedRound!='1'">
+<accordion-group ui-if="selectedRound!='1'">
     <accordion-heading>Übersicht</accordion-heading>
     <table>
         <tr>
@@ -66,7 +65,7 @@
         </tr>
     </table>
 </accordion-group>
-<accordion-group  ng-show="selectedRound!='1'">
+<accordion-group  ui-if="selectedRound!='1'">
     <accordion-heading>
         <table>
             <tr>
@@ -225,7 +224,7 @@
         </accordion-group>
     </accordion>
 </accordion-group>
-<accordion-group  ng-show="selectedRound!='1'">
+<accordion-group  ui-if="selectedRound!='1'">
     <accordion-heading>
         <table>
             <tr>
@@ -305,7 +304,7 @@
         </accordion>
     </accordion-body>
 </accordion-group>
-<div class="accordion-group">
+<div class="accordion-group" ui-if="selectedRound!='1'">
     <div class="accordion-heading">
         <div class="accordion-toggle">
             <table>

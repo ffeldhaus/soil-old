@@ -86,6 +86,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
             $scope.player = $scope.game.players.filter(function (player) {
                 return player.id == $scope.player_id;
             })[0];
+            $scope.selectedRound = $scope.player.rounds.length;
         });
 
         // $scope.currentRound = $scope.player.rounds[$scope.player.rounds.length - 1].number;

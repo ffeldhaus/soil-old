@@ -1,3 +1,3 @@
 class InvestmentSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :sum, :animals, :machines
 end
