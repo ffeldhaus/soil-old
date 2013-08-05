@@ -3,40 +3,44 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="">Soil</a>
+      <div class="dropdown pull-left">
+        <a class="brand dropdown-toggle" href="#" role="button">Soil <b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
       <div class="nav-collapse">
         <ul class="nav">
-            <nav-location name="field" show="$parent.show" visible="show!='finance'"
-                          href="#/field">Spielfeld
-            </nav-location>
-            <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
-                          href="#/field">Fruchtfolge
-            </nav-location>
-            <nav-location name="soil" show="$parent.show" visible="show=='soil'"
-                          href="#/field">Bodenqualität
-            </nav-location>
-            <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
-                          href="#/field">Mineralstoffe
-            </nav-location>
-            <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
-                          href="#/field">Ernteertrag
-            </nav-location>
-            <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
+          <nav-location name="field" show="$parent.show" visible="show!='finance'"
+                        href="#/field">Spielfeld
+          </nav-location>
+          <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
+                        href="#/field">Fruchtfolge
+          </nav-location>
+          <nav-location name="soil" show="$parent.show" visible="show=='soil'"
+                        href="#/field">Bodenqualität
+          </nav-location>
+          <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
+                        href="#/field">Mineralstoffe
+          </nav-location>
+          <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
+                        href="#/field">Ernteertrag
+          </nav-location>
+          <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
         </ul>
-        <a ng-click="endRound()" class="btn pull-right" ng-disabled="currentRound != rounds.length" href="#/endRound">Runde
-          abschicken &raquo;</a>
+        <a ng-click="endRound()" class="btn pull-right" ng-disabled="selectedRound != player.rounds.length" href="#">Runde abschicken &raquo;</a>
       </div>
     </div>
   </div>
 </div>
 
 <div id="main" role="main">
-  <div class="container" ng-init="player_id=<%= current_user.game_id %>;getGame(<%= current_user.game_id %>);">
+  <div class="container" ng-init="player_id=<%= current_user.id %>;getGame(<%= current_user.game_id %>);">
     <div class="content row">
       <div class="span12">
         <%= render 'layouts/messages' %>
         <div>
-          <pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="'Vorherige Runde'" next-text="'Nächste Runde'" on-select-page="selectedRound=page"></pagination>
+          <pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="selectedRound=page"></pagination>
         </div>
         <div ng-view>
         </div>

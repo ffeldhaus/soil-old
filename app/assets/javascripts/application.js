@@ -15,6 +15,5 @@
 //= require unstable/angular
 //= require unstable/angular-resource
 //= require angular-ui
-//= require angular-ui-bootstrap-tpls
 //= require turbolinks
 //= require_tree .

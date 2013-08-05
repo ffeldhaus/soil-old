@@ -1,72 +1,80 @@
-<div class="endRound">
+<div class="modal-header">
+  <h2>Runde beenden<button ng-click="close()" class="close pull-right">&times;</button></h2>
+</div>
+<div class="modal-body">
+  <div>
     <div style="position: relative;float: left;width: 48%;">
-        <table cellpadding="5px" >
-            <tr>
-                <th>Konventioneller Dünger</th>
-                <td>
-                    <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize}">Ja
-                        </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize=false" type="button" class="btn" value="false"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.fertilize}">Nein
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Pestizide</th>
-                <td>
-                    <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide}">Ja
-                        </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.pesticide}">Nein
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Nützlinge</th>
-                <td>
-                    <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms}">Ja
-                        </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.organisms}">Nein
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Maschineneinsatz steigern</th>
-                <td>
-                    <select ng-model="$parent.rounds[$parent.currentRound - 1].decision_attributes.machines" ng-options="percent for percent in percentages"></select>
-                </td>
-            </tr>
-            <tr>
-                <th>Bio-Siegel</th>
-                <td>
-                    <div class="btn-group">
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organic=true" type="button" class="btn" value="true"
-                                ng-class="{active:$parent.rounds[$parent.currentRound - 1].decision_attributes.organic}">Ja
-                        </button>
-                        <button ng-click="$parent.rounds[$parent.currentRound - 1].decision_attributes.organic=false" type="button" class="btn" value="no"
-                                ng-class="{active:!$parent.rounds[$parent.currentRound - 1].decision_attributes.organic}">Nein
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </table>
+      <table cellpadding="5px">
+        <tr>
+          <th>Konventioneller Dünger</th>
+          <td>
+            <div class="btn-group">
+              <button ng-click="round.decision.fertilize=true" type="button" class="btn" value="true"
+                      ng-class="{active:round.decision.fertilize}">Ja
+              </button>
+              <button ng-click="round.decision.fertilize=false" type="button" class="btn" value="false"
+                      ng-class="{active:!round.decision.fertilize}">Nein
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>Pestizide</th>
+          <td>
+            <div class="btn-group">
+              <button ng-click="round.decision.pesticide=true" type="button" class="btn" value="true"
+                      ng-class="{active:round.decision.pesticide}">Ja
+              </button>
+              <button ng-click="round.decision.pesticide=false" type="button" class="btn" value="no"
+                      ng-class="{active:!round.decision.pesticide}">Nein
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>Nützlinge</th>
+          <td>
+            <div class="btn-group">
+              <button ng-click="round.decision.organisms=true" type="button" class="btn" value="true"
+                      ng-class="{active:round.decision.organisms}">Ja
+              </button>
+              <button ng-click="round.decision.organisms=false" type="button" class="btn" value="no"
+                      ng-class="{active:!round.decision.organisms}">Nein
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>Maschineneinsatz steigern</th>
+          <td>
+            <select ng-model="round.decision.machines" ng-options="percent for percent in percentages" selected="0%"></select>
+          </td>
+        </tr>
+        <tr>
+          <th>Bio-Siegel</th>
+          <td>
+            <div class="btn-group">
+              <button ng-click="round.decision.organic=true" type="button" class="btn" value="true"
+                      ng-class="{active:round.decision.organic}">Ja
+              </button>
+              <button ng-click="round.decision.organic=false" type="button" class="btn" value="no"
+                      ng-class="{active:!round.decision.organic}">Nein
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><a ng-click="submitRound()" class="btn btn-block btn-large">Abschicken</a></td>
+        </tr>
+      </table>
     </div>
-    <div style="position: relative;float: right;width: 50%" class="field">
-        <ol class="ui-selectable">
-          <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in rounds[currentRound - 1].field_attributes.parcels_attributes | orderBy:'number'"
-                class="ui-state-default">
-                {{parcel.plantation.charAt(0)}}
-            </li>
-        </ol>
+    <div style="position: relative;width: 50%;" class="field pull-right">
+      <ol class="ui-selectable">
+        <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)" ng-repeat="parcel in round.field.parcels | orderBy:'number'"
+            class="ui-state-default">
+          {{parcel.plantation.charAt(0)}}
+        </li>
+      </ol>
     </div>
+  </div>
 </div>

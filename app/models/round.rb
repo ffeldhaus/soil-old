@@ -4,8 +4,6 @@ class Round < ActiveRecord::Base
   has_one :decision, :autosave => true, :dependent => :destroy
   has_one :result, :autosave => true, :dependent => :destroy
 
-  accepts_nested_attributes_for :field, :decision
-
   MACHINE_AGING = 5
 
   SOIL = 80
@@ -100,14 +98,16 @@ class Round < ActiveRecord::Base
   HARVEST_BEET = {false => 3, true => 4}
 
   after_initialize do
-    self.number ||= self.player.game.nextRound
+    self.number ||= 1
     self.create_decision(:machines => '0', :organic => false, :pesticide => false, :fertilize => false, :organisms => false) unless self.decision
     self.create_result(:machines => MACHINES, :organic => 'false', :weather => 'Normal', :vermin => 'Keine') unless self.result
     self.create_field unless self.field
   end
 
   def calculate_attributes
+    puts self.player_id
     rounds = self.player.rounds
+    puts rounds
     # self is the new round,
     # the current round is the round before it
     # the previous round is the round before the current one

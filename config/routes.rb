@@ -6,12 +6,14 @@ Soil::Application.routes.draw do
   get 'sessions', to: 'sessions#new'
 
   resources :supervisors
-  resources :games
+  resources :games do
+    resources :players do
+      resources :rounds
+    end
+  end
+
   resources :sessions
-  resources :players
-  resources :rounds
   resources :materials
-  resources :round_tracker
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

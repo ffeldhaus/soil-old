@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   create_table "rounds", force: true do |t|
     t.integer  "number"
+    t.boolean  "submitted"
     t.integer  "player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
