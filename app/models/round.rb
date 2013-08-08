@@ -4,6 +4,8 @@ class Round < ActiveRecord::Base
   has_one :decision, :autosave => true, :dependent => :destroy
   has_one :result, :autosave => true, :dependent => :destroy
 
+  accepts_nested_attributes_for :field, :decision
+
   MACHINE_AGING = 5
 
   SOIL = 80
@@ -391,5 +393,6 @@ class Round < ActiveRecord::Base
     self.result.profit = self.result.income.sum + self.result.expense.sum
     ## capital
     self.result.capital = current_round.result.capital + self.result.profit
+    self.result.save
   end
 end

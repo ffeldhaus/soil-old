@@ -1,5 +1,18 @@
 <div class="finance scrollable">
 <accordion close-others="false">
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <div class="accordion-toggle">
+            <table>
+                <tr>
+                    <th></th>
+                    <td ng-repeat="player in game.players">{{player.name}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 <accordion-group ui-if="selectedRound!='1'">
     <accordion-heading>Getroffene Entscheidungen aus der vorherigen Runde</accordion-heading>
     <table>
@@ -65,7 +78,7 @@
         </tr>
     </table>
 </accordion-group>
-<accordion-group  ui-if="selectedRound!='1'">
+<accordion-group ui-if="selectedRound!='1'">
     <accordion-heading>
         <table>
             <tr>
@@ -224,7 +237,7 @@
         </accordion-group>
     </accordion>
 </accordion-group>
-<accordion-group  ui-if="selectedRound!='1'">
+<accordion-group ui-if="selectedRound!='1'">
     <accordion-heading>
         <table>
             <tr>
@@ -324,7 +337,8 @@
             <table>
                 <tr>
                     <th>Kapital</th>
-                    <td ng-repeat="player in game.players">{{(player.rounds | orderBy:'number')[selectedRound-1].result.capital | currency }}
+                    <td ng-repeat="player in game.players">{{(player.rounds |
+                        orderBy:'number')[selectedRound-1].result.capital | currency }}
                     </td>
                 </tr>
             </table>

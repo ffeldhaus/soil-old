@@ -15,10 +15,11 @@ class RoundsController < ApplicationController
   # PATCH/PUT /rounds/1.json
   def update
     @game = Game.find(params[:game_id])
-    @round = Round.find(params[:id])
 
-    if @round.update_attributes!(round_params)
-      puts @round.submitted
+    puts @round.field.parcels.to_json
+
+    if @round.update_attributes(round_params)
+      puts @round.field.parcels.to_json
       puts "before start new round"
       @game.start_new_round
       puts "after start new round"
@@ -33,8 +34,14 @@ class RoundsController < ApplicationController
   def set_round
     @round = Round.find_by_id(params[:id])
   end
+
   def round_params
     params["submitted"] = true
+    if params.has_key? :field
+      params[:field_attributes] = params.delete(:field)
+      params[:field_attributes][:parcels_attributes] = params[:field_attributes].delete(:parcels) if params[:field_attributes].has_key? :parcels
+    end
+    params[:decision_attributes] = params.delete(:decision) if params.has_key? :decision
     params.permit(:number, :submitted, field_attributes: [:id, parcels_attributes: [:id, :nutrition, :soil, :cropsequence, :harvest, :plantation]], decision_attributes: [:id, :machines, :organic, :pesticide, :fertilize, :organisms])
   end
 
