@@ -184,7 +184,11 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, chec
         var dialog = $dialog.dialog(opts);
 
         if ($scope.selectedRound == $scope.player.rounds.length && !$scope.gameOver && !$scope.round.submitted) {
-            dialog.open().then( function() {$scope.round.submitted=true});
+            dialog.open().then(function (submitted) {
+                if (submitted) {
+                    $scope.round.submitted = true;
+                }
+            });
         }
     }
 }
@@ -214,14 +218,14 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
     $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
     $scope.round = round;
     $scope.round.decision.machines = "0%";
-    $scope.close = function () {
-        dialog.close();
+    $scope.close = function (submitted) {
+        dialog.close(submitted);
     };
 
     $scope.submitRound = function () {
         var Rounds = $resource('/games/:game_id/players/:player_id/rounds/:round_id', {game_id: game.id, player_id: player.id, round_id: round.id}, { update: { method: 'PUT' } });
         Rounds.update($scope.round);
-        $scope.close();
+        $scope.close(true);
     }
 }
 
