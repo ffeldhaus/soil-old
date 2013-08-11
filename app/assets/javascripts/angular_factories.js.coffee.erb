@@ -1,0 +1,23 @@
+angular.module("soil.factories", []).factory 'checkForNewRounds', ($resource, $timeout, $filter, $log) ->
+    data =
+        rounds: []
+
+    scope = null
+
+    setScope = (s) ->
+        scope = s
+
+    query = ->
+        $log.debug 'In check Round'
+        $resource('/games/:game_id/players/:player_id/rounds/',
+            game_id: scope.game.id
+            player_id: scope.player.id
+        ).query (r) ->
+            $log.debug 'In query Round'
+            data.rounds = $filter('orderBy')(r, 'number')
+            $log.debug data.rounds
+            $timeout query, 5000
+
+    data: data,
+    setScope: setScope,
+    query: query

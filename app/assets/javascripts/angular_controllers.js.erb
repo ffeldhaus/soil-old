@@ -72,12 +72,14 @@ function GamesCtrl($scope, $resource, $log, $location) {
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
-function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
+function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout, checkForNewRounds) {
 
     var Games = $resource('/games/:game_id', {game_id: '@id'});
 
     $scope.selectedRound = 1;
     $scope.player_id = null;
+
+    $scope.checkForNewRounds = checkForNewRounds;
 
     $scope.getGame = function (game) {
         $log.debug("Getting game with id: " + game);
@@ -86,58 +88,12 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
             $scope.player = $scope.game.players.filter(function (player) {
                 return player.id == $scope.player_id;
             })[0];
+            $scope.checkForNewRounds.setScope($scope);
+            $scope.checkForNewRounds.query();
             $scope.selectedRound = $scope.player.rounds.length;
         });
-
-        // $scope.currentRound = $scope.player.rounds[$scope.player.rounds.length - 1].number;
-        // $scope.getRound($scope.player.rounds.length);
-        // if ($scope.player.wait_for_other_players) $scope.wait_for_other_players();
     };
 
-    $scope.wait_for_other_players = function () {
-        $log.info('Wait for others');
-        var startNewRound = false;
-
-        var t = '<div ng-show="!startNewRound" class="modal-header">' +
-                '<h1>Auf andere Gruppen warten{{startNewRound}}</h1>' +
-                '</div>' +
-                '<div ng-show="startNewRound" class="modal-header">' +
-                '<h1>Beginn von Runde {{$scope.currentRound}}</h1>' +
-                '</div>' +
-                '<div ng-show="startNewRound" class="modal-footer">' +
-                '<button ng-click="close()" class="btn btn-primary" >Close</button>' +
-                '</div>';
-
-        $scope.tick = function () {
-            $log.info($scope.player.id)
-            var player = Players.get({player_id: $scope.player.id});
-            $log.info(player.wait_for_other_players)
-            if (player.wait_for_other_players) {
-                $timeout($scope.tick, 1000)
-            }
-            else {
-                $log.info('Start new Round');
-                return true;
-            }
-        };
-
-        $scope.opts = {
-            backdrop: true,
-            dialogFade: true,
-            keyboard: false,
-            backdropClick: false,
-            template: t,
-            controller: 'EndRoundCtrl',
-            resolve: { startNewRound: $scope.tick }
-        };
-
-        var dialog = $dialog.dialog($scope.opts);
-        dialog.open();
-
-        $scope.close = function () {
-            dialog.close();
-        };
-    };
 
     $scope.endRound = function () {
         var opts = {
@@ -187,7 +143,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout) {
      }*/
 }
 
-SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout'];
+SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout', 'checkForNewRounds'];
 
 // the dialog is injected in the specified controller
 function SelectPlantationCtrl($scope, $log, dialog) {
