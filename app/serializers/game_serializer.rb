@@ -1,4 +1,4 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :weather, :vermin
   has_many :players
 end

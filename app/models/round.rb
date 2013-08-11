@@ -108,10 +108,7 @@ class Round < ActiveRecord::Base
   end
 
   def calculate_attributes
-    puts self.player_id
     rounds = self.player.rounds
-    puts rounds.to_json
-    puts "Round number: #{self.number}"
     # self is the new round,
     # the current round is the round before it
     # the previous round is the round before the current one

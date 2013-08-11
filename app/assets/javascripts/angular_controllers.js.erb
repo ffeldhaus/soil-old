@@ -72,40 +72,79 @@ function GamesCtrl($scope, $resource, $log, $location) {
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
-function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout, checkForNewRounds) {
+function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, checkForNewRounds) {
 
     var Games = $resource('/games/:game_id', {game_id: '@id'});
 
-    $scope.selectedRound = 1;
-    $scope.player_id = null;
+    $scope.initialize = function (game_id, player_id) {
+        $scope.selectedRound = 1;
+        $scope.game_id = game_id;
+        $scope.player_id = player_id;
+        $scope.getGame(game_id, player_id);
+    };
 
-    $scope.checkForNewRounds = checkForNewRounds;
-
-    $scope.getGame = function (game) {
-        $log.debug("Getting game with id: " + game);
-        Games.get({game_id: game}, function (response) {
+    $scope.getGame = function () {
+        var deferred = $q.defer;
+        $log.debug("Getting game with id: " + $scope.game_id);
+        Games.get({game_id: $scope.game_id}, function (response) {
             $scope.game = response;
             $scope.player = $scope.game.players.filter(function (player) {
                 return player.id == $scope.player_id;
             })[0];
-            $scope.checkForNewRounds.setScope($scope);
-            $scope.checkForNewRounds.query();
+            $scope.rounds = $filter('orderBy')($scope.player.rounds, 'number');
+            $scope.round = $scope.rounds[$scope.rounds.length - 1];
             $scope.selectedRound = $scope.player.rounds.length;
+            if ($scope.round.number < 8) {
+                if (typeof $scope.checkForNewRounds === 'undefined') {
+                    $scope.checkForNewRounds = checkForNewRounds;
+                    $scope.checkForNewRounds.setScope($scope);
+                    $scope.checkForNewRounds.query();
+                } else {
+                    $scope.startNewRound();
+                }
+            } else {
+                $scope.endGame();
+                $scope.gameOver = true;
+            }
         });
     };
 
-
-    $scope.endRound = function () {
+    $scope.startNewRound = function () {
         var opts = {
             backdrop: true,
             dialogFade: true,
             keyboard: true,
             backdropClick: true,
-            templateUrl: "<%= asset_path('endRound.html') %>",
-            controller: 'EndRoundCtrl',
+            templateUrl: "<%= asset_path('newRound.html') %>",
+            controller: 'NewRoundCtrl',
             resolve: {
                 round: function () {
-                    return angular.copy($scope.player.rounds[$scope.selectedRound - 1]);
+                    return angular.copy($scope.round);
+                },
+                game: function () {
+                    return angular.copy($scope.game);
+                },
+                player: function () {
+                    return angular.copy($scope.player);
+                }
+            }
+        };
+
+        var dialog = $dialog.dialog(opts);
+        dialog.open();
+    };
+
+    $scope.endGame = function () {
+        var opts = {
+            backdrop: true,
+            dialogFade: true,
+            keyboard: true,
+            backdropClick: true,
+            templateUrl: "<%= asset_path('endGame.html') %>",
+            controller: 'EndGameCtrl',
+            resolve: {
+                round: function () {
+                    return angular.copy($scope.round);
                 },
                 game: function () {
                     return angular.copy($scope.game);
@@ -119,31 +158,38 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $timeout, checkFo
         var dialog = $dialog.dialog(opts);
 
         dialog.open();
-//        if ($location.url() == '/endRound' && $scope.currentRound == $scope.rounds.length) {
-//            $scope.endRoundAcknowledgement()
-//        }
+    };
+
+    $scope.endRound = function () {
+        var opts = {
+            backdrop: true,
+            dialogFade: true,
+            keyboard: true,
+            backdropClick: true,
+            templateUrl: "<%= asset_path('endRound.html') %>",
+            controller: 'EndRoundCtrl',
+            resolve: {
+                round: function () {
+                    return angular.copy($scope.round);
+                },
+                game: function () {
+                    return angular.copy($scope.game);
+                },
+                player: function () {
+                    return angular.copy($scope.player);
+                }
+            }
+        };
+
+        var dialog = $dialog.dialog(opts);
+
+        if ($scope.selectedRound == $scope.player.rounds.length && !$scope.gameOver && !$scope.round.submitted) {
+            dialog.open().then( function() {$scope.round.submitted=true});
+        }
     }
-
-    /*    $scope.endRoundAcknowledgement = function () {
-     var title = 'Runde beenden';
-     var msg = 'Soll die Runde wirklich beendet und die Angaben abgeschickt werden?';
-     var btns = [
-     {result: 'cancel', label: 'Abbrechen'},
-     {result: 'send', label: 'Runde beenden', cssClass: 'btn-primary'}
-     ];
-
-     $dialog.messageBox(title, msg, btns)
-     .open()
-     .then(function (result) {
-     if (result == 'send') {
-     $scope.rounds[$scope.rounds.length - 1].$update();
-     $scope.wait_for_other_players();
-     }
-     });
-     }*/
 }
 
-SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$timeout', 'checkForNewRounds'];
+SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
 
 // the dialog is injected in the specified controller
 function SelectPlantationCtrl($scope, $log, dialog) {
@@ -180,3 +226,21 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
 }
 
 EndRoundCtrl.$inject = ['$scope', '$resource', 'dialog', 'game', 'player', 'round'];
+
+function NewRoundCtrl($scope, dialog, round) {
+    $scope.round = round;
+    $scope.close = function () {
+        dialog.close();
+    };
+}
+
+NewRoundCtrl.$inject = ['$scope', 'dialog', 'round'];
+
+function EndGameCtrl($scope, dialog, round) {
+    $scope.round = round;
+    $scope.close = function () {
+        dialog.close();
+    };
+}
+
+EndGameCtrl.$inject = ['$scope', 'dialog', 'round'];

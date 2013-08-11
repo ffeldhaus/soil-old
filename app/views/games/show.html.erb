@@ -29,14 +29,14 @@
           </nav-location>
           <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
         </ul>
-        <a ng-click="endRound()" class="btn pull-right" ng-disabled="selectedRound != player.rounds.length" href="#">Runde abschicken &raquo;</a>
+        <a ng-click="endRound()" class="btn pull-right" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">Runde abschicken &raquo;</a>
       </div>
     </div>
   </div>
 </div>
 
 <div id="main" role="main">
-  <div class="container" ng-init="player_id=<%= current_user.id %>;getGame(<%= current_user.game_id %>);">
+  <div class="container" ng-init="initialize(<%= current_user.game_id %>, <%= current_user.id %>)">
     <div class="content row">
       <div class="span12">
         <%= render 'layouts/messages' %>

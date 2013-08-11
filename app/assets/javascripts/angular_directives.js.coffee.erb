@@ -29,7 +29,7 @@ angular.module("soil.directives", []).directive("navLocation", ['$location', ($l
                 idx = $(this).index()
                 index: idx
             ).get()
-            if scope.selectedRound == scope.player.rounds.length
+            if scope.selectedRound == scope.player.rounds.length and not scope.round.submitted and not scope.gameOver
                 d = $dialog.dialog(scope.opts)
                 d.open().then (plantation) ->
                     if plantation
