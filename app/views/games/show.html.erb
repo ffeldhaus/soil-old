@@ -29,7 +29,7 @@
           </nav-location>
           <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
         </ul>
-        <a ng-click="endRound()" class="btn pull-right" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">Runde abschicken &raquo;</a>
+        <a ng-click="endRound()" class="btn pull-right" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">{{getButtonText()}}</a>
       </div>
     </div>
   </div>

@@ -83,6 +83,17 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, chec
         $scope.getGame(game_id, player_id);
     };
 
+    $scope.getButtonText = function () {
+        if ($scope.round.submitted) {
+            return 'Auf andere Gruppen warten ...'
+        } else if ($scope.gameOver) {
+            return 'Ende des Spiels!'
+        }
+        else {
+           return  'Runde abschicken »'
+        }
+    };
+
     $scope.getGame = function () {
         var deferred = $q.defer;
         $log.debug("Getting game with id: " + $scope.game_id);
