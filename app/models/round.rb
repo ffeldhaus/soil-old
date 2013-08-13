@@ -24,27 +24,56 @@ class Round < ActiveRecord::Base
   SOIL_DROUGHT = 0.03
 
   NUTRITION = 80
-  NUTRITION_DECLINE = 0.6
+  NUTRITION_DECLINE = 0.2
   NUTRITION_FERTILIZE = 0.5
   NUTRITION_ANIMALS = 0.4
   NUTRITION_FIELDBEAN = 0.2
 
-  HARVEST = {'Tiere' => 0, 'Brachland' => 0, 'Ackerbohne' => 60, 'Gerste' => 95, 'Hafer' => 70, 'Kartoffel' => 370, 'Mais' => 110, 'Roggen' => 100, 'Weizen' => 115, 'Zuckerruebe' => 570}
-  HARVEST_SOIL = {'Tiere' => 0, 'Brachland' => 0, 'Ackerbohne' => 1, 'Gerste' => 1.1, 'Hafer' => 1, 'Kartoffel' => 1.1, 'Mais' => 1, 'Roggen' => 1, 'Weizen' => 1.1, 'Zuckerruebe' => 1}
-  HARVEST_NUTRITION = {'Tiere' => 0, 'Brachland' => 0, 'Ackerbohne' => 0.9, 'Gerste' => 0.9, 'Hafer' => 1, 'Kartoffel' => 1.1, 'Mais' => 1, 'Roggen' => 0.9, 'Weizen' => 1.1, 'Zuckerruebe' => 1.1}
-  HARVEST_WEATHER = {'Tiere' => {'Kälte' => 1, 'Dürre' => 1, 'Überschwemmung' => 1},
-                     'Brachland' => {'Kälte' => 1, 'Dürre' => 1, 'Überschwemmung' => 1},
-                     'Ackerbohne' => {'Kälte' => 0.9, 'Dürre' => 0.8, 'Überschwemmung' => 0.8},
-                     'Gerste' => {'Kälte' => 0.8, 'Dürre' => 0.8, 'Überschwemmung' => 0.8},
-                     'Hafer' => {'Kälte' => 0.8, 'Dürre' => 0.9, 'Überschwemmung' => 0.8},
-                     'Kartoffel' => {'Kälte' => 0.8, 'Dürre' => 0.9, 'Überschwemmung' => 0.8},
-                     'Mais' => {'Kälte' => 0.8, 'Dürre' => 0.9, 'Überschwemmung' => 0.8},
-                     'Roggen' => {'Kälte' => 0.9, 'Dürre' => 0.9, 'Überschwemmung' => 0.8},
-                     'Weizen' => {'Kälte' => 0.8, 'Dürre' => 0.9, 'Überschwemmung' => 0.8},
-                     'Zuckerruebe' => {'Kälte' => 0.8, 'Dürre' => 0.8, 'Überschwemmung' => 0.8}}
-  HARVEST_VERMIN = {'Tiere' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Brachland' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Ackerbohne' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+  HARVEST = {'Tiere' => 0,
+             'Brachland' => 0,
+             'Ackerbohne' => 60,
+             'Gerste' => 95,
+             'Hafer' => 70,
+             'Kartoffel' => 370,
+             'Mais' => 110,
+             'Roggen' => 100,
+             'Weizen' => 115,
+             'Zuckerruebe' => 570}
+  HARVEST_SOIL_NORMAL = 1.0
+  HARVEST_SOIL_STRONG = 1.1
+  HARVEST_SOIL = {'Ackerbohne' => HARVEST_SOIL_NORMAL,
+                  'Gerste' => HARVEST_SOIL_STRONG,
+                  'Hafer' => HARVEST_SOIL_NORMAL,
+                  'Kartoffel' => HARVEST_SOIL_STRONG,
+                  'Mais' => HARVEST_SOIL_NORMAL,
+                  'Roggen' => HARVEST_SOIL_NORMAL,
+                  'Weizen' => HARVEST_SOIL_STRONG,
+                  'Zuckerruebe' => HARVEST_SOIL_NORMAL}
+  HARVEST_NUTRITION_LOW = 0.9
+  HARVEST_NUTRITION_NORMAL = 1.0
+  HARVEST_NUTRITION_STRONG = 1.1
+  HARVEST_NUTRITION = {'Ackerbohne' => HARVEST_NUTRITION_LOW,
+                       'Gerste' => HARVEST_NUTRITION_LOW,
+                       'Hafer' => HARVEST_NUTRITION_NORMAL,
+                       'Kartoffel' => HARVEST_NUTRITION_STRONG,
+                       'Mais' => HARVEST_NUTRITION_NORMAL,
+                       'Roggen' => HARVEST_NUTRITION_LOW,
+                       'Weizen' => HARVEST_NUTRITION_STRONG,
+                       'Zuckerruebe' => HARVEST_NUTRITION_STRONG}
+  HARVEST_WEATHER_STRONG = 0.8
+  HARVEST_WEATHER_MODERATE = 0.9
+  HARVEST_WEATHER = {'Ackerbohne' => {'Kälte' => HARVEST_WEATHER_MODERATE, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Gerste' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Hafer' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Kartoffel' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Mais' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Roggen' => {'Kälte' => HARVEST_WEATHER_MODERATE, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Weizen' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
+                     'Zuckerruebe' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG}}
+  HARVEST_VERMIN_PESTICIDE = 1.0
+  HARVEST_VERMIN_ORGANISM = 0.8
+  HARVEST_VERMIN_WITHOUT = 0.5
+  HARVEST_VERMIN = {'Ackerbohne' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Gerste' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Hafer' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Kartoffel' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => true, 'Maiszünsler' => false, 'Drahtwurm' => false},
@@ -56,7 +85,6 @@ class Round < ActiveRecord::Base
   HARVEST_EFFICIENCY = 0.05
   HARVEST_MACHINES = 0.5
   HARVEST_ANIMALS = 10
-
 
   MACHINES = 100
 
@@ -120,9 +148,10 @@ class Round < ActiveRecord::Base
     end
 
     ## overview
+    ### animals
     animals = current_round.field.parcels.select { |parcel| parcel.plantation=='Tiere' }.count
     if animals > 0
-      animals_per_parcel = 40.to_f/(animals*8)
+      animals_per_parcel = (animals*8)/40.to_f
     else
       animals_per_parcel = 0
     end
@@ -133,16 +162,15 @@ class Round < ActiveRecord::Base
       self.result.machines = current_round.result.machines - MACHINE_AGING
     end
     ### organic
-    if current_round.decision.fertilize == false && current_round.decision.pesticide == false
-      if animals_per_parcel == 0 || animals_per_parcel.between?(0.8, 1.2)
-        self.result.organic = true
-      end
+    if current_round.decision.organic? and not current_round.decision.fertilize? and not current_round.decision.pesticide?
+      self.result.organic = true
     end
     ### weather
     self.result.weather = self.player.game.weather[self.number-2]
     ### vermin
     self.result.vermin = self.player.game.vermin[self.number-2]
 
+    ### parcel evaluation
     self.field.parcels.each do |new_parcel|
       current_parcel = current_round.field.parcels.find_by_number(new_parcel.number)
       previous_parcel = previous_round.field.parcels.find_by_number(new_parcel.number)
@@ -211,88 +239,79 @@ class Round < ActiveRecord::Base
       else
         nutrition_factor = 0
         nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
-        nutrition_factor += (1-(1-animals_per_parcel).abs) * NUTRITION_ANIMALS if animals_per_parcel > 0
+        nutrition_factor += (1-0.01*current_parcel.nutrition) * animals_per_parcel * NUTRITION_ANIMALS
         nutrition_factor += NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
+        # scale with previous soil (good soil helps nutrition uptake) and previous nutrition (good nutrition blocks nutrition uptake)
         nutrition_factor *= 0.01 * current_parcel.soil * (1 - 0.01 * current_parcel.nutrition)
-        # TODO: Harvest
-        nutrition_factor *= 1/((current_parcel.harvest_yield.to_f/HARVEST[current_parcel.plantation])**0.2) if current_parcel.harvest_yield > 0
         new_parcel.nutrition += current_parcel.nutrition * nutrition_factor
-        new_parcel.nutrition -= (1-0.01*current_parcel.soil) * 0.01 * current_parcel.nutrition * NUTRITION_DECLINE
       end
 
       # calculate harvest
-      puts current_parcel.plantation
-      harvest = HARVEST[current_parcel.plantation]
-      puts harvest
-      # Nährstoffe
-      harvest *= (current_parcel.nutrition.to_f/NUTRITION) ** HARVEST_NUTRITION[current_parcel.plantation]
-      puts "Nutrition: " + current_parcel.nutrition.to_s
-      puts harvest
-      # Bodenqualität
-      harvest *= (current_parcel.soil.to_f/SOIL) ** HARVEST_SOIL[current_parcel.plantation]
-      puts "Soil: " + current_parcel.soil.to_s
-      puts harvest
-      # Wetter
-      harvest *= HARVEST_WEATHER[current_parcel.plantation][self.result.weather] unless self.result.weather == 'Normal'
-      puts harvest
-      # Schädlinge
-      if HARVEST_VERMIN[current_parcel.plantation][self.result.vermin]
-        if current_round.decision.pesticide
-          harvest *= 1
-        elsif current_round.decision.organisms
-          harvest *= 0.8
-        else
-          harvest *= 0.5
-        end
-      end
-      puts harvest
-      # Fruchtfolge
-      case new_parcel.cropsequence
-        when 'gut'
-          harvest *= 1 + HARVEST_CROPSEQUENCE
-        when 'ok'
-          harvest *= 1
-        when 'schlecht'
-          harvest *= 1 - HARVEST_CROPSEQUENCE
-      end
-      puts harvest
-      # Vorfrucht / Effizienz
-      round_counter = 0
-      efficiency = (current_parcel.plantation == previous_parcel.plantation)
-      while efficiency
-        round_counter += 1
-        if rounds.count > round_counter + 2
-          efficiency = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
-        else
-          efficiency = false
-        end
-      end
-      puts harvest
-      harvest *= 1 + round_counter * HARVEST_EFFICIENCY
-      puts harvest
-      harvest *= 1 + HARVEST_EFFICIENCY**2 * (current_round.field.parcels.select { |parcel| parcel.plantation == current_parcel.plantation }.length - 1)
-      puts harvest
-      # Maschineneinsatz
-      harvest *= (0.01 * self.result.machines)**HARVEST_MACHINES
-      puts harvest
-      # Nahrung Tiere
-      harvest *= (1 - animals_per_parcel / HARVEST_ANIMALS)
-      puts harvest
-      new_parcel.harvest_yield = harvest.to_i
-      puts "Harvest am ende:" + new_parcel.harvest_yield.to_s
-      harvest_ratio = harvest/HARVEST[current_parcel.plantation]
-      if harvest_ratio > 1.2
-        new_parcel.harvest = 'sehr_hoch'
-      elsif harvest_ratio > 0.9
-        new_parcel.harvest = 'hoch'
-      elsif harvest_ratio > 0.6
-        new_parcel.harvest = 'maessig'
-      elsif harvest_ratio > 0.3
-        new_parcel.harvest = 'niedrig'
-      elsif harvest_ratio > 0
-        new_parcel.harvest = 'sehr_niedrig'
+      if current_parcel.plantation == 'Tiere' || current_parcel.plantation == 'Brachland'
+        new_parcel.harvest_yield = 0
       else
-        new_parcel.harvest = 'keiner'
+        harvest = HARVEST[current_parcel.plantation]
+        # Nährstoffe
+        harvest *= (new_parcel.nutrition.to_f/NUTRITION) ** HARVEST_NUTRITION[current_parcel.plantation]
+        # Bodenqualität
+        harvest *= (new_parcel.soil.to_f/SOIL) ** HARVEST_SOIL[current_parcel.plantation]
+        # Wetter
+        harvest *= HARVEST_WEATHER[current_parcel.plantation][self.result.weather] unless self.result.weather == 'Normal'
+        # Schädlinge
+        if HARVEST_VERMIN[current_parcel.plantation][self.result.vermin]
+          if current_round.decision.pesticide
+            harvest *= HARVEST_VERMIN_PESTICIDE
+          elsif current_round.decision.organisms
+            harvest *= HARVEST_VERMIN_ORGANISM
+          else
+            harvest *= HARVEST_VERMIN_WITHOUT
+          end
+        end
+        # Fruchtfolge
+        #case new_parcel.cropsequence
+        #  when 'gut'
+        #    harvest *= 1 + HARVEST_CROPSEQUENCE
+        #  when 'ok'
+        #    harvest *= 1
+        #  when 'schlecht'
+        #    harvest *= 1 - HARVEST_CROPSEQUENCE
+        #end
+        # Vorfrucht / Effizienz
+        round_counter = 0
+        efficiency = (current_parcel.plantation == previous_parcel.plantation)
+        while efficiency
+          round_counter += 1
+          if rounds.count > round_counter + 2
+            efficiency = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
+          else
+            efficiency = false
+          end
+        end
+        harvest *= 1 + round_counter * HARVEST_EFFICIENCY
+        harvest *= 1 + HARVEST_EFFICIENCY**2 * (current_round.field.parcels.select { |parcel| parcel.plantation == current_parcel.plantation }.length - 1)
+        # Maschineneinsatz
+        harvest *= (0.01 * self.result.machines)**HARVEST_MACHINES
+        # Nahrung Tiere
+        harvest *= (1 - animals_per_parcel / HARVEST_ANIMALS)
+        new_parcel.harvest_yield = harvest.to_i
+
+        # nutrition decline scales with harvest yield
+        new_parcel.nutrition -= (harvest/HARVEST[current_parcel.plantation])**0.5 * current_parcel.nutrition * NUTRITION_DECLINE
+
+        harvest_ratio = harvest/HARVEST[current_parcel.plantation]
+        if harvest_ratio > 1.2
+          new_parcel.harvest = 'sehr_hoch'
+        elsif harvest_ratio > 0.9
+          new_parcel.harvest = 'hoch'
+        elsif harvest_ratio > 0.6
+          new_parcel.harvest = 'maessig'
+        elsif harvest_ratio > 0.3
+          new_parcel.harvest = 'niedrig'
+        elsif harvest_ratio > 0
+          new_parcel.harvest = 'sehr_niedrig'
+        else
+          new_parcel.harvest = 'keiner'
+        end
       end
     end
 
@@ -320,7 +339,8 @@ class Round < ActiveRecord::Base
     self.result.expense.seed.save
     ## investments
     ### animals
-    self.result.expense.investment.animals = animals * INVESTMENT_ANIMALS
+    existing_animals = previous_round.field.parcels.select { |parcel| parcel.plantation=='Tiere' }.count
+    self.result.expense.investment.animals = [animals-existing_animals, 0].max * INVESTMENT_ANIMALS
     ### machines
     self.result.expense.investment.machines = 0.1 * current_round.decision.machines * INVESTMENT_MACHINES
     ### sum
