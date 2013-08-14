@@ -24,7 +24,7 @@ class Round < ActiveRecord::Base
   SOIL_DROUGHT = 0.03
 
   NUTRITION = 80
-  NUTRITION_DECLINE = 0.2
+  NUTRITION_DECLINE = 0.15
   NUTRITION_FERTILIZE = 0.5
   NUTRITION_ANIMALS = 0.4
   NUTRITION_FIELDBEAN = 0.4
@@ -82,7 +82,7 @@ class Round < ActiveRecord::Base
                     'Weizen' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Zuckerruebe' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => true}}
   HARVEST_CROPSEQUENCE = 0.2
-  HARVEST_EFFICIENCY = 0.05
+  HARVEST_EFFICIENCY = 0.02
   HARVEST_MACHINES = 0.5
   HARVEST_ANIMALS = 10
 
