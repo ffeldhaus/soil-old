@@ -56,9 +56,7 @@ class GamesController < ApplicationController
       end
     end
 
-    puts game_params
     @supervisor = Supervisor.find_by_id(game_params['supervisor_id'])
-    puts @supervisor
     UserMailer.new_game_confirmation(@supervisor,@game).deliver
 
   end
