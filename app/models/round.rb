@@ -360,7 +360,7 @@ class Round < ActiveRecord::Base
     ### animals
     self.result.expense.running_cost.animals = animals * RUNNINGCOSTS_ANIMALS
     ### basic cost
-    self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic]
+    self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic] * (0.01 * self.result.machines)**0.5
     ### sum
     self.result.expense.running_cost.sum = self.result.expense.running_cost.organic_control +
         self.result.expense.running_cost.fertilize +
