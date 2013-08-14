@@ -27,7 +27,7 @@ class Round < ActiveRecord::Base
   NUTRITION_DECLINE = 0.2
   NUTRITION_FERTILIZE = 0.5
   NUTRITION_ANIMALS = 0.4
-  NUTRITION_FIELDBEAN = 0.2
+  NUTRITION_FIELDBEAN = 0.4
 
   HARVEST = {'Tiere' => 0,
              'Brachland' => 0,
