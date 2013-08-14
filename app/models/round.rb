@@ -238,8 +238,8 @@ class Round < ActiveRecord::Base
         new_parcel.nutrition = NUTRITION if current_parcel.nutrition > NUTRITION
       else
         nutrition_factor = 0
-        nutrition_factor += (1-0.01*current_parcel.nutrition) * NUTRITION_FERTILIZE if current_round.decision.fertilize
-        nutrition_factor += (1-0.01*current_parcel.nutrition) * animals_per_parcel * NUTRITION_ANIMALS
+        nutrition_factor += NUTRITION_FERTILIZE if current_round.decision.fertilize
+        nutrition_factor += animals_per_parcel * NUTRITION_ANIMALS
         nutrition_factor += NUTRITION_FIELDBEAN if current_parcel.plantation == 'Ackerbohne'
         # scale with previous soil (good soil helps nutrition uptake) and previous nutrition (good nutrition blocks nutrition uptake)
         nutrition_factor *= 0.01 * current_parcel.soil * (1 - 0.01 * current_parcel.nutrition)
@@ -296,7 +296,7 @@ class Round < ActiveRecord::Base
         new_parcel.harvest_yield = harvest.to_i
 
         # nutrition decline scales with harvest yield
-        new_parcel.nutrition -= (harvest/HARVEST[current_parcel.plantation])**0.5 * current_parcel.nutrition * NUTRITION_DECLINE
+        new_parcel.nutrition -= (harvest/HARVEST[current_parcel.plantation]) * current_parcel.nutrition * NUTRITION_DECLINE
 
         harvest_ratio = harvest/HARVEST[current_parcel.plantation]
         if harvest_ratio > 1.2
