@@ -116,7 +116,7 @@ class Round < ActiveRecord::Base
   RUNNINGCOSTS_PESTICIDE = -50
   RUNNINGCOSTS_ORGANISMS = -100
   RUNNINGCOSTS_ANIMALS = -200
-  RUNNINGCOSTS_BASE = {false => -700, true => -900}
+  RUNNINGCOSTS_BASE = {false => -500, true => -700}
 
   HARVEST_FIELDBEAN = {false => 18, true => 21}
   HARVEST_BARLEY = {false => 13, true => 14.5}
