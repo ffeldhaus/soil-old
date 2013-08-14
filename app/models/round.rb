@@ -39,8 +39,8 @@ class Round < ActiveRecord::Base
              'Roggen' => 100,
              'Weizen' => 115,
              'Zuckerruebe' => 570}
-  HARVEST_SOIL_NORMAL = 1.0
-  HARVEST_SOIL_STRONG = 1.1
+  HARVEST_SOIL_NORMAL = 0.8
+  HARVEST_SOIL_STRONG = 1
   HARVEST_SOIL = {'Ackerbohne' => HARVEST_SOIL_NORMAL,
                   'Gerste' => HARVEST_SOIL_STRONG,
                   'Hafer' => HARVEST_SOIL_NORMAL,
@@ -49,9 +49,9 @@ class Round < ActiveRecord::Base
                   'Roggen' => HARVEST_SOIL_NORMAL,
                   'Weizen' => HARVEST_SOIL_STRONG,
                   'Zuckerruebe' => HARVEST_SOIL_NORMAL}
-  HARVEST_NUTRITION_LOW = 0.9
-  HARVEST_NUTRITION_NORMAL = 1.0
-  HARVEST_NUTRITION_STRONG = 1.1
+  HARVEST_NUTRITION_LOW = 0.6
+  HARVEST_NUTRITION_NORMAL = 0.8
+  HARVEST_NUTRITION_STRONG = 1
   HARVEST_NUTRITION = {'Ackerbohne' => HARVEST_NUTRITION_LOW,
                        'Gerste' => HARVEST_NUTRITION_LOW,
                        'Hafer' => HARVEST_NUTRITION_NORMAL,
@@ -60,8 +60,8 @@ class Round < ActiveRecord::Base
                        'Roggen' => HARVEST_NUTRITION_LOW,
                        'Weizen' => HARVEST_NUTRITION_STRONG,
                        'Zuckerruebe' => HARVEST_NUTRITION_STRONG}
-  HARVEST_WEATHER_STRONG = 0.8
-  HARVEST_WEATHER_MODERATE = 0.9
+  HARVEST_WEATHER_STRONG = 0.85
+  HARVEST_WEATHER_MODERATE = 0.95
   HARVEST_WEATHER = {'Ackerbohne' => {'Kälte' => HARVEST_WEATHER_MODERATE, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
                      'Gerste' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
                      'Hafer' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
@@ -70,9 +70,9 @@ class Round < ActiveRecord::Base
                      'Roggen' => {'Kälte' => HARVEST_WEATHER_MODERATE, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
                      'Weizen' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_MODERATE, 'Überschwemmung' => HARVEST_WEATHER_STRONG},
                      'Zuckerruebe' => {'Kälte' => HARVEST_WEATHER_STRONG, 'Dürre' => HARVEST_WEATHER_STRONG, 'Überschwemmung' => HARVEST_WEATHER_STRONG}}
-  HARVEST_VERMIN_PESTICIDE = 1.0
-  HARVEST_VERMIN_ORGANISM = 0.8
-  HARVEST_VERMIN_WITHOUT = 0.5
+  HARVEST_VERMIN_PESTICIDE = 0.95
+  HARVEST_VERMIN_ORGANISM = 0.9
+  HARVEST_VERMIN_WITHOUT = 0.7
   HARVEST_VERMIN = {'Ackerbohne' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Gerste' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
                     'Hafer' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
