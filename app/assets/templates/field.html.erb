@@ -8,7 +8,7 @@
 </div>
 <div class="soil" ui-if="show=='soil'">
     <ol class="ui-selectable">
-      <li style="background-size: 0; background-color: hsl({{1.5*parcel.soil-20}},100%,40%);" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
+      <li ng-click="showParcelInformation(parcel)" style="background-size: 0; background-color: hsl({{1.5*parcel.soil-20}},100%,40%);" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
             class="ui-state-default">
             {{parcel.soil}}%
         </li>
@@ -16,7 +16,7 @@
 </div>
 <div class="nutrition" ui-if="show=='nutrition'">
     <ol class="ui-selectable">
-      <li style="background-size: 0; background-color: hsl({{1.5*parcel.nutrition-20}},100%,40%);" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
+      <li ng-click="showParcelInformation(parcel)" style="background-size: 0; background-color: hsl({{1.5*parcel.nutrition-20}},100%,40%);" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
             class="ui-state-default">
             {{parcel.nutrition}}%
         </li>
@@ -24,7 +24,7 @@
 </div>
 <div class="cropsequence" ui-if="show=='cropsequence'">
     <ol class="ui-selectable">
-      <li ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
+      <li ng-click="showParcelInformation(parcel)" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
             class="{{parcel.cropsequence | lowercase}} ui-state-default">
             {{parcel.cropsequence}}
         </li>
@@ -32,7 +32,7 @@
 </div>
 <div class="harvest" ui-if="show=='harvest'">
     <ol class="ui-selectable">
-      <li ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
+      <li ng-click="showParcelInformation(parcel)" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
             class="{{parcel.cropsequence | lowercase}} ui-state-default">
         {{parcel.harvest.split('_').join(' ');}}</br><div style="line-height: 0em;">({{parcel.harvest_yield}} dT)</div>
         </li>

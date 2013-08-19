@@ -90,7 +90,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, chec
             return 'Ende des Spiels!'
         }
         else {
-           return  'Runde abschicken »'
+            return  'Runde abschicken »'
         }
     };
 
@@ -118,6 +118,39 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, chec
                 $scope.gameOver = true;
             }
         });
+    };
+
+    $scope.showParcelInformation = function (parcel) {
+        var opts = {
+            backdrop: true,
+            dialogFade: true,
+            keyboard: true,
+            backdropClick: true,
+            templateUrl: "<%= asset_path('showParcelInformation.html') %>",
+            controller: 'ShowParcelInformationCtrl',
+            resolve: {
+                game: function () {
+                    return angular.copy($scope.game);
+                },
+                player: function () {
+                    return angular.copy($scope.player);
+                },
+                round: function () {
+                    return angular.copy($scope.rounds[$scope.selectedRound - 1]);
+                },
+                parcel: function () {
+                    return angular.copy(parcel);
+                },
+                show: function () {
+                    return angular.copy($scope.show);
+                }
+            }
+        };
+
+        var dialog = $dialog.dialog(opts);
+        if ($scope.selectedRound > 1) {
+            dialog.open();
+        }
     };
 
     $scope.startNewRound = function () {
@@ -259,3 +292,23 @@ function EndGameCtrl($scope, dialog, round) {
 }
 
 EndGameCtrl.$inject = ['$scope', 'dialog', 'round'];
+
+
+function ShowParcelInformationCtrl($scope, $filter, dialog, game, player, round, parcel, show) {
+    $scope.game = game;
+    $scope.player = player;
+    $scope.round = round;
+    $scope.previous_round = player.rounds[round.number - 2];
+    $scope.previous_round.field.parcels = $filter('orderBy')($scope.previous_round.field.parcels, 'number');
+    $scope.parcel = parcel;
+    $scope.previous_parcel = $scope.previous_round.field.parcels[parcel.number];
+    $scope.animals = $scope.previous_round.field.parcels.filter(function (x) {
+        return x.plantation == 'Tiere'
+    }).length;
+    $scope.show = show;
+    $scope.close = function () {
+        dialog.close();
+    };
+}
+
+ShowParcelInformationCtrl.$inject = ['$scope', '$filter', 'dialog', 'game', 'player', 'round', 'parcel', 'show'];
