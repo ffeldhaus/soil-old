@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg ng-init="image_path={'Gerste':'<%= asset_path('gerste.jpg') %>','Hafer':'<%= asset_path('hafer.jpg') %>','Kartoffel':'<%= asset_path('kartoffel.jpg') %>','Mais':'<%= asset_path('mais.jpg') %>','Roggen':'<%= asset_path('roggen.jpg') %>','Weizen':'<%= asset_path('weizen.jpg') %>','Zuckerruebe':'<%= asset_path('zuckerruebe.jpg') %>'}"
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -143,7 +143,7 @@
              style="font-size:10px;font-weight:bold;text-align:center;text-anchor:middle;fill:#ffffff;-inkscape-font-specification:Sans Bold">Ackerbohne</tspan></text>
       </g>
     </g>
-    <g ng-if="image_path[previous_parcel.plantation]!==undefined"
+    <g ng-if="previous_parcel.plantation!='Tiere' && previous_parcel.plantation!='Brachland'"
        id="g3156"
        transform="matrix(2.4647536,0,0,2.4647536,-70.02939,1475.535)">
       <path
@@ -189,7 +189,7 @@
              sodipodi:role="line">{{previous_parcel.plantation}}</tspan></text>
       </g>
     </g>
-    <g ng-if="previous_parcel.plantation==player.rounds[round.number-3].field.parcels[parcel.number].plantation"
+    <g ng-if="previous_parcel.plantation==preprevious_parcel.plantation"
        id="g4167"
        transform="matrix(1.4446568,0,0,1.4446568,-20.298986,447.84369)">
       <path

@@ -96,8 +96,8 @@ class Round < ActiveRecord::Base
                   'Roggen' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'ok', 'Roggen' => 'gut', 'Weizen' => 'ok', 'Zuckerruebe' => 'ok'},
                   'Weizen' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'schlecht', 'Hafer' => 'ok', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'schlecht', 'Weizen' => 'schlecht', 'Zuckerruebe' => 'gut'},
                   'Zuckerruebe' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'ok', 'Kartoffel' => 'gut', 'Mais' => 'ok', 'Roggen' => 'ok', 'Weizen' => 'ok', 'Zuckerruebe' => 'schlecht'},
-                  'Brachland' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'},
-                  'Tiere' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'ok', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'}}
+                  'Brachland' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'},
+                  'Tiere' => {'Tiere' => 'gut', 'Brachland' => 'gut', 'Ackerbohne' => 'gut', 'Gerste' => 'gut', 'Hafer' => 'gut', 'Kartoffel' => 'gut', 'Mais' => 'gut', 'Roggen' => 'gut', 'Weizen' => 'gut', 'Zuckerruebe' => 'gut'}}
 
   SEED_FIELDBEAN = {false => -120, true => -144}
   SEED_BARLEY = {false => -68, true => -85}

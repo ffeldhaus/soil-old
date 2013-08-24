@@ -72,7 +72,29 @@ function GamesCtrl($scope, $resource, $log, $location) {
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
 
-function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, checkForNewRounds) {
+function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, checkForNewRounds) {
+
+    $rootScope.image_path = {
+        'Brachland': '<%= asset_path('brachland.jpg') %>',
+        'Gerste': '<%= asset_path('gerste.jpg') %>',
+        'Hafer': '<%= asset_path('hafer.jpg') %>',
+        'Kartoffel': '<%= asset_path('kartoffel.jpg') %>',
+        'Mais': '<%= asset_path('mais.jpg') %>',
+        'Roggen': '<%= asset_path('roggen.jpg') %>',
+        'Tiere': '<%= asset_path('tiere.jpg') %>',
+        'Weizen': '<%= asset_path('weizen.jpg') %>',
+        'Zuckerruebe': '<%= asset_path('zuckerruebe.jpg') %>'
+    };
+
+    $rootScope.color_mapping = {
+        'schlecht': '#FF0000',
+        'ok': '#F5ED00',
+        'gut': '#00FF00'
+    };
+
+    $rootScope.round_zero =
+    <%= RoundSerializer.new(Round.new(:number => 0)).to_json %>.
+    round;
 
     var Games = $resource('/games/:game_id', {game_id: '@id'});
 
@@ -237,7 +259,7 @@ function SoilCtrl($scope, $location, $dialog, $resource, $log, $filter, $q, chec
     }
 }
 
-SoilCtrl.$inject = ['$scope', '$location', '$dialog', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
+SoilCtrl.$inject = ['$scope', '$rootScope', '$dialog', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
 
 // the dialog is injected in the specified controller
 function SelectPlantationCtrl($scope, $log, dialog) {
@@ -298,10 +320,20 @@ function ShowParcelInformationCtrl($scope, $filter, dialog, game, player, round,
     $scope.game = game;
     $scope.player = player;
     $scope.round = round;
-    $scope.previous_round = player.rounds[round.number - 2];
-    $scope.previous_round.field.parcels = $filter('orderBy')($scope.previous_round.field.parcels, 'number');
     $scope.parcel = parcel;
-    $scope.previous_parcel = $scope.previous_round.field.parcels[parcel.number];
+    if (player.rounds[round.number - 2] !== undefined) {
+        $scope.previous_round = player.rounds[round.number - 2];
+        $scope.previous_round.field.parcels = $filter('orderBy')($scope.previous_round.field.parcels, 'number');
+        $scope.previous_parcel = $scope.previous_round.field.parcels[parcel.number];
+        if (player.rounds[round.number - 3] !== undefined) {
+            $scope.preprevious_round = player.rounds[round.number - 3];
+        } else {
+            $scope.preprevious_round = $scope.round_zero;
+        }
+
+        $scope.preprevious_round.field.parcels = $filter('orderBy')($scope.preprevious_round.field.parcels, 'number');
+        $scope.preprevious_parcel = $scope.preprevious_round.field.parcels[parcel.number];
+    }
     $scope.animals = $scope.previous_round.field.parcels.filter(function (x) {
         return x.plantation == 'Tiere'
     }).length;
