@@ -76,6 +76,7 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
 
     $rootScope.image_path = {
         'Brachland': '<%= asset_path('brachland.jpg') %>',
+        'Ackerbohne': '<%= asset_path('ackerbohne.jpg') %>',
         'Gerste': '<%= asset_path('gerste.jpg') %>',
         'Hafer': '<%= asset_path('hafer.jpg') %>',
         'Kartoffel': '<%= asset_path('kartoffel.jpg') %>',
@@ -83,7 +84,17 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
         'Roggen': '<%= asset_path('roggen.jpg') %>',
         'Tiere': '<%= asset_path('tiere.jpg') %>',
         'Weizen': '<%= asset_path('weizen.jpg') %>',
-        'Zuckerruebe': '<%= asset_path('zuckerruebe.jpg') %>'
+        'Zuckerruebe': '<%= asset_path('zuckerruebe.jpg') %>',
+        'fertilizer': '<%= asset_path('fertilizer.png') %>',
+        'pesticide': '<%= asset_path('pesticide.jpg') %>',
+        'Überschwemmung': '<%= asset_path('flood.jpg') %>',
+        'Dürre': '<%= asset_path('drought.jpg') %>',
+        'Kälte': '<%= asset_path('cold.jpg') %>',
+        'Blattlaus': '<%= asset_path('blattlaus.jpg') %>',
+        'Kartoffelkäfer': '<%= asset_path('kartoffelkaefer.jpg') %>',
+        'Maiszünsler': '<%= asset_path('maiszuensler.jpg') %>',
+        'Drahtwurm': '<%= asset_path('drahtwurm.jpg') %>',
+        'Fritfliege': '<%= asset_path('fritfliege.jpg') %>'
     };
 
     $rootScope.color_mapping = {
@@ -127,7 +138,7 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
             $scope.rounds = $filter('orderBy')($scope.player.rounds, 'number');
             $scope.round = $scope.rounds[$scope.rounds.length - 1];
             $scope.selectedRound = $scope.player.rounds.length;
-            if ($scope.round.number < 8) {
+            if ($scope.round.number < 11) {
                 if (typeof $scope.checkForNewRounds === 'undefined') {
                     $scope.checkForNewRounds = checkForNewRounds;
                     $scope.checkForNewRounds.setScope($scope);

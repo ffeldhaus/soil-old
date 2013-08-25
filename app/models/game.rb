@@ -7,8 +7,8 @@ class Game < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true, :length => {:in => 4..64}
 
   after_initialize do
-    self.weather ||= %w|Normal| + %w|Normal Normal Normal Normal Dürre Kälte Überschwemmung|.shuffle
-    self.vermin ||= %w|Keine| + %w|Keine Keine Blattlaus Frittfliege Kartoffelkäfer Maiszünsler Drahtwurm|.shuffle
+    self.weather ||= %w|Normal| + %w|Normal Normal Normal Normal Dürre Kälte Überschwemmung Dürre Kälte Überschwemmung|.shuffle
+    self.vermin ||= %w|Keine| + %w|Keine Blattlaus Fritfliege Kartoffelkäfer Maiszünsler Drahtwurm Blattlaus Fritfliege Kartoffelkäfer Maiszünsler Drahtwurm|.shuffle
   end
 
   def start_new_round

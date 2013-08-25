@@ -11,10 +11,7 @@ class Round < ActiveRecord::Base
   SOIL = 80
   SOIL_FALLOW = 0.1
   SOIL_CROPSEQUENCE = 0.03
-  SOIL_FIELDBEAN = 0.02
-  SOIL_OAT = 0.02
-  SOIL_RYE = 0.02
-  SOIL_BEET = 0.02
+  SOIL_PLANTATION = 0.02
   SOIL_FERTILIZE = 0.05
   SOIL_ANIMALS = 0.02
   SOIL_PESTICIDE = 0.04
@@ -26,8 +23,8 @@ class Round < ActiveRecord::Base
   NUTRITION = 80
   NUTRITION_DECLINE = 0.15
   NUTRITION_FERTILIZE = 0.5
-  NUTRITION_ANIMALS = 0.4
-  NUTRITION_FIELDBEAN = 0.4
+  NUTRITION_ANIMALS = 0.3
+  NUTRITION_FIELDBEAN = 0.1
 
   HARVEST = {'Tiere' => 0,
              'Brachland' => 0,
@@ -73,14 +70,14 @@ class Round < ActiveRecord::Base
   HARVEST_VERMIN_PESTICIDE = 0.95
   HARVEST_VERMIN_ORGANISM = 0.9
   HARVEST_VERMIN_WITHOUT = 0.7
-  HARVEST_VERMIN = {'Ackerbohne' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Gerste' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Hafer' => {'Blattlaus' => false, 'Frittfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Kartoffel' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => true, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Mais' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => true, 'Drahtwurm' => false},
-                    'Roggen' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Weizen' => {'Blattlaus' => true, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
-                    'Zuckerruebe' => {'Blattlaus' => false, 'Frittfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => true}}
+  HARVEST_VERMIN = {'Ackerbohne' => {'Blattlaus' => true, 'Fritfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Gerste' => {'Blattlaus' => false, 'Fritfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Hafer' => {'Blattlaus' => false, 'Fritfliege' => true, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Kartoffel' => {'Blattlaus' => false, 'Fritfliege' => false, 'Kartoffelkäfer' => true, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Mais' => {'Blattlaus' => false, 'Fritfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => true, 'Drahtwurm' => false},
+                    'Roggen' => {'Blattlaus' => true, 'Fritfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Weizen' => {'Blattlaus' => true, 'Fritfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => false},
+                    'Zuckerruebe' => {'Blattlaus' => false, 'Fritfliege' => false, 'Kartoffelkäfer' => false, 'Maiszünsler' => false, 'Drahtwurm' => true}}
   HARVEST_CROPSEQUENCE = 0.2
   HARVEST_EFFICIENCY = 0.02
   HARVEST_MACHINES = 0.5
@@ -197,14 +194,10 @@ class Round < ActiveRecord::Base
         soil_factor -= SOIL_CROPSEQUENCE if new_parcel.cropsequence == 'schlecht'
         # Getreidesorte
         case current_parcel.plantation
-          when 'Ackerbohne'
-            soil_factor += SOIL_FIELDBEAN
-          when 'Hafer'
-            soil_factor += SOIL_OAT
-          when 'Roggen'
-            soil_factor += SOIL_RYE
-          when 'Zuckerruebe'
-            soil_factor += SOIL_BEET
+          when 'Ackerbohne', 'Hafer', 'Roggen', 'Zuckerruebe'
+            soil_factor += SOIL_PLANTATION
+          when 'Gerste', 'Kartoffel', 'Mais', 'Weizen'
+            soil_factor -= SOIL_PLANTATION
         end
         # Dünger
         soil_factor -= SOIL_FERTILIZE if current_round.decision.fertilize
@@ -296,7 +289,9 @@ class Round < ActiveRecord::Base
         new_parcel.harvest_yield = harvest.to_i
 
         # nutrition decline scales with harvest yield
-        new_parcel.nutrition -= (harvest/HARVEST[current_parcel.plantation]) * current_parcel.nutrition * NUTRITION_DECLINE
+        unless current_parcel.plantation == 'Ackerbohne'
+          new_parcel.nutrition -= (harvest/HARVEST[current_parcel.plantation]) * current_parcel.nutrition * NUTRITION_DECLINE
+        end
 
         harvest_ratio = harvest/HARVEST[current_parcel.plantation]
         if harvest_ratio > 1.2

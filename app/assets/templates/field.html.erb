@@ -33,7 +33,7 @@
 <div class="harvest" ui-if="show=='harvest'">
     <ol class="ui-selectable">
       <li ng-click="showParcelInformation(parcel)" ng-repeat="parcel in rounds[selectedRound - 1].field.parcels | orderBy:'number'"
-            class="{{parcel.cropsequence | lowercase}} ui-state-default">
+            class="{{parcel.harvest | lowercase}} ui-state-default">
         {{parcel.harvest.split('_').join(' ');}}</br><div style="line-height: 0em;">({{parcel.harvest_yield}} dT)</div>
         </li>
     </ol>
