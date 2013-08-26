@@ -36,8 +36,8 @@ class Round < ActiveRecord::Base
              'Roggen' => 100,
              'Weizen' => 115,
              'Zuckerruebe' => 570}
-  HARVEST_SOIL_NORMAL = 0.8
-  HARVEST_SOIL_STRONG = 1
+  HARVEST_SOIL_NORMAL = 1.0
+  HARVEST_SOIL_STRONG = 1.2
   HARVEST_SOIL = {'Ackerbohne' => HARVEST_SOIL_NORMAL,
                   'Gerste' => HARVEST_SOIL_STRONG,
                   'Hafer' => HARVEST_SOIL_NORMAL,
@@ -46,9 +46,9 @@ class Round < ActiveRecord::Base
                   'Roggen' => HARVEST_SOIL_NORMAL,
                   'Weizen' => HARVEST_SOIL_STRONG,
                   'Zuckerruebe' => HARVEST_SOIL_NORMAL}
-  HARVEST_NUTRITION_LOW = 0.6
-  HARVEST_NUTRITION_NORMAL = 0.8
-  HARVEST_NUTRITION_STRONG = 1
+  HARVEST_NUTRITION_LOW = 0.8
+  HARVEST_NUTRITION_NORMAL = 1.0
+  HARVEST_NUTRITION_STRONG = 1.2
   HARVEST_NUTRITION = {'Ackerbohne' => HARVEST_NUTRITION_LOW,
                        'Gerste' => HARVEST_NUTRITION_LOW,
                        'Hafer' => HARVEST_NUTRITION_NORMAL,
@@ -294,13 +294,13 @@ class Round < ActiveRecord::Base
         end
 
         harvest_ratio = harvest/HARVEST[current_parcel.plantation]
-        if harvest_ratio > 1.2
+        if harvest_ratio > 0.8
           new_parcel.harvest = 'sehr_hoch'
-        elsif harvest_ratio > 0.9
-          new_parcel.harvest = 'hoch'
         elsif harvest_ratio > 0.6
+          new_parcel.harvest = 'hoch'
+        elsif harvest_ratio > 0.4
           new_parcel.harvest = 'maessig'
-        elsif harvest_ratio > 0.3
+        elsif harvest_ratio > 0.2
           new_parcel.harvest = 'niedrig'
         elsif harvest_ratio > 0
           new_parcel.harvest = 'sehr_niedrig'

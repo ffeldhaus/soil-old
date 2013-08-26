@@ -182,7 +182,9 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
 
         var dialog = $dialog.dialog(opts);
         if ($scope.selectedRound > 1) {
-            dialog.open();
+            if ((parcel.plantation != 'Brachland' && parcel.plantation != 'Tiere') || ($scope.show == 'cropsequence' && parcel.plantation == 'Brachland')) {
+                dialog.open();
+            }
         }
     };
 
