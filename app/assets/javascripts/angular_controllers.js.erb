@@ -299,24 +299,34 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
     {
         case ($scope.round.result.machines >= 200):
             $scope.percentages = ['0%'];
+            break;
         case ($scope.round.result.machines >= 195):
             $scope.percentages = ['0%', '5%'];
+            break;
         case ($scope.round.result.machines >= 190):
             $scope.percentages = ['0%', '5%', '10%'];
+            break;
         case ($scope.round.result.machines >= 185):
             $scope.percentages = ['0%', '5%', '10%', '15%'];
+            break;
         case ($scope.round.result.machines >= 180):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%'];
+            break;
         case ($scope.round.result.machines >= 175):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%'];
+            break;
         case ($scope.round.result.machines >= 170):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%'];
+            break;
         case ($scope.round.result.machines >= 165):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%'];
+            break;
         case ($scope.round.result.machines >= 160):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%'];
+            break;
         case ($scope.round.result.machines >= 155):
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%'];
+            break;
         default:
             $scope.percentages = ['0%', '5%', '10%', '15%','20%', '25%', '30%', '35%', '40%', '45%', '50%'];
     }
