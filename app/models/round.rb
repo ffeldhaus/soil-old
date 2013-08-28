@@ -137,9 +137,9 @@ class Round < ActiveRecord::Base
     # self is the new round,
     # the current round is the round before it
     # the previous round is the round before the current one
-    current_round = rounds.find_by_number(self.number-1)
+    current_round = rounds.find_by number: self.number - 1
     if rounds.length > 2
-      previous_round = rounds.find_by_number(self.number-2)
+      previous_round = rounds.find_by number: self.number - 2
     else
       previous_round = Round.new(:number => 0)
     end
@@ -169,8 +169,8 @@ class Round < ActiveRecord::Base
 
     ### parcel evaluation
     self.field.parcels.each do |new_parcel|
-      current_parcel = current_round.field.parcels.find_by_number(new_parcel.number)
-      previous_parcel = previous_round.field.parcels.find_by_number(new_parcel.number)
+      current_parcel = current_round.field.parcels.find_by number: new_parcel.number
+      previous_parcel = previous_round.field.parcels.find_by number: new_parcel.number
 
       # copy values from parcel of current round to parcel of new round
       new_parcel.plantation = current_parcel.plantation
@@ -212,7 +212,7 @@ class Round < ActiveRecord::Base
         while monoculture
           round_counter += 1
           if rounds.count > round_counter + 2
-            monoculture = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
+            monoculture = (current_parcel.plantation == rounds.find_by(number: self.number - 2 - round_counter).field.parcels.find_by(number: new_parcel.number).plantation)
           else
             monoculture = false
           end
@@ -275,7 +275,7 @@ class Round < ActiveRecord::Base
         while efficiency
           round_counter += 1
           if rounds.count > round_counter + 2
-            efficiency = (current_parcel.plantation == rounds.find_by_number(self.number - 2 - round_counter).field.parcels.find_by_number(new_parcel.number).plantation)
+            efficiency = (current_parcel.plantation == rounds.find_by(number: self.number - 2 - round_counter).field.parcels.find_by(number: new_parcel.number).plantation)
           else
             efficiency = false
           end
@@ -313,21 +313,21 @@ class Round < ActiveRecord::Base
     # expenses
     ## seeds
     ### fieldbean
-    self.result.expense.seed.fieldbean = current_round.field.parcels.find_all_by_plantation('Ackerbohne').count * SEED_FIELDBEAN[current_round.decision.organic]
+    self.result.expense.seed.fieldbean = current_round.field.parcels.where(plantation: 'Ackerbohne').count * SEED_FIELDBEAN[current_round.decision.organic]
     ### barley
-    self.result.expense.seed.barley = current_round.field.parcels.find_all_by_plantation('Gerste').count * SEED_BARLEY[current_round.decision.organic]
+    self.result.expense.seed.barley = current_round.field.parcels.where(plantation: 'Gerste').count * SEED_BARLEY[current_round.decision.organic]
     ### oat
-    self.result.expense.seed.oat = current_round.field.parcels.find_all_by_plantation('Hafer').count * SEED_OAT[current_round.decision.organic]
+    self.result.expense.seed.oat = current_round.field.parcels.where(plantation: 'Hafer').count * SEED_OAT[current_round.decision.organic]
     ### potatoe
-    self.result.expense.seed.potatoe = current_round.field.parcels.find_all_by_plantation('Kartoffel').count * SEED_POTATOE[current_round.decision.organic]
+    self.result.expense.seed.potatoe = current_round.field.parcels.where(plantation: 'Kartoffel').count * SEED_POTATOE[current_round.decision.organic]
     ### corn
-    self.result.expense.seed.corn = current_round.field.parcels.find_all_by_plantation('Mais').count * SEED_CORN[current_round.decision.organic]
+    self.result.expense.seed.corn = current_round.field.parcels.where(plantation: 'Mais').count * SEED_CORN[current_round.decision.organic]
     ### rye
-    self.result.expense.seed.rye = current_round.field.parcels.find_all_by_plantation('Roggen').count * SEED_RYE[current_round.decision.organic]
+    self.result.expense.seed.rye = current_round.field.parcels.where(plantation: 'Roggen').count * SEED_RYE[current_round.decision.organic]
     ### wheat
-    self.result.expense.seed.wheat = current_round.field.parcels.find_all_by_plantation('Weizen').count * SEED_WHEAT[current_round.decision.organic]
+    self.result.expense.seed.wheat = current_round.field.parcels.where(plantation: 'Weizen').count * SEED_WHEAT[current_round.decision.organic]
     ### beet
-    self.result.expense.seed.beet = current_round.field.parcels.find_all_by_plantation('Zuckerruebe').count * SEED_BEET[current_round.decision.organic]
+    self.result.expense.seed.beet = current_round.field.parcels.where(plantation: 'Zuckerruebe').count * SEED_BEET[current_round.decision.organic]
     ### seed sum
     self.result.expense.seed.sum = self.result.expense.seed.fieldbean + self.result.expense.seed.barley + self.result.expense.seed.oat + self.result.expense.seed.potatoe + self.result.expense.seed.corn + self.result.expense.seed.rye + self.result.expense.seed.wheat + self.result.expense.seed.beet
     ## save seeds
@@ -374,21 +374,21 @@ class Round < ActiveRecord::Base
     self.save
     self.field.save
     ### fieldbean
-    self.result.income.harvest.fieldbean = self.field.parcels.find_all_by_plantation('Ackerbohne').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_FIELDBEAN[self.result.organic]
+    self.result.income.harvest.fieldbean = self.field.parcels.where(plantation: 'Ackerbohne').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_FIELDBEAN[self.result.organic]
     ### barley
-    self.result.income.harvest.barley = self.field.parcels.find_all_by_plantation('Gerste').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BARLEY[self.result.organic]
+    self.result.income.harvest.barley = self.field.parcels.where(plantation: 'Gerste').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BARLEY[self.result.organic]
     ### oat
-    self.result.income.harvest.oat = self.field.parcels.find_all_by_plantation('Hafer').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_OAT[self.result.organic]
+    self.result.income.harvest.oat = self.field.parcels.where(plantation: 'Hafer').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_OAT[self.result.organic]
     ### potatoe
-    self.result.income.harvest.potatoe = self.field.parcels.find_all_by_plantation('Kartoffel').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_POTATOE[self.result.organic]
+    self.result.income.harvest.potatoe = self.field.parcels.where(plantation: 'Kartoffel').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_POTATOE[self.result.organic]
     ### corn
-    self.result.income.harvest.corn = self.field.parcels.find_all_by_plantation('Mais').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_CORN[self.result.organic]
+    self.result.income.harvest.corn = self.field.parcels.where(plantation: 'Mais').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_CORN[self.result.organic]
     ### rye
-    self.result.income.harvest.rye = self.field.parcels.find_all_by_plantation('Roggen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_RYE[self.result.organic]
+    self.result.income.harvest.rye = self.field.parcels.where(plantation: 'Roggen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_RYE[self.result.organic]
     ### wheat
-    self.result.income.harvest.wheat = self.field.parcels.find_all_by_plantation('Weizen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_WHEAT[self.result.organic]
+    self.result.income.harvest.wheat = self.field.parcels.where(plantation: 'Weizen').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_WHEAT[self.result.organic]
     ### beet
-    self.result.income.harvest.beet = self.field.parcels.find_all_by_plantation('Zuckerruebe').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BEET[self.result.organic]
+    self.result.income.harvest.beet = self.field.parcels.where(plantation: 'Zuckerruebe').collect { |parcel| parcel.harvest_yield }.inject(:+).to_i * HARVEST_BEET[self.result.organic]
     ### sum
     self.result.income.harvest.sum = self.result.income.harvest.fieldbean +
         self.result.income.harvest.barley +
