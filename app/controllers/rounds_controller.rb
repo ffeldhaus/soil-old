@@ -3,7 +3,7 @@
 
 
   def index
-    @rounds = Player.find(params[:player_id]).rounds
+    @rounds = Round.where player_id: params[:player_id]
     render json: @rounds.to_json
   end
 
