@@ -19,7 +19,7 @@ angular.module("soil.factories", []).factory 'checkForNewRounds', ($resource, $t
             $log.debug 'Old round' if r.length <= rounds.length
             rounds = $filter('orderBy')(r, 'number')
             $log.debug rounds
-            $timeout query, 1000
+            $timeout query, 2000
 
     setScope: setScope,
     query: query
