@@ -7,18 +7,14 @@ angular.module("soil.factories", []).factory 'checkForNewRounds', ($resource, $t
         scope = s
 
     query = ->
-        $log.debug 'In check Round'
         $resource('/games/:game_id/players/:player_id/rounds/',
             game_id: scope.game.id
             player_id: scope.player.id
         ).query (r) ->
-            $log.debug 'In query Round'
             if r.length > rounds.length and rounds.length > 0
-                $log.debug 'New round'
                 scope.getGame(scope.game.id)
             $log.debug 'Old round' if r.length <= rounds.length
             rounds = $filter('orderBy')(r, 'number')
-            $log.debug rounds
             $timeout query, 2000
 
     setScope: setScope,

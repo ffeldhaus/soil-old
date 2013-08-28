@@ -119,10 +119,10 @@ class Round < ActiveRecord::Base
   HARVEST_BARLEY = {false => 13, true => 14.5}
   HARVEST_OAT = {false => 12, true => 14}
   HARVEST_POTATOE = {false => 4, true => 5}
-  HARVEST_CORN = {false => 15, true => 18}
+  HARVEST_CORN = {false => 15, true => 17}
   HARVEST_RYE = {false => 13, true => 14.5}
-  HARVEST_WHEAT = {false => 15, true => 18}
-  HARVEST_BEET = {false => 3, true => 4}
+  HARVEST_WHEAT = {false => 15, true => 17}
+  HARVEST_BEET = {false => 2, true => 2,5}
 
   after_initialize do
     self.number ||= 1
@@ -355,7 +355,7 @@ class Round < ActiveRecord::Base
     ### animals
     self.result.expense.running_cost.animals = animals * RUNNINGCOSTS_ANIMALS
     ### basic cost
-    self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic] * (0.01 * self.result.machines)**0.5
+    self.result.expense.running_cost.base = 40 * RUNNINGCOSTS_BASE[current_round.decision.organic] * (0.01 * self.result.machines)**0.4
     ### sum
     self.result.expense.running_cost.sum = self.result.expense.running_cost.organic_control +
         self.result.expense.running_cost.fertilize +
