@@ -122,7 +122,7 @@ class Round < ActiveRecord::Base
   HARVEST_CORN = {false => 15, true => 17}
   HARVEST_RYE = {false => 13, true => 14.5}
   HARVEST_WHEAT = {false => 15, true => 17}
-  HARVEST_BEET = {false => 2, true => 2,5}
+  HARVEST_BEET = {false => 2, true => 2.5}
 
   after_initialize do
     self.number ||= 1
