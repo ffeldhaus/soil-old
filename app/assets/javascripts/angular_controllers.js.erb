@@ -294,7 +294,21 @@ SelectPlantationCtrl.$inject = ['$scope', '$log', 'dialog'];
 // the dialog is injected in the specified controller
 function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
 
-    $scope.percentages = ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'];
+    switch ($scope.round.result.machines)
+    {
+        case '160%':
+            $scope.percentages = ['0%', '10%', '20%', '30%', '40%'];
+        case '170%':
+            $scope.percentages = ['0%', '10%', '20%', '30%'];
+        case '180%':
+            $scope.percentages = ['0%', '10%', '20%'];
+        case '190%':
+            $scope.percentages = ['0%', '10%'];
+        case '200%':
+            $scope.percentages = ['0%'];
+        default:
+            $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
+    }
     $scope.round = round;
     $scope.round.decision.machines = "0%";
     $scope.close = function (submitted) {
