@@ -295,25 +295,30 @@ SelectPlantationCtrl.$inject = ['$scope', '$log', 'dialog'];
 function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
 
     $scope.round = round;
-    switch ($scope.round.result.machines)
+    switch (true)
     {
-        case 155:
-        case 160:
-            $scope.percentages = ['0%', '10%', '20%', '30%', '40%'];
-        case 165:
-        case 170:
-            $scope.percentages = ['0%', '10%', '20%', '30%'];
-        case 175:
-        case 180:
-            $scope.percentages = ['0%', '10%', '20%'];
-        case 185:
-        case 190:
-            $scope.percentages = ['0%', '10%'];
-        case 195:
-        case 200:
+        case ($scope.round.result.machines >= 200):
             $scope.percentages = ['0%'];
+        case ($scope.round.result.machines >= 195):
+            $scope.percentages = ['0%', '5%'];
+        case ($scope.round.result.machines >= 190):
+            $scope.percentages = ['0%', '5%', '10%'];
+        case ($scope.round.result.machines >= 185):
+            $scope.percentages = ['0%', '5%', '10%', '15%'];
+        case ($scope.round.result.machines >= 180):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%'];
+        case ($scope.round.result.machines >= 175):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%'];
+        case ($scope.round.result.machines >= 170):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%'];
+        case ($scope.round.result.machines >= 165):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%'];
+        case ($scope.round.result.machines >= 160):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%'];
+        case ($scope.round.result.machines >= 155):
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%'];
         default:
-            $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
+            $scope.percentages = ['0%', '5%', '10%', '15%','20%', '25%', '30%', '35%', '40%', '45%', '50%'];
     }
     $scope.round.decision.machines = "0%";
     $scope.close = function (submitted) {
