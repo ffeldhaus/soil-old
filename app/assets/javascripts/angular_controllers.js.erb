@@ -297,15 +297,20 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
     $scope.round = round;
     switch ($scope.round.result.machines)
     {
-        case '160%':
+        case 155:
+        case 160:
             $scope.percentages = ['0%', '10%', '20%', '30%', '40%'];
-        case '170%':
+        case 165:
+        case 170:
             $scope.percentages = ['0%', '10%', '20%', '30%'];
-        case '180%':
+        case 175:
+        case 180:
             $scope.percentages = ['0%', '10%', '20%'];
-        case '190%':
+        case 185:
+        case 190:
             $scope.percentages = ['0%', '10%'];
-        case '200%':
+        case 195:
+        case 200:
             $scope.percentages = ['0%'];
         default:
             $scope.percentages = ['0%', '10%', '20%', '30%', '40%', '50%'];
