@@ -153,10 +153,12 @@ ActiveRecord::Schema.define(version: 20130731151717) do
     t.integer  "number"
     t.boolean  "submitted"
     t.integer  "player_id"
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
   add_index "rounds", ["player_id"], name: "index_rounds_on_player_id", using: :btree
 
   create_table "running_costs", force: true do |t|

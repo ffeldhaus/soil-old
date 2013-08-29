@@ -12,9 +12,9 @@ class Game < ActiveRecord::Base
   end
 
   def start_new_round
-    if self.players.load.all? { |player| player.rounds.load.all? { |round| round.submitted } }
-      self.players.load.each do |player|
-        next_round = player.rounds.create(number: player.rounds.length + 1)
+    if Round.where(game_id: self.id).all? { |round| round.submitted }
+      Player.where(game_id: self.id).each do |player|
+        next_round = player.rounds.create(number: player.rounds.length + 1, game_id: self.id)
         next_round.calculate_attributes
       end
     end

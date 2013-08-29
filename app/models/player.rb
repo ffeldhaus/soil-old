@@ -9,6 +9,6 @@ class Player < ActiveRecord::Base
   validates :name, :presence => true, :length => {:in => 4..64}
 
   after_create do
-    @first_round ||= self.rounds.create(:number => 1)
+    @first_round ||= self.rounds.create number: 1, game_id: self.game_id
   end
 end
