@@ -1,0 +1,33 @@
+<form class="form-horizontal">
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label"><%= I18n.t 'name' %></label>
+      <div class="controls">
+        <span class="input-xlarge uneditable-input">{{supervisor.first_name.charAt(0) + supervisor.last_name | lowercase }}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputFirstName"><%= I18n.t 'first_name' %></label>
+      <div class="controls">
+        <input ng-model="supervisor.first_name" type="text" id="inputFirstName" placeholder="<%= I18n.t 'first_name' %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputLastName"><%= I18n.t 'last_name' %></label>
+      <div class="controls">
+        <input ng-model="supervisor.last_name" ttype="text" id="inputLastName" placeholder="<%= I18n.t 'last_name' %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputEmail"><%= I18n.t 'email' %></label>
+      <div class="controls">
+        <input ng-model="supervisor.email" ttype="email" id="inputEmail" placeholder="<%= I18n.t 'email' %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button ng-click="createSupervisor(supervisor)" type="submit" class="btn"><%= I18n.t 'new_supervisor' %></button>
+      </div>
+    </div>
+  </fieldset>
+</form>

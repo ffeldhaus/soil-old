@@ -1,0 +1,32 @@
+<div class="span6 center login-form">
+  <%= form_tag sessions_path, :class => 'form-horizontal' do %>
+      <fieldset>
+        <div class="control-group">
+          <%= label_tag 'name', 'Spielname', :class => 'control-label' %>
+          <div class="control">
+            <%= select_tag :game, options_from_collection_for_select(Game.all, "id", "name") %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= label_tag 'name', 'Benutzername', :class => 'control-label' %>
+          <div class="control">
+            <%= text_field_tag :name, params[:name], :placeholder => 'Benutzername' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= label_tag 'password', 'Passwort', :class => 'control-label' %>
+          <div class="control">
+            <%= password_field_tag :password, params[:password], :placeholder => 'Passwort' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <!-- Button -->
+          <div class="controls">
+            <%= submit_tag "Anmelden", :class => 'btn btn-primary' %>
+          </div>
+        </div>
+      </fieldset>
+  <% end %>
+</div>

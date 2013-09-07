@@ -1,5 +1,4 @@
 class SupervisorsController < ApplicationController
-  before_filter :authorize_supervisor, only: [:edit, :update]
   before_action :set_supervisor, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -12,8 +11,6 @@ class SupervisorsController < ApplicationController
     render json: @supervisor
   end
 
-  # POST /games
-  # POST /games.json
   def create
     @supervisor = Supervisor.new(supervisor_params)
     if @supervisor.save

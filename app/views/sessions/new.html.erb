@@ -1,45 +1,19 @@
-<body ng-controller="SoilCtrl">
+<body ng-controller="LoginCtrl">
 
 <div id="main" role="main">
   <div class="content">
-    <div class="row span6 center">
-      <%= render 'layouts/messages' %>
-
-      <div class="login-form">
-        <%= form_tag sessions_path, :class => 'form-horizontal' do %>
-            <fieldset>
-              <div id="legend">
-                <legend class="">Anmelden</legend>
-              </div>
-              <div class="control-group">
-                <%= label_tag 'name', 'Spielname', :class => 'control-label' %>
-                <div class="control">
-                  <%= select_tag :game, options_from_collection_for_select(Game.all, "id", "name") %>
-                </div>
-              </div>
-              <div class="control-group">
-                <%= label_tag 'name', 'Benutzername', :class => 'control-label' %>
-                <div class="control">
-                  <%= text_field_tag :name, params[:name], :placeholder => 'Benutzername' %>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <%= label_tag 'password', 'Passwort', :class => 'control-label' %>
-                <div class="control">
-                  <%= password_field_tag :password, params[:password], :placeholder => 'Passwort' %>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <!-- Button -->
-                <div class="controls">
-                  <%= submit_tag "Anmelden", :class => 'btn btn-primary' %>
-                </div>
-              </div>
-            </fieldset>
-        <% end %>
+    <div class="row span8 center">
+      <div>
+        <%= render 'layouts/messages' %>
       </div>
+
+      <tabset class="frontpage">
+        <tab heading="Übersicht"><%= render 'layouts/overview' %></tab>
+        <tab heading="Hintergrundinformationen"><%= render 'layouts/background' %></tab>
+        <tab heading="Anmelden"><%= render 'layouts/login' %></tab>
+        <tab heading="Registrieren"><%= render 'layouts/register' %></tab>
+        <tab heading="Impressum"><%= render 'layouts/impressum' %></tab>
+      </tabset>
     </div>
   </div>
 </div>

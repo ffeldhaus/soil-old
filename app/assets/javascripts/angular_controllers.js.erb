@@ -117,6 +117,8 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
     <%= RoundSerializer.new(Round.new(:number => 0)).to_json %>.
     round;
 
+    $scope.hideAlert = false;
+
     var Games = $resource('/games/:game_id', {game_id: '@id'});
 
     $scope.initialize = function (game_id, player_id) {
@@ -400,3 +402,18 @@ function ShowParcelInformationCtrl($scope, $filter, dialog, game, player, round,
 }
 
 ShowParcelInformationCtrl.$inject = ['$scope', '$filter', 'dialog', 'game', 'player', 'round', 'parcel', 'show'];
+
+function LoginCtrl($scope, $resource, $log) {
+    var Supervisors = $resource('/supervisors/:supervisor_id', {supervisor_id: '@id'});
+
+    $scope.supervisor = {};
+    $scope.supervisor.first_name = '';
+    $scope.supervisor.last_name = '';
+    $scope.supervisor.email = '';
+
+    $scope.createSupervisor = function (supervisor) {
+        Supervisors.save(supervisor);
+    };
+}
+
+LoginCtrl.$inject = ['$scope', '$resource', '$log'];
