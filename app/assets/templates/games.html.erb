@@ -66,6 +66,12 @@
               <span>{{currentRound(game)}}</span>
             </div>
           </div>
+          <div class="control-group">
+            <label class="control-label" for="inputName"><%= I18n.t 'game_group_count' %></label>
+            <div class="controls form-align">
+              <span>{{game.players.length}}</span>
+            </div>
+          </div>
         </fieldset>
       </form>
     </accordion-group>
