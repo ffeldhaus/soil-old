@@ -1,17 +1,7 @@
 <div class="games">
   <accordion>
     <accordion-group ng-repeat="material in materials">
-      <accordion-heading>{{material.name}}</accordion-heading>
-      <table>
-        <tr>
-          <th><%= I18n.t 'size' %></th>
-          <td>{{material.size}}</td>
-        </tr>
-        <tr>
-          <th><%= I18n.t 'download' %></th>
-          <td>{{material.download}}</td>
-        </tr>
-      </table>
+      <accordion-heading><a href="{{material.url}}">{{material.name}}</a> {{material.size}}</accordion-heading>
     </accordion-group>
   </accordion>
 </div>

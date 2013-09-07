@@ -1,5 +1,6 @@
 class SupervisorsController < ApplicationController
   before_action :set_supervisor, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :require_login, only: :create
 
   def index
     @supervisors = Supervisor.all
@@ -34,8 +35,8 @@ class SupervisorsController < ApplicationController
   def supervisor_params
     params.merge! :name => (params[:first_name][0] + params[:last_name]).downcase
     password = SecureRandom.hex(8)
-    params.merge! :password => password
-    params.merge! :password_confirmation => password
+    params.merge! :password => password unless params.has_key? :password
+    params.merge! :password_confirmation => params[:password]
     puts params
     params.permit(:name, :first_name, :last_name, :password, :password_confirmation, :email)
   end

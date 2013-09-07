@@ -33,6 +33,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :player?, :supervisor?, :admin?
 
   def require_login
-    redirect_to login_url, alert: "Not authorized" if current_user.nil?
+    redirect_to welcome_url if current_user.nil?
   end
 end

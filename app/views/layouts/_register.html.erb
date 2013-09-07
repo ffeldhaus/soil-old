@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<form class="form-horizontal" name="register">
   <fieldset>
     <div class="control-group">
       <label class="control-label"><%= I18n.t 'name' %></label>
@@ -9,24 +9,37 @@
     <div class="control-group">
       <label class="control-label" for="inputFirstName"><%= I18n.t 'first_name' %></label>
       <div class="controls">
-        <input ng-model="supervisor.first_name" type="text" id="inputFirstName" placeholder="<%= I18n.t 'first_name' %>">
+        <input ng-model="supervisor.first_name" required type="text" id="inputFirstName" placeholder="<%= I18n.t 'first_name' %>">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="inputLastName"><%= I18n.t 'last_name' %></label>
       <div class="controls">
-        <input ng-model="supervisor.last_name" ttype="text" id="inputLastName" placeholder="<%= I18n.t 'last_name' %>">
+        <input ng-model="supervisor.last_name" required type="text" id="inputLastName" placeholder="<%= I18n.t 'last_name' %>">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="inputEmail"><%= I18n.t 'email' %></label>
       <div class="controls">
-        <input ng-model="supervisor.email" ttype="email" id="inputEmail" placeholder="<%= I18n.t 'email' %>">
+        <input ng-model="supervisor.email" required type="email" id="inputEmail" placeholder="<%= I18n.t 'email' %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPassword"><%= I18n.t 'password' %></label>
+      <div class="controls">
+        <input ng-model="supervisor.password" required type="password" id="inputPassword" placeholder="<%= I18n.t 'password' %>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPasswordConfirm"><%= I18n.t 'password_confirm' %></label>
+      <div class="controls">
+        <input name="password_confirm" ui-validate=" '$value==supervisor.password' " ui-validate-watch=" 'supervisor.password' " required type="password" placeholder="<%= I18n.t 'password' %>">
+        <span ng-show='register.password_confirm.$error.validator'>Passwords do not match!</span>
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <button ng-click="createSupervisor(supervisor)" type="submit" class="btn"><%= I18n.t 'new_supervisor' %></button>
+        <button ng-click="createSupervisor(supervisor)" type="submit" class="btn"><%= I18n.t 'register_supervisor' %></button>
       </div>
     </div>
   </fieldset>

@@ -42,6 +42,14 @@ function GamesCtrl($scope, $resource, $log, $location) {
     $scope.game.name = '';
     $scope.game.supervisor_id = null;
 
+    $scope.materials = [
+        {
+            'name': 'Sortenpass',
+            'url': '<%= asset_path('sortenpass.pdf') %>',
+            'size': '<%= File.size(asset_path('sortenpass.pdf')) %>'
+        }
+    ];
+
     function Player() {
         this.name = '';
         this.password = Math.random().toString(36).slice(-8);
