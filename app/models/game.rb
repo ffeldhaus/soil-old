@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
-  has_many :players, :autosave => true, :dependent => :destroy
+  has_many :players, autosave: true, dependent: :destroy
+  has_many :rounds, through: :players
   belongs_to :supervisor
   serialize :weather
   serialize :vermin

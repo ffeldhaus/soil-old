@@ -54,12 +54,6 @@
       </accordion-heading>
       <form class="form-horizontal">
         <fieldset>
-          <div class="control-group">
-            <label class="control-label" for="inputName"><%= I18n.t 'game_name' %></label>
-            <div class="controls form-align">
-              <span>{{game.name}}</span>
-            </div>
-          </div>
           <div class="control-group" ng-show="admin">
             <label class="control-label" for="inputName"><%= I18n.t 'supervisor' %></label>
             <div class="controls form-align">
@@ -69,27 +63,8 @@
           <div class="control-group">
             <label class="control-label" for="inputName"><%= I18n.t 'current_round' %></label>
             <div class="controls form-align">
-              <span>{{game.current_round}}</span>
+              <span>{{currentRound(game)}}</span>
             </div>
-          </div>
-          <div class="control-group" ng-repeat="player in game.players | orderBy: 'name'">
-            <accordion>
-              <accordion-group>
-                <accordion-heading>{{player.name}}</accordion-heading>
-                <div class="control-group">
-                  <label class="control-label" for="inputPlayerName"><%= I18n.t 'group_name' %></label>
-                  <div class="controls form-align">
-                    <span>{{player.name}}</span>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label" for="inputPlayerPassword"><%= I18n.t 'password' %></label>
-                  <div class="controls form-align">
-                    <span>{{player.password}}</span>
-                  </div>
-                </div>
-              </accordion-group>
-            </accordion>
           </div>
         </fieldset>
       </form>

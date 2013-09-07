@@ -68,6 +68,16 @@ function GamesCtrl($scope, $resource, $log, $location) {
         $scope.games = Games.query();
     };
 
+    $scope.currentRound = function (game) {
+        var round = 1;
+        game.players.forEach(function (player) {
+            if (player.rounds.length > round) {
+                round = player.rounds.length;
+            }
+        });
+        return round;
+    };
+
 }
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
@@ -295,8 +305,7 @@ SelectPlantationCtrl.$inject = ['$scope', '$log', 'dialog'];
 function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
 
     $scope.round = round;
-    switch (true)
-    {
+    switch (true) {
         case ($scope.round.result.machines >= 200):
             $scope.percentages = ['0%'];
             break;
@@ -328,7 +337,7 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
             $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%'];
             break;
         default:
-            $scope.percentages = ['0%', '5%', '10%', '15%','20%', '25%', '30%', '35%', '40%', '45%', '50%'];
+            $scope.percentages = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '35%', '40%', '45%', '50%'];
     }
     $scope.round.decision.machines = "0%";
     $scope.close = function (submitted) {

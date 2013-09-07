@@ -9,6 +9,7 @@ class CreateParcels < ActiveRecord::Migration
       t.string :harvest
       t.string :plantation
       t.references :field, index: true
+      t.references :round, index: true
 
       t.timestamps
     end

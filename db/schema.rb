@@ -117,15 +117,16 @@ ActiveRecord::Schema.define(version: 20130731151717) do
     t.string   "harvest"
     t.string   "plantation"
     t.integer  "field_id"
+    t.integer  "round_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "parcels", ["field_id"], name: "index_parcels_on_field_id", using: :btree
+  add_index "parcels", ["round_id"], name: "index_parcels_on_round_id", using: :btree
 
   create_table "players", force: true do |t|
     t.string   "name"
-    t.integer  "seedcapital"
     t.string   "password_digest"
     t.string   "salt"
     t.integer  "game_id"
