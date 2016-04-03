@@ -11,3 +11,4 @@
 7. Install Bundler `gem install bundler`
 8. Re-Link bundler to current rbenv ruby `rbenv rehash`
 9. Install all gems with bundler `bundle install`
+10. Re-Link binaries (e.g. rails) to current rbenv ruby `rbenv rehash`
