@@ -2,16 +2,19 @@
 
 ## Setup
 
-1. [Install rbenv](https://github.com/rbenv/rbenv#installation)
-2. [Install ruby-build plugin](https://github.com/rbenv/ruby-build#installing-as-an-rbenv-plugin-recommended)
-3. [Install rbenv-gemset plugin](https://github.com/jf/rbenv-gemset#github)
-4. Build ruby 2.3.0 with `rbenv install 2.3.0 -v`. You may need to manually specify the openssl directory with e.g. `RUBY_CONFIGURE_OPTS=--with-openssl-dir=/opt rbenv install 2.3.0 -v`
-5. Clone soil `git clone https://github.com/ffeldhaus/soil.git soil`
-6. Change to soil directory `cd soil`
-7. Install Bundler `gem install bundler`
-8. Re-Link bundler to current rbenv ruby `rbenv rehash`
-9. Install all gems with bundler `bundle install`
-10. Re-Link binaries (e.g. rails) to current rbenv ruby `rbenv rehash`
-11. Install postgresql
-12. Init postgresql with `initdb -D $HOME/soil/db/pgsql -U soil`
-13. Start postgresql with `postgresql -D $HOME/soil/db/pgsql`
+1. Create a new user named `soil` and become the user with e.g. `su -l soil`
+2. [Install rbenv](https://github.com/rbenv/rbenv#installation)
+3. [Install ruby-build plugin](https://github.com/rbenv/ruby-build#installing-as-an-rbenv-plugin-recommended)
+4. [Install rbenv-gemset plugin](https://github.com/jf/rbenv-gemset#github)
+5. Build ruby 2.3.0 with `rbenv install 2.3.0 -v`. You may need to manually specify the openssl directory with e.g. `RUBY_CONFIGURE_OPTS=--with-openssl-dir=/opt rbenv install 2.3.0 -v`
+6. Clone soil `git clone https://github.com/ffeldhaus/soil.git soil`
+7. Change to soil directory `cd soil`
+8. Install Bundler `gem install bundler`
+9. Re-Link bundler to current rbenv ruby `rbenv rehash`
+10. Install all gems with bundler `bundle install`
+11. Re-Link binaries (e.g. rails) to current rbenv ruby `rbenv rehash`
+12. Install postgresql
+13. Init postgresql with `initdb -D $HOME/soil/db/pgsql -U soil`
+14. Change `listen_addresses` and `port` in `db/pgsql/postgresql.conf` if necessary
+15. Start postgresql with `postgres -D $HOME/soil/db/pgsql >$HOME/soil/log/pgsql.log 2>&1 &`
+16. You may need to create a database for the `soil` user with `createdb` or, if the port is different than 5432 then with `createdb -p <port>` (change `<port>` to the port number)
