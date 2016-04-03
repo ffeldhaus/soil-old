@@ -18,3 +18,15 @@
 14. Change `listen_addresses` and `port` in `db/pgsql/postgresql.conf` if necessary
 15. Start postgresql with `postgres -D $HOME/soil/db/pgsql >$HOME/soil/log/pgsql.log 2>&1 &`
 16. You may need to create a database for the `soil` user with `createdb` or, if the port is different than 5432 then with `createdb -p <port>` (change `<port>` to the port number)
+17. Create the file `config/database.yml` file and insert the following (adapt database name, host and port):
+```
+production:
+  adapter: postgresql
+  database: soil
+  host: 127.0.0.1
+  port: 5433
+  encoding: unicode
+  pool: 5
+```
+18. Setup database with `RAILS_ENV=production rake db:reset`
+19. Start Rails server with `RAILS_ENV=production rails server -b <IP>` (change <IP> to the IP of your server) and test connection on <IP>:3000
