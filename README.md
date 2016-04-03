@@ -12,3 +12,6 @@
 8. Re-Link bundler to current rbenv ruby `rbenv rehash`
 9. Install all gems with bundler `bundle install`
 10. Re-Link binaries (e.g. rails) to current rbenv ruby `rbenv rehash`
+11. Install postgresql
+12. Init postgresql with `initdb -D $HOME/soil/db/pgsql -U soil`
+13. Start postgresql with `postgresql -D $HOME/soil/db/pgsql`
