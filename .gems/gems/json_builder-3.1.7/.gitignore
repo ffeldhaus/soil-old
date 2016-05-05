@@ -1,5 +1,0 @@
-pkg/*
-doc/*
-.DS_Store
-*.log
-/.rbenv-version
