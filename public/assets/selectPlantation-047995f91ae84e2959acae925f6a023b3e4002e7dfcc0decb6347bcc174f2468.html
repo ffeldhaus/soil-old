@@ -1,9 +1,0 @@
-<div class="modal-header">
-    <h2>Was soll angebaut werden?<button ng-click="close()" class="close pull-right">&times;</button></h2>
-</div>
-<div class="modal-body">
-    <ol class="ui-selectable plantation">
-        <li ng-click="click(plantation)" class="{{plantation | lowercase}} ui-selectee" ng-repeat="plantation in plantations">{{plantation}}</li>
-    </ol>
-    {{msg}}
-</div>
