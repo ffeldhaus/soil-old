@@ -25,4 +25,7 @@ build.xml
 .idea/*
 
 # ignore rbenv gemsets
-.gem
+.gems
+
+# ignore rails assets
+public/assets/**
