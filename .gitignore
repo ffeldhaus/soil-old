@@ -5,11 +5,14 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
+# Ignore postgresql data
+/db/pgsql
+
 # Ignore database configuration
 /config/database.yml
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
+/log
 /tmp
 
 **/.DS_Store

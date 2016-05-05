@@ -1,4 +1,4 @@
-angular.module("soil.directives", []).directive("navLocation", ['$location', ($location) ->
+angular.module("soil").directive("navLocation", ['$location', ($location) ->
     restrict: "E"
     transclude: true
     scope:
@@ -14,7 +14,7 @@ angular.module("soil.directives", []).directive("navLocation", ['$location', ($l
     template: "<li ng-class=\"{active: location(href) && visible()}\">" + "<a ng-click=\"show=name\" href=\"{{href}}\" ng-transclude></a>" + "</li>"
     replace: true
 ]
-).directive "uiSelectable", ['$dialog', '$filter', ($dialog, $filter) ->
+).directive "uiSelectable", ['$uibModal', '$filter', ($uibModal, $filter) ->
     (scope, el, attrs) ->
         scope.opts =
             backdrop: true
@@ -30,8 +30,8 @@ angular.module("soil.directives", []).directive("navLocation", ['$location', ($l
                 index: idx
             ).get()
             if scope.selectedRound == scope.player.rounds.length and not scope.round.submitted and not scope.gameOver
-                d = $dialog.dialog(scope.opts)
-                d.open().then (plantation) ->
+                d = $uibModal.open(scope.opts)
+                d.result.then (plantation) ->
                     if plantation
                         i = 0
                         while i < selected.length

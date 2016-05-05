@@ -34,6 +34,7 @@ function AdminCtrl($scope, $resource, $log, $location) {
 }
 
 AdminCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
+angular.module('soil').controller('AdminCtrl', AdminCtrl);
 
 function GamesCtrl($scope, $resource, $log, $location) {
     var Games = $resource('/games/:game_id', {game_id: '@id'});
@@ -46,7 +47,7 @@ function GamesCtrl($scope, $resource, $log, $location) {
         {
             'name': 'Sortenpass',
             'url': '<%= asset_path('sortenpass.pdf') %>',
-            'size': '<%= File.size(asset_path('sortenpass.pdf')) %>'
+            'size': '<%= File.size('public' + asset_path('sortenpass.pdf')) %>'
         }
     ];
 
@@ -89,8 +90,9 @@ function GamesCtrl($scope, $resource, $log, $location) {
 }
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
+angular.module('soil').controller('GamesCtrl', GamesCtrl);
 
-function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, checkForNewRounds) {
+function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, checkForNewRounds) {
 
     $rootScope.image_path = {
         'Brachland': '<%= asset_path('brachland.jpg') %>',
@@ -176,7 +178,7 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
     $scope.showParcelInformation = function (parcel) {
         var opts = {
             backdrop: true,
-            dialogFade: true,
+            uibModalFade: true,
             keyboard: true,
             backdropClick: true,
             templateUrl: "<%= asset_path('showParcelInformation.html') %>",
@@ -200,10 +202,9 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
             }
         };
 
-        var dialog = $dialog.dialog(opts);
         if ($scope.selectedRound > 1) {
             if ((parcel.plantation != 'Brachland' && parcel.plantation != 'Tiere') || ($scope.show == 'cropsequence' && parcel.plantation == 'Brachland')) {
-                dialog.open();
+                var uibModal = $uibModal.open(opts);
             }
         }
     };
@@ -211,7 +212,7 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
     $scope.startNewRound = function () {
         var opts = {
             backdrop: true,
-            dialogFade: true,
+            uibModalFade: true,
             keyboard: true,
             backdropClick: true,
             templateUrl: "<%= asset_path('newRound.html') %>",
@@ -229,14 +230,13 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
             }
         };
 
-        var dialog = $dialog.dialog(opts);
-        dialog.open();
+        var uibModal = $uibModal.open(opts);
     };
 
     $scope.endGame = function () {
         var opts = {
             backdrop: true,
-            dialogFade: true,
+            uibModalFade: true,
             keyboard: true,
             backdropClick: true,
             templateUrl: "<%= asset_path('endGame.html') %>",
@@ -254,15 +254,13 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
             }
         };
 
-        var dialog = $dialog.dialog(opts);
-
-        dialog.open();
+        var uibModal = $uibModal.open(opts);
     };
 
     $scope.endRound = function () {
         var opts = {
             backdrop: true,
-            dialogFade: true,
+            uibModalFade: true,
             keyboard: true,
             backdropClick: true,
             templateUrl: "<%= asset_path('endRound.html') %>",
@@ -280,10 +278,10 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
             }
         };
 
-        var dialog = $dialog.dialog(opts);
+        var uibModal = $uibModal.open(opts);
 
         if ($scope.selectedRound == $scope.player.rounds.length && !$scope.gameOver && !$scope.round.submitted) {
-            dialog.open().then(function (submitted) {
+            uibModal.result.then(function (submitted) {
                 if (submitted) {
                     $scope.round.submitted = true;
                 }
@@ -292,27 +290,29 @@ function SoilCtrl($scope, $rootScope, $dialog, $resource, $log, $filter, $q, che
     }
 }
 
-SoilCtrl.$inject = ['$scope', '$rootScope', '$dialog', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
+SoilCtrl.$inject = ['$scope', '$rootScope', '$uibModal', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
+angular.module('soil').controller('SoilCtrl', SoilCtrl);
 
-// the dialog is injected in the specified controller
-function SelectPlantationCtrl($scope, $log, dialog) {
+// the uibModal is injected in the specified controller
+function SelectPlantationCtrl($scope, $log, uibModal) {
     $scope.plantations = [
         'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
 
     $scope.click = function (plantation) {
-        dialog.close(plantation);
+        uibModal.close(plantation);
     }
 
     $scope.close = function () {
-        dialog.close();
+        uibModal.close();
     }
 }
 
-SelectPlantationCtrl.$inject = ['$scope', '$log', 'dialog'];
+SelectPlantationCtrl.$inject = ['$scope', '$log', 'uibModal'];
+angular.module('soil').controller('SelectPlantationCtrl', SelectPlantationCtrl);
 
-// the dialog is injected in the specified controller
-function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
+// the uibModal is injected in the specified controller
+function EndRoundCtrl($scope, $resource, uibModal, game, player, round) {
 
     $scope.round = round;
     switch (true) {
@@ -351,7 +351,7 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
     }
     $scope.round.decision.machines = "0%";
     $scope.close = function (submitted) {
-        dialog.close(submitted);
+        uibModal.close(submitted);
     };
 
     $scope.submitRound = function () {
@@ -361,28 +361,30 @@ function EndRoundCtrl($scope, $resource, dialog, game, player, round) {
     }
 }
 
-EndRoundCtrl.$inject = ['$scope', '$resource', 'dialog', 'game', 'player', 'round'];
+EndRoundCtrl.$inject = ['$scope', '$resource', 'uibModal', 'game', 'player', 'round'];
+angular.module('soil').controller('EndRoundCtrl', EndRoundCtrl);
 
-function NewRoundCtrl($scope, dialog, round) {
+function NewRoundCtrl($scope, uibModal, round) {
     $scope.round = round;
     $scope.close = function () {
-        dialog.close();
+        uibModal.close();
     };
 }
 
-NewRoundCtrl.$inject = ['$scope', 'dialog', 'round'];
+NewRoundCtrl.$inject = ['$scope', 'uibModal', 'round'];
+angular.module('soil').controller('NewRoundCtrl', NewRoundCtrl);
 
-function EndGameCtrl($scope, dialog, round) {
+function EndGameCtrl($scope, uibModal, round) {
     $scope.round = round;
     $scope.close = function () {
-        dialog.close();
+        uibModal.close();
     };
 }
 
-EndGameCtrl.$inject = ['$scope', 'dialog', 'round'];
+EndGameCtrl.$inject = ['$scope', 'uibModal', 'round'];
+angular.module('soil').controller('EndGameCtrl', EndGameCtrl);
 
-
-function ShowParcelInformationCtrl($scope, $filter, dialog, game, player, round, parcel, show) {
+function ShowParcelInformationCtrl($scope, $filter, uibModal, game, player, round, parcel, show) {
     $scope.game = game;
     $scope.player = player;
     $scope.round = round;
@@ -405,11 +407,12 @@ function ShowParcelInformationCtrl($scope, $filter, dialog, game, player, round,
     }).length;
     $scope.show = show;
     $scope.close = function () {
-        dialog.close();
+        uibModal.close();
     };
 }
 
-ShowParcelInformationCtrl.$inject = ['$scope', '$filter', 'dialog', 'game', 'player', 'round', 'parcel', 'show'];
+ShowParcelInformationCtrl.$inject = ['$scope', '$filter', 'uibModal', 'game', 'player', 'round', 'parcel', 'show'];
+angular.module('soil').controller('ShowParcelInformationCtrl', ShowParcelInformationCtrl);
 
 function LoginCtrl($scope, $resource, $log) {
     var Supervisors = $resource('/supervisors/:supervisor_id', {supervisor_id: '@id'});
@@ -425,3 +428,5 @@ function LoginCtrl($scope, $resource, $log) {
 }
 
 LoginCtrl.$inject = ['$scope', '$resource', '$log'];
+angular.module('soil').controller('LoginCtrl', LoginCtrl);
+

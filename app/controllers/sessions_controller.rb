@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_filter :require_login
 
   def create
-    player = Player.first(:conditions => { :name => params[:name], :game_id => params[:game]})
+    player = Player.where({ :name => params[:name], :game_id => params[:game]}).first
     supervisor = Supervisor.find_by_name(params[:name])
     admin = Admin.find_by_name(params[:name])
     if player && player.authenticate(params[:password])

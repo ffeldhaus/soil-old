@@ -1,7 +1,7 @@
 'use strict'
 
 angular
-    .module('soil', ['ui', 'ui.bootstrap', 'ngResource', 'soil.filters', 'soil.directives', 'soil.factories', 'soil.services', 'ui.slider'])
+    .module('soil', ['ngRoute', 'ui', 'ui.bootstrap', 'ngResource'])
     .config ($routeProvider) ->
         $routeProvider
             .when('/field',

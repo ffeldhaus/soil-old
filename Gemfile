@@ -1,4 +1,3 @@
-ruby '2.0.0'
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -12,7 +11,7 @@ gem 'newrelic_rpm'
 gem 'rails_12factor'
 
 # AngularJS pre minification
-gem 'ngmin-rails'
+gem 'ngannotate-rails'
 
 # activemodel
 gem 'active_model_serializers'
@@ -33,6 +32,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'angularjs-rails'
 gem 'angular-ui-rails'
+gem 'angular-ui-bootstrap-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -42,7 +42,7 @@ gem 'jbuilder', '>= 1.0.1'
 gem 'json_builder'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby'#, '~> 3.0.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'

@@ -1,0 +1,22 @@
+current directory: /volume1/homes/soil/soil/.gems/gems/json-1.8.0/ext/json/ext/generator
+/var/services/homes/soil/.rbenv/versions/2.3.0/bin/ruby -r ./siteconf20160403-9313-wfx8qp.rb extconf.rb
+creating Makefile
+
+current directory: /volume1/homes/soil/soil/.gems/gems/json-1.8.0/ext/json/ext/generator
+make "DESTDIR=" clean
+
+current directory: /volume1/homes/soil/soil/.gems/gems/json-1.8.0/ext/json/ext/generator
+make "DESTDIR="
+compiling generator.c
+In file included from generator.c:1:0:
+../fbuffer/fbuffer.h: In function 'fbuffer_to_s':
+../fbuffer/fbuffer.h:175:47: error: macro "rb_str_new" requires 2 arguments, but only 1 given
+     VALUE result = rb_str_new(FBUFFER_PAIR(fb));
+                                               ^
+../fbuffer/fbuffer.h:175:20: warning: initialization makes integer from pointer without a cast [-Wint-conversion]
+     VALUE result = rb_str_new(FBUFFER_PAIR(fb));
+                    ^
+Makefile:238: recipe for target 'generator.o' failed
+make: *** [generator.o] Error 1
+
+make failed, exit code 2

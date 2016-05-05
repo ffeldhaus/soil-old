@@ -11,9 +11,12 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery.ui.all
-//= require unstable/angular
-//= require unstable/angular-resource
+//= require jquery-ui
+//= require angular
+//= require angular-route
+//= require angular-resource
 //= require angular-ui
+//= require angular-ui-bootstrap
+//= require angular-ui-bootstrap-tpls
 //= require turbolinks
 //= require_tree .

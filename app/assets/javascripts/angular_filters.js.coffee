@@ -1,3 +1,3 @@
-angular.module("soil.filters", []).filter "checkmark", ->
+angular.module("soil").filter "checkmark", ->
   (input) ->
     (if input then "✓" else "✘")
