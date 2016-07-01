@@ -138,17 +138,6 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
         $scope.getGame(game_id, player_id);
     };
 
-    $scope.getButtonText = function () {
-        if ($scope.round.submitted) {
-            return 'Auf andere Gruppen warten ...'
-        } else if ($scope.gameOver) {
-            return 'Ende des Spiels!'
-        }
-        else {
-            return  'Runde abschicken »'
-        }
-    };
-
     $scope.getGame = function () {
         var deferred = $q.defer;
         $log.debug("Getting game with id: " + $scope.game_id);
@@ -173,6 +162,17 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
                 $scope.gameOver = true;
             }
         });
+    };
+
+    $scope.getButtonText = function () {
+        if ($scope.round.submitted) {
+            return 'Auf andere Gruppen warten ...'
+        } else if ($scope.gameOver) {
+            return 'Ende des Spiels!'
+        }
+        else {
+            return  'Runde abschicken »'
+        }
     };
 
     $scope.showParcelInformation = function (parcel) {
@@ -204,7 +204,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
 
         if ($scope.selectedRound > 1) {
             if ((parcel.plantation != 'Brachland' && parcel.plantation != 'Tiere') || ($scope.show == 'cropsequence' && parcel.plantation == 'Brachland')) {
-                var uibModal = $uibModal.open(opts);
+                var uibModalInstance = $uibModal.open(opts);
             }
         }
     };
@@ -230,7 +230,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
             }
         };
 
-        var uibModal = $uibModal.open(opts);
+        var uibModalInstance = $uibModal.open(opts);
     };
 
     $scope.endGame = function () {
@@ -254,7 +254,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
             }
         };
 
-        var uibModal = $uibModal.open(opts);
+        var uibModalInstance = $uibModal.open(opts);
     };
 
     $scope.endRound = function () {
@@ -278,10 +278,10 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
             }
         };
 
-        var uibModal = $uibModal.open(opts);
+        var uibModalInstance = $uibModal.open(opts);
 
         if ($scope.selectedRound == $scope.player.rounds.length && !$scope.gameOver && !$scope.round.submitted) {
-            uibModal.result.then(function (submitted) {
+            uibModalInstance.result.then(function (submitted) {
                 if (submitted) {
                     $scope.round.submitted = true;
                 }
@@ -294,25 +294,25 @@ SoilCtrl.$inject = ['$scope', '$rootScope', '$uibModal', '$resource', '$log', '$
 angular.module('soil').controller('SoilCtrl', SoilCtrl);
 
 // the uibModal is injected in the specified controller
-function SelectPlantationCtrl($scope, $log, uibModal) {
+function SelectPlantationCtrl($scope, $log, $uibModalInstance) {
     $scope.plantations = [
         'Ackerbohne', 'Gerste', 'Hafer', 'Kartoffel', 'Mais', 'Roggen', 'Weizen', 'Zuckerruebe', 'Tiere', 'Brachland'
     ];
 
     $scope.click = function (plantation) {
-        uibModal.close(plantation);
+        $uibModalInstance.close(plantation);
     }
 
     $scope.close = function () {
-        uibModal.close();
+       $uibModalInstance.close();
     }
 }
 
-SelectPlantationCtrl.$inject = ['$scope', '$log', 'uibModal'];
+SelectPlantationCtrl.$inject = ['$scope', '$log', '$uibModalInstance'];
 angular.module('soil').controller('SelectPlantationCtrl', SelectPlantationCtrl);
 
 // the uibModal is injected in the specified controller
-function EndRoundCtrl($scope, $resource, uibModal, game, player, round) {
+function EndRoundCtrl($scope, $resource, $uibModalInstance, game, player, round) {
 
     $scope.round = round;
     switch (true) {
@@ -351,7 +351,7 @@ function EndRoundCtrl($scope, $resource, uibModal, game, player, round) {
     }
     $scope.round.decision.machines = "0%";
     $scope.close = function (submitted) {
-        uibModal.close(submitted);
+        $uibModalInstance.close(submitted);
     };
 
     $scope.submitRound = function () {
@@ -361,30 +361,30 @@ function EndRoundCtrl($scope, $resource, uibModal, game, player, round) {
     }
 }
 
-EndRoundCtrl.$inject = ['$scope', '$resource', 'uibModal', 'game', 'player', 'round'];
+EndRoundCtrl.$inject = ['$scope', '$resource', '$uibModalInstance', 'game', 'player', 'round'];
 angular.module('soil').controller('EndRoundCtrl', EndRoundCtrl);
 
-function NewRoundCtrl($scope, uibModal, round) {
+function NewRoundCtrl($scope, $uibModalInstance, round) {
     $scope.round = round;
     $scope.close = function () {
-        uibModal.close();
+        $uibModalInstance.close();
     };
 }
 
-NewRoundCtrl.$inject = ['$scope', 'uibModal', 'round'];
+NewRoundCtrl.$inject = ['$scope', '$uibModalInstance', 'round'];
 angular.module('soil').controller('NewRoundCtrl', NewRoundCtrl);
 
-function EndGameCtrl($scope, uibModal, round) {
+function EndGameCtrl($scope, $uibModalInstance, round) {
     $scope.round = round;
     $scope.close = function () {
-        uibModal.close();
+        $uibModalInstance.close();
     };
 }
 
-EndGameCtrl.$inject = ['$scope', 'uibModal', 'round'];
+EndGameCtrl.$inject = ['$scope', '$uibModalInstance', 'round'];
 angular.module('soil').controller('EndGameCtrl', EndGameCtrl);
 
-function ShowParcelInformationCtrl($scope, $filter, uibModal, game, player, round, parcel, show) {
+function ShowParcelInformationCtrl($scope, $filter, $uibModalInstance, game, player, round, parcel, show) {
     $scope.game = game;
     $scope.player = player;
     $scope.round = round;
@@ -407,11 +407,11 @@ function ShowParcelInformationCtrl($scope, $filter, uibModal, game, player, roun
     }).length;
     $scope.show = show;
     $scope.close = function () {
-        uibModal.close();
+        $uibModalInstance.close();
     };
 }
 
-ShowParcelInformationCtrl.$inject = ['$scope', '$filter', 'uibModal', 'game', 'player', 'round', 'parcel', 'show'];
+ShowParcelInformationCtrl.$inject = ['$scope', '$filter', '$uibModalInstance', 'game', 'player', 'round', 'parcel', 'show'];
 angular.module('soil').controller('ShowParcelInformationCtrl', ShowParcelInformationCtrl);
 
 function LoginCtrl($scope, $resource, $log) {

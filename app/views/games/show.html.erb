@@ -3,9 +3,9 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <div class="dropdown pull-left">
-        <a class="brand dropdown-toggle" href="#" role="button">Soil <b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu">
+      <div class="uib-dropdown pull-left">
+        <a class="brand uib-dropdown-toggle" href="#" role="button">Soil <b class="caret"></b></a>
+        <ul class="uib-dropdown-menu" role="menu">
           <li><a href="#">{{player.name}}</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul>
@@ -41,7 +41,7 @@
       <div class="span12">
         <%= render 'layouts/messages' %>
         <div>
-          <pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="selectedRound=page"></pagination>
+          <uib-pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="selectedRound=page"></uib-pagination>
         </div>
         <div ng-view>
         </div>

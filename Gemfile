@@ -10,6 +10,9 @@ gem 'newrelic_rpm'
 # Heroku Rails Integration
 gem 'rails_12factor'
 
+# Install JavaScript runtime for ngannotate
+gem 'therubyracer'
+
 # AngularJS pre minification
 gem 'ngannotate-rails'
 
@@ -42,7 +45,7 @@ gem 'jbuilder', '>= 1.0.1'
 gem 'json_builder'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby'#, '~> 3.0.0'
+gem 'bcrypt'
 
 # Use unicorn as the app server
 # gem 'unicorn'

@@ -1,5 +1,5 @@
 <div class="finance scrollable">
-<accordion close-others="false">
+<uib-accordion close-others="false">
 <div class="accordion-group">
     <div class="accordion-heading">
         <div class="accordion-toggle">
@@ -13,8 +13,8 @@
         </div>
     </div>
 </div>
-<accordion-group ui-if="selectedRound!='1'">
-    <accordion-heading>Getroffene Entscheidungen aus der vorherigen Runde</accordion-heading>
+<uib-accordion-group ng-if="selectedRound!='1'">
+    <uib-accordion-heading>Getroffene Entscheidungen aus der vorherigen Runde</uib-accordion-heading>
     <table>
         <tr>
             <th>Konventioneller Dünger</th>
@@ -47,9 +47,9 @@
             </td>
         </tr>
     </table>
-</accordion-group>
-<accordion-group ui-if="selectedRound!='1'">
-    <accordion-heading>Übersicht</accordion-heading>
+</uib-accordion-group>
+<uib-accordion-group ng-if="selectedRound!='1'">
+    <uib-accordion-heading>?bersicht</uib-accordion-heading>
     <table>
         <tr>
             <th>Einsatz von Maschinen</th>
@@ -77,9 +77,9 @@
             </td>
         </tr>
     </table>
-</accordion-group>
-<accordion-group ui-if="selectedRound!='1'">
-    <accordion-heading>
+</uib-accordion-group>
+<uib-accordion-group ng-if="selectedRound!='1'">
+    <uib-accordion-heading>
         <table>
             <tr>
                 <th>Ausgaben</th>
@@ -88,10 +88,10 @@
                 </td>
             </tr>
         </table>
-    </accordion-heading>
-    <accordion close-others="false">
-        <accordion-group>
-            <accordion-heading>
+    </uib-accordion-heading>
+    <uib-accordion close-others="false">
+        <uib-accordion-group>
+            <uib-accordion-heading>
                 <table>
                     <tr>
                         <th>Saatgut</th>
@@ -100,8 +100,8 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-heading>
-            <accordion-body>
+            </uib-accordion-heading>
+            <uib-accordion-body>
                 <table>
                     <tr>
                         <th>Ackerbohnen</th>
@@ -153,10 +153,10 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-body>
-        </accordion-group>
-        <accordion-group>
-            <accordion-heading>
+            </uib-accordion-body>
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
                 <table>
                     <tr>
                         <th>Investitionen</th>
@@ -165,8 +165,8 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-heading>
-            <accordion-body>
+            </uib-accordion-heading>
+            <uib-accordion-body>
                 <table>
                     <tr>
                         <th>Tiere</th>
@@ -181,10 +181,10 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-body>
-        </accordion-group>
-        <accordion-group>
-            <accordion-heading>
+            </uib-accordion-body>
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
                 <table>
                     <tr>
                         <th>Laufende Kosten</th>
@@ -193,8 +193,8 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-heading>
-            <accordion-body>
+            </uib-accordion-heading>
+            <uib-accordion-body>
                 <table>
                     <tr>
                         <th>Kontrollen Bio-Siegel</th>
@@ -233,12 +233,12 @@
                         </td>
                     </tr>
                 </table>
-            </accordion-body>
-        </accordion-group>
-    </accordion>
-</accordion-group>
-<accordion-group ui-if="selectedRound!='1'">
-    <accordion-heading>
+            </uib-accordion-body>
+        </uib-accordion-group>
+    </uib-accordion>
+</uib-accordion-group>
+<uib-accordion-group ng-if="selectedRound!='1'">
+    <uib-accordion-heading>
         <table>
             <tr>
                 <th>Einnahmen</th>
@@ -247,11 +247,11 @@
                 </td>
             </tr>
         </table>
-    </accordion-heading>
-    <accordion-body>
-        <accordion>
-            <accordion-group>
-                <accordion-heading>
+    </uib-accordion-heading>
+    <uib-accordion-body>
+        <uib-accordion>
+            <uib-accordion-group>
+                <uib-accordion-heading>
                     <table>
                         <tr>
                             <th>Ernteerträge</th>
@@ -260,8 +260,8 @@
                             </td>
                         </tr>
                     </table>
-                </accordion-heading>
-                <accordion-body>
+                </uib-accordion-heading>
+                <uib-accordion-body>
                     <table>
                         <tr>
                             <th>Ackerbohnen</th>
@@ -312,12 +312,12 @@
                             </td>
                         </tr>
                     </table>
-                </accordion-body>
-            </accordion-group>
-        </accordion>
-    </accordion-body>
-</accordion-group>
-<div class="accordion-group" ui-if="selectedRound!='1'">
+                </uib-accordion-body>
+            </uib-accordion-group>
+        </uib-accordion>
+    </uib-accordion-body>
+</uib-accordion-group>
+<div class="accordion-group" ng-if="selectedRound!='1'">
     <div class="accordion-heading">
         <div class="accordion-toggle">
             <table>
@@ -345,5 +345,5 @@
         </div>
     </div>
 </div>
-</accordion>
+</uib-accordion>
 </div>
