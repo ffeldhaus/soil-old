@@ -41,6 +41,30 @@ li {
     cursor: pointer;
 }
 
+.modal-dialog {
+	width: 50%;
+}
+
+.navbar-soil {
+    font-size: 120%;
+	background-color: rgba(50, 50, 100, 0.5);
+	background-image: none;
+}
+
+.navbar-soil a {
+	color: #EEE;
+}
+
+.navbar-soil li:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+	color: rgb(221, 221, 221);
+}
+
+.navbar-soil li:focus {
+    background-color: rgba(0, 0, 0, 0.4);
+	color: rgb(221, 221, 221);
+}
+
 .uib-accordion-body {
     cursor: default;
 }
@@ -109,7 +133,7 @@ legend {
 
 .field, .soil, .nutrition, .cropsequence, .harvest {
     position: absolute;
-    width: 100%;
+    width: 90%;
 }
 
 .soil, .nutrition, .cropsequence, .harvest {
@@ -224,80 +248,30 @@ legend {
     text-align: right;
 }
 
-.accordion {
+.panel-group {
     margin-bottom: 0px;
 }
 
-.accordion-group {
+.panel {
     overflow: hidden;
 }
 
-.accordion-heading {
+.panel-heading {
     background-color: rgba(255, 255, 255, 0.8);
     font-weight: bold;
 }
 
-.accordion-body {
+.panel-collapse {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
-.accordion-heading a:hover {
+.panel-heading a:hover {
     background-color: rgba(255, 255, 255, 1);
     color: #777;
 }
 
-.accordion-inner, .finance .accordion-heading .accordion-toggle {
+.panel-body, .finance .panel-heading .accordion-toggle {
     padding-right: 0;
-}
-
-.navbar .brand {
-    color: #FFF;
-}
-
-.navbar .brand:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.navbar .navbar-inner {
-    background-color: rgba(50, 50, 100, 0.5);
-    background-image: none;
-}
-
-.navbar .nav li a {
-    color: #DDD;
-    padding: 10px;
-}
-
-.navbar .nav .active a {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(221, 221, 221);
-}
-
-.navbar .nav .active a:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(221, 221, 221);
-}
-
-.navbar .nav .active a:focus {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(221, 221, 221);
-}
-
-.navbar .nav li a:active {
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.navbar .nav li a:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(221, 221, 221);
-}
-
-.navbar a {
-    font-size: 120%;
-}
-
-.navbar .btn {
-    font-size: 100%;
 }
 
 .center {
@@ -413,14 +387,6 @@ form {
 
 .login-form .control-label {
     padding-right: 5px;
-}
-
-body .modal {
-    width: 800px;
-    margin-left: -400px;
-}
-body .modal.fade.in {
-    top: auto; /* fade in to correct spot */
 }
 
 .frontpage {

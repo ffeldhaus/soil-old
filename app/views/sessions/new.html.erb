@@ -2,18 +2,18 @@
 
 <div id="main" role="main">
   <div class="content">
-    <div class="row span8 center">
+    <div class="row col-md-8 center">
       <div>
         <%= render 'layouts/messages' %>
       </div>
 
-      <tabset class="frontpage">
-        <tab heading="Übersicht"><%= render 'layouts/overview' %></tab>
-        <tab heading="Hintergrundinformationen"><%= render 'layouts/background' %></tab>
-        <tab heading="Anmelden"><%= render 'layouts/login' %></tab>
-        <tab heading="Registrieren"><%= render 'layouts/register' %></tab>
-        <tab heading="Impressum"><%= render 'layouts/impressum' %></tab>
-      </tabset>
+      <uib-tabset class="frontpage">
+        <uib-tab heading="Uebersicht"><%= render 'layouts/overview' %></uib-tab>
+        <uib-tab heading="Hintergrundinformationen"><%= render 'layouts/background' %></uib-tab>
+        <uib-tab heading="Anmelden"><%= render 'layouts/login' %></uib-tab>
+        <uib-tab heading="Registrieren"><%= render 'layouts/register' %></uib-tab>
+        <uib-tab heading="Impressum"><%= render 'layouts/impressum' %></uib-tab>
+      </uib-tabset>
     </div>
   </div>
 </div>

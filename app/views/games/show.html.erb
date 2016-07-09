@@ -1,50 +1,42 @@
 <body ng-controller="SoilCtrl">
 
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <div class="uib-dropdown pull-left">
-        <a class="brand uib-dropdown-toggle" href="#" role="button">Soil <b class="caret"></b></a>
-        <ul class="uib-dropdown-menu" role="menu">
-          <li><a href="#">{{player.name}}</a></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul>
-      </div>
-      <div class="nav-collapse">
-        <ul class="nav">
-          <nav-location name="field" show="$parent.show" visible="show!='finance'"
-                        href="#/field">Spielfeld
-          </nav-location>
-          <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'"
-                        href="#/field">Fruchtfolge
-          </nav-location>
-          <nav-location name="soil" show="$parent.show" visible="show=='soil'"
-                        href="#/field">Bodenqualität
-          </nav-location>
-          <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'"
-                        href="#/field">Mineralstoffe
-          </nav-location>
-          <nav-location name="harvest" show="$parent.show" visible="show=='harvest'"
-                        href="#/field">Ernteertrag
-          </nav-location>
-          <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
-        </ul>
-        <a ng-click="endRound()" class="btn pull-right" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">{{getButtonText()}}</a>
-      </div>
-    </div>
-  </div>
-</div>
+<nav class="navbar navbar-soil navbar-fixed-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <div class="dropdown pull-left" uib-dropdown>
+		<a class="navbar-brand dropdown-toggle" uib-dropdown-toggle href="#" role="button">Soil <b class="caret"></b></a>
+		<ul class="dropdown-menu" role="menu">
+		  <li><a href="#">{{player.name}}</a></li>
+		  <li><a href="/logout">Logout</a></li>
+		</ul>
+	  </div>
+	</div>
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <nav-location class="active" name="field" show="$parent.show" visible="show!='finance'" href="#/field">Spielfeld</nav-location>
+        <nav-location name="cropsequence" show="$parent.show" visible="show=='cropsequence'" href="#/field">Fruchtfolge</nav-location>
+        <nav-location name="soil" show="$parent.show" visible="show=='soil'" href="#/field">Bodenqualität</nav-location>
+        <nav-location name="nutrition" show="$parent.show" visible="show=='nutrition'" href="#/field">Mineralstoffe</nav-location>
+        <nav-location name="harvest" show="$parent.show" visible="show=='harvest'" href="#/field">Ernteertrag</nav-location>
+        <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><p class="navbar-btn"><a ng-click="endRound()" class="btn btn-default" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">{{getButtonText()}}</p></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 <div id="main" role="main">
   <div class="container" ng-init="initialize(<%= current_user.game_id %>, <%= current_user.id %>)">
-    <div class="content row">
-      <div class="span12">
-        <%= render 'layouts/messages' %>
-        <div>
-          <uib-pagination num-pages="player.rounds.length" current-page="selectedRound" class="pagination-centered" previous-text="Vorherige Runde" next-text="Nächste Runde" on-select-page="selectedRound=page"></uib-pagination>
-        </div>
-        <div ng-view>
-        </div>
+    <div class="row">
+      <%= render 'layouts/messages' %>
+      <div class="text-center">
+        <uib-pagination total-items="player.rounds.length" ng-model="selectedRound" class="pagination" previous-text="Vorherige Runde" next-text="Nächste Runde" ng-change="selectedRound=page"></uib-pagination>
+      </div>
+      <div ng-view>
       </div>
     </div>
   </div>

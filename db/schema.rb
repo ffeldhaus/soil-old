@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admins", force: true do |t|
+  create_table "admins", force: :cascade do |t|
     t.string   "name"
     t.string   "password_digest"
     t.string   "salt"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
     t.datetime "updated_at"
   end
 
-  create_table "decisions", force: true do |t|
+  create_table "decisions", force: :cascade do |t|
     t.integer  "machines"
     t.boolean  "organic"
     t.boolean  "pesticide"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "decisions", ["round_id"], name: "index_decisions_on_round_id", using: :btree
 
-  create_table "expenses", force: true do |t|
+  create_table "expenses", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "result_id"
     t.datetime "created_at"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "expenses", ["result_id"], name: "index_expenses_on_result_id", using: :btree
 
-  create_table "fields", force: true do |t|
+  create_table "fields", force: :cascade do |t|
     t.integer  "round_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "fields", ["round_id"], name: "index_fields_on_round_id", using: :btree
 
-  create_table "games", force: true do |t|
+  create_table "games", force: :cascade do |t|
     t.integer  "current_round"
     t.string   "name"
     t.string   "weather"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "games", ["supervisor_id"], name: "index_games_on_supervisor_id", using: :btree
 
-  create_table "harvests", force: true do |t|
+  create_table "harvests", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "fieldbean"
     t.integer  "barley"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "harvests", ["income_id"], name: "index_harvests_on_income_id", using: :btree
 
-  create_table "incomes", force: true do |t|
+  create_table "incomes", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "result_id"
     t.datetime "created_at"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "incomes", ["result_id"], name: "index_incomes_on_result_id", using: :btree
 
-  create_table "investments", force: true do |t|
+  create_table "investments", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "animals"
     t.integer  "machines"
@@ -103,12 +103,12 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "investments", ["expense_id"], name: "index_investments_on_expense_id", using: :btree
 
-  create_table "materials", force: true do |t|
+  create_table "materials", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "parcels", force: true do |t|
+  create_table "parcels", force: :cascade do |t|
     t.integer  "number"
     t.integer  "nutrition"
     t.integer  "soil"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
   add_index "parcels", ["field_id"], name: "index_parcels_on_field_id", using: :btree
   add_index "parcels", ["round_id"], name: "index_parcels_on_round_id", using: :btree
 
-  create_table "players", force: true do |t|
+  create_table "players", force: :cascade do |t|
     t.string   "name"
     t.string   "password_digest"
     t.string   "salt"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
 
-  create_table "results", force: true do |t|
+  create_table "results", force: :cascade do |t|
     t.integer  "machines"
     t.boolean  "organic"
     t.string   "weather"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "results", ["round_id"], name: "index_results_on_round_id", using: :btree
 
-  create_table "rounds", force: true do |t|
+  create_table "rounds", force: :cascade do |t|
     t.integer  "number"
     t.boolean  "submitted"
     t.integer  "player_id"
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
   add_index "rounds", ["player_id"], name: "index_rounds_on_player_id", using: :btree
 
-  create_table "running_costs", force: true do |t|
+  create_table "running_costs", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "organic_control"
     t.integer  "fertilize"
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "running_costs", ["expense_id"], name: "index_running_costs_on_expense_id", using: :btree
 
-  create_table "seeds", force: true do |t|
+  create_table "seeds", force: :cascade do |t|
     t.integer  "sum"
     t.integer  "fieldbean"
     t.integer  "barley"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 20130731151717) do
 
   add_index "seeds", ["expense_id"], name: "index_seeds_on_expense_id", using: :btree
 
-  create_table "supervisors", force: true do |t|
+  create_table "supervisors", force: :cascade do |t|
     t.string   "name"
     t.string   "first_name"
     t.string   "last_name"

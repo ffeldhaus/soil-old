@@ -5,10 +5,8 @@ gem 'rails', '>= 4.0.0'
 
 gem 'pg'
 
-gem 'newrelic_rpm'
-
-# Heroku Rails Integration
-gem 'rails_12factor'
+# Pum webserver
+gem "puma"
 
 # Install JavaScript runtime for ngannotate
 gem 'therubyracer'
