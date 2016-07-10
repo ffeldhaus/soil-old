@@ -319,30 +319,34 @@
 </uib-accordion-group>
 <div class="panel panel-default" ng-if="selectedRound!='1'">
     <div class="panel-heading">
-        <div class="accordion-toggle">
-            <table>
-                <tr>
-                    <th>Gewinn</th>
-                    <td ng-repeat="player in game.players | orderBy: 'id'">{{(player.rounds |
-                        orderBy:'number')[selectedRound-1].result.profit | currency }}
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <h4 class="panel-title">
+            <div class="accordion-toggle">
+                <table>
+                    <tr>
+                        <th>Gewinn</th>
+                        <td ng-repeat="player in game.players | orderBy: 'id'">{{(player.rounds |
+                            orderBy:'number')[selectedRound-1].result.profit | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h4>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div class="accordion-toggle">
-            <table>
-                <tr>
-                    <th>Kapital</th>
-                    <td ng-repeat="player in game.players | orderBy: 'id'">{{(player.rounds |
-                        orderBy:'number')[selectedRound-1].result.capital | currency }}
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <h4 class="panel-title">
+            <div class="accordion-toggle">
+                <table>
+                    <tr>
+                        <th>Kapital</th>
+                        <td ng-repeat="player in game.players | orderBy: 'id'">{{(player.rounds |
+                            orderBy:'number')[selectedRound-1].result.capital | currency }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h4>
     </div>
 </div>
 </uib-accordion>

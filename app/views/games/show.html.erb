@@ -23,7 +23,7 @@
         <nav-location name="finanzen" show="$parent.show" visible="true" href="#/finance">Finanzen</nav-location>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-btn"><a ng-click="endRound()" class="btn btn-default" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">{{getButtonText()}}</p></a></li>
+        <li><p class="navbar-btn"><button ng-click="endRound()" class="btn btn-default" ng-disabled="(selectedRound != player.rounds.length || gameOver || round.submitted)" href="#">{{getButtonText()}}</button></p></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
