@@ -148,7 +148,12 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
             })[0];
             $scope.rounds = $filter('orderBy')($scope.player.rounds, 'number');
             $scope.round = $scope.rounds[$scope.rounds.length - 1];
-            $scope.selectedRound = $scope.player.rounds.length;
+            if ($scope.round.submitted) {
+                $scope.selectedRound = $scope.player.rounds.length-1;
+            }
+            else {
+                $scope.selectedRound = $scope.player.rounds.length;
+            }
             if ($scope.round.number < 11) {
                 if (typeof $scope.checkForNewRounds === 'undefined') {
                     $scope.checkForNewRounds = checkForNewRounds;
