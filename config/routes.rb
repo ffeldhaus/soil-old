@@ -1,6 +1,6 @@
 Soil::Application.routes.draw do
   get 'welcome', to: 'sessions#new', as: 'welcome'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
   get 'admin', to: 'admin#index', as: 'admin'
   get 'games', to: 'games#index', as: 'games'
   get 'sessions', to: 'sessions#new'

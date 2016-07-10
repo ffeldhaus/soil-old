@@ -8,7 +8,7 @@
 		<a class="navbar-brand dropdown-toggle" uib-dropdown-toggle href="#" role="button">Soil <b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu">
 		  <li><a href="#">{{player.name}}</a></li>
-		  <li><a href="/logout">Logout</a></li>
+		  <li><%= link_to 'Logout', logout_path("current"), method: :delete %></li>
 		</ul>
 	  </div>
 	</div>
