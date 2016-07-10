@@ -34,7 +34,7 @@
     <div class="row">
       <%= render 'layouts/messages' %>
       <div class="text-center">
-        <uib-pagination total-items="player.rounds.length" ng-model="selectedRound" class="pagination" previous-text="Vorherige Runde" next-text="Nächste Runde" ng-change="selectedRound=page"></uib-pagination>
+        <uib-pagination total-items="player.rounds.length-1" ng-model="selectedRound" class="pagination" previous-text="Vorherige Runde" next-text="Nächste Runde" ng-change="selectedRound=page"></uib-pagination>
       </div>
       <div ng-view>
       </div>
