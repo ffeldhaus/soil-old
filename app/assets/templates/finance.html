@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<uib-accordion-group ng-if="selectedRound!='1'">
+<uib-accordion-group ng-if="selectedRound!='1'" is-open="true">
     <uib-accordion-heading>Getroffene Entscheidungen aus der vorherigen Runde</uib-accordion-heading>
     <table>
         <tr>
@@ -49,7 +49,7 @@
     </table>
 </uib-accordion-group>
 <uib-accordion-group ng-if="selectedRound!='1'">
-    <uib-accordion-heading>?bersicht</uib-accordion-heading>
+    <uib-accordion-heading>Übersicht</uib-accordion-heading>
     <table>
         <tr>
             <th>Einsatz von Maschinen</th>
@@ -317,8 +317,8 @@
         </uib-accordion>
     </uib-accordion-body>
 </uib-accordion-group>
-<div class="accordion-group" ng-if="selectedRound!='1'">
-    <div class="accordion-heading">
+<div class="panel panel-default" ng-if="selectedRound!='1'">
+    <div class="panel-heading">
         <div class="accordion-toggle">
             <table>
                 <tr>
@@ -331,8 +331,8 @@
         </div>
     </div>
 </div>
-<div class="accordion-group">
-    <div class="accordion-heading">
+<div class="panel panel-default">
+    <div class="panel-heading">
         <div class="accordion-toggle">
             <table>
                 <tr>
