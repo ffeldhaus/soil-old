@@ -11,12 +11,12 @@ angular.module("app.soil").factory 'checkForNewRounds', ($resource, $timeout, $f
             game_id: scope.game.id
             player_id: scope.player.id
         ).query (r) ->
-            if r.length > rounds.length and rounds.length > 0 and round.submitted
+            if round.submitted
                 $timeout query, 30000
                 scope.getGame(scope.game.id)
             $log.debug 'Old round' if r.length <= rounds.length
             rounds = $filter('orderBy')(r, 'number')
-            $timeout query, 30000
+            $timeout query, 1000
 
     setScope: setScope,
     query: query
