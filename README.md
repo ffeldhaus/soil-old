@@ -29,7 +29,7 @@ production:
   pool: 5
 ```
 18. Setup database with `RAILS_ENV=production rake db:reset`
-19. Start Rails server with `RAILS_ENV=production rails server -b <IP>` (change <IP> to the IP of your server) and test connection on <IP>:3000
+19. Start Rails server with `puma -b tcp://127.0.0.1:3000 -e production -d` (change 127.0.0.1 to the public IP of the server if you do not use a reverse proxy) and test connection on <IP>:3000
 
 ## Upgrading
 
