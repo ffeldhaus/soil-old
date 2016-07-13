@@ -34,7 +34,7 @@ function AdminCtrl($scope, $resource, $log, $location) {
 }
 
 AdminCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
-angular.module('soil').controller('AdminCtrl', AdminCtrl);
+angular.module('app.soil').controller('AdminCtrl', AdminCtrl);
 
 function GamesCtrl($scope, $resource, $log, $location) {
     var Games = $resource('/games/:game_id', {game_id: '@id'});
@@ -90,9 +90,11 @@ function GamesCtrl($scope, $resource, $log, $location) {
 }
 
 GamesCtrl.$inject = ['$scope', '$resource', '$log', '$location'];
-angular.module('soil').controller('GamesCtrl', GamesCtrl);
+angular.module('app.soil').controller('GamesCtrl', GamesCtrl);
 
 function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, checkForNewRounds) {
+
+    $scope.selectedRound = 1;
 
     $rootScope.image_path = {
         'Brachland': '<%= asset_path('brachland.jpg') %>',
@@ -148,12 +150,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
             })[0];
             $scope.rounds = $filter('orderBy')($scope.player.rounds, 'number');
             $scope.round = $scope.rounds[$scope.rounds.length - 1];
-            if ($scope.round.submitted) {
-                $scope.selectedRound = $scope.player.rounds.length-1;
-            }
-            else {
-                $scope.selectedRound = $scope.player.rounds.length;
-            }
+            $scope.selectedRound = $scope.player.rounds.length;
             if ($scope.round.number < 11) {
                 if (typeof $scope.checkForNewRounds === 'undefined') {
                     $scope.checkForNewRounds = checkForNewRounds;
@@ -296,7 +293,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
 }
 
 SoilCtrl.$inject = ['$scope', '$rootScope', '$uibModal', '$resource', '$log', '$filter', '$q', 'checkForNewRounds'];
-angular.module('soil').controller('SoilCtrl', SoilCtrl);
+angular.module('app.soil').controller('SoilCtrl', SoilCtrl);
 
 // the uibModal is injected in the specified controller
 function SelectPlantationCtrl($scope, $log, $uibModalInstance) {
@@ -314,7 +311,7 @@ function SelectPlantationCtrl($scope, $log, $uibModalInstance) {
 }
 
 SelectPlantationCtrl.$inject = ['$scope', '$log', '$uibModalInstance'];
-angular.module('soil').controller('SelectPlantationCtrl', SelectPlantationCtrl);
+angular.module('app.soil').controller('SelectPlantationCtrl', SelectPlantationCtrl);
 
 // the uibModal is injected in the specified controller
 function EndRoundCtrl($scope, $resource, $uibModalInstance, game, player, round) {
@@ -367,7 +364,7 @@ function EndRoundCtrl($scope, $resource, $uibModalInstance, game, player, round)
 }
 
 EndRoundCtrl.$inject = ['$scope', '$resource', '$uibModalInstance', 'game', 'player', 'round'];
-angular.module('soil').controller('EndRoundCtrl', EndRoundCtrl);
+angular.module('app.soil').controller('EndRoundCtrl', EndRoundCtrl);
 
 function NewRoundCtrl($scope, $uibModalInstance, round) {
     $scope.round = round;
@@ -377,7 +374,7 @@ function NewRoundCtrl($scope, $uibModalInstance, round) {
 }
 
 NewRoundCtrl.$inject = ['$scope', '$uibModalInstance', 'round'];
-angular.module('soil').controller('NewRoundCtrl', NewRoundCtrl);
+angular.module('app.soil').controller('NewRoundCtrl', NewRoundCtrl);
 
 function EndGameCtrl($scope, $uibModalInstance, round) {
     $scope.round = round;
@@ -387,7 +384,7 @@ function EndGameCtrl($scope, $uibModalInstance, round) {
 }
 
 EndGameCtrl.$inject = ['$scope', '$uibModalInstance', 'round'];
-angular.module('soil').controller('EndGameCtrl', EndGameCtrl);
+angular.module('app.soil').controller('EndGameCtrl', EndGameCtrl);
 
 function ShowParcelInformationCtrl($scope, $filter, $uibModalInstance, game, player, round, parcel, show) {
     $scope.game = game;
@@ -417,7 +414,7 @@ function ShowParcelInformationCtrl($scope, $filter, $uibModalInstance, game, pla
 }
 
 ShowParcelInformationCtrl.$inject = ['$scope', '$filter', '$uibModalInstance', 'game', 'player', 'round', 'parcel', 'show'];
-angular.module('soil').controller('ShowParcelInformationCtrl', ShowParcelInformationCtrl);
+angular.module('app.soil').controller('ShowParcelInformationCtrl', ShowParcelInformationCtrl);
 
 function LoginCtrl($scope, $resource, $log) {
     var Supervisors = $resource('/supervisors/:supervisor_id', {supervisor_id: '@id'});
@@ -433,5 +430,5 @@ function LoginCtrl($scope, $resource, $log) {
 }
 
 LoginCtrl.$inject = ['$scope', '$resource', '$log'];
-angular.module('soil').controller('LoginCtrl', LoginCtrl);
+angular.module('app.soil').controller('LoginCtrl', LoginCtrl);
 

@@ -7,6 +7,7 @@ class Game < ActiveRecord::Base
 
   validates :name, :presence => true, :uniqueness => true, :length => {:in => 4..64}
 
+  # TODO: remove full list of weather and vermin from rendering
   after_initialize do
     self.weather ||= %w|Normal| + %w|Normal Normal Normal Normal Dürre Kälte Überschwemmung Dürre Kälte Überschwemmung|.shuffle
     self.vermin ||= %w|Keine| + %w|Keine Blattlaus Fritfliege Kartoffelkäfer Maiszünsler Drahtwurm Blattlaus Fritfliege Kartoffelkäfer Maiszünsler Drahtwurm|.shuffle

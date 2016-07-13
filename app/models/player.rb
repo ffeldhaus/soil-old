@@ -11,5 +11,6 @@ class Player < ActiveRecord::Base
   after_create do
     # TODO: add game id to round
     @first_round ||= self.rounds.build number: 1
+    @first_round.game_id = self.game_id
   end
 end

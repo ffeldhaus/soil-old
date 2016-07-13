@@ -4,101 +4,95 @@
     </h2>
 </div>
 <div class="modal-body">
-    <div class="content">
+    <div class="content-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <b>Konventioneller Dünger</b>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn-group">
-                                <button ng-click="round.decision.fertilize=true" type="button" class="btn btn-default"
-                                        value="true"
-                                        ng-class="{active:round.decision.fertilize}">Ja
-                                </button>
-                                <button ng-click="round.decision.fertilize=false" type="button" class="btn btn-default"
-                                        value="false"
-                                        ng-class="{active:!round.decision.fertilize}">Nein
-                                </button>
-                            </div>
-                        </div>
+            <div class="col-xs-6">
+                <div class="form-group input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        Konventioneller Dünger
+                    </span>
+                    <div class="input-group-btn">
+                        <button ng-click="round.decision.fertilize=true" type="button" class="btn btn-default btn-sm"
+                                value="true"
+                                ng-class="{active:round.decision.fertilize}">Ja
+                        </button>
+                        <button ng-click="round.decision.fertilize=false" type="button" class="btn btn-default btn-sm"
+                                value="false"
+                                ng-class="{active:!round.decision.fertilize}">Nein
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <b>Pestizide</b>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn-group">
-                                <button ng-click="round.decision.pesticide=true" type="button" class="btn btn-default"
-                                        value="true"
-                                        ng-class="{active:round.decision.pesticide}">Ja
-                                </button>
-                                <button ng-click="round.decision.pesticide=false" type="button" class="btn btn-default"
-                                        value="no"
-                                        ng-class="{active:!round.decision.pesticide}">Nein
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        Pestizide
+                    </span>
+                    <div class="input-group-btn">
+                        <button ng-click="round.decision.pesticide=true" type="button" class="btn btn-default btn-sm"
+                                value="true"
+                                ng-class="{active:round.decision.pesticide}">Ja
+                        </button>
+                        <button ng-click="round.decision.pesticide=false" type="button" class="btn btn-default btn-sm"
+                                value="no"
+                                ng-class="{active:!round.decision.pesticide}">Nein
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <b>Nützlinge</b>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn-group">
-                                <button ng-click="round.decision.organisms=true" type="button" class="btn btn-default"
-                                        value="true"
-                                        ng-class="{active:round.decision.organisms}">Ja
-                                </button>
-                                <button ng-click="round.decision.organisms=false" type="button" class="btn btn-default"
-                                        value="no"
-                                        ng-class="{active:!round.decision.organisms}">Nein
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        Nützlinge
+                    </span>
+                    <div class="input-group-btn">
+                        <button ng-click="round.decision.organisms=true" type="button" class="btn btn-default btn-sm"
+                                value="true"
+                                ng-class="{active:round.decision.organisms}">Ja
+                        </button>
+                        <button ng-click="round.decision.organisms=false" type="button" class="btn btn-default btn-sm"
+                                value="no"
+                                ng-class="{active:!round.decision.organisms}">Nein
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <b>Maschineneinsatz steigern</b>
-                        </div>
-                        <div class="col-md-4">
-                            <select ng-model="round.decision.machines"
-                                    ng-options="percent for percent in percentages"
-                                    selected="0%"></select>
-                        </div>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        Maschineneinsatz steigern
+                    </span>
+                    <div class="input-group-btn">
+                        <select style="width: 5.7em" class="form-control"  ng-model="round.decision.machines"
+                                ng-options="percent for percent in percentages"
+                                selected="0%"></select>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <b>Bio-Siegel</b>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn-group">
-                                <button ng-click="round.decision.organic=true" type="button" class="btn btn-default"
-                                        value="true"
-                                        ng-class="{active:round.decision.organic}">Ja
-                                </button>
-                                <button ng-click="round.decision.organic=false" type="button" class="btn btn-default"
-                                        value="no"
-                                        ng-class="{active:!round.decision.organic}">Nein
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <a ng-click="submitRound()" class="btn btn-default">Abschicken</a>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        Bio-Siegel
+                    </span>
+                    <div class="input-group-btn">
+                        <button ng-click="round.decision.organic=true" type="button" class="btn btn-default btn-sm"
+                                value="true"
+                                ng-class="{active:round.decision.organic}">Ja
+                        </button>
+                        <button ng-click="round.decision.organic=false" type="button" class="btn btn-default btn-sm"
+                                value="no"
+                                ng-class="{active:!round.decision.organic}">Nein
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <ol class="ui-selectable">
-                    <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)"
-                        ng-repeat="parcel in round.field.parcels | orderBy:'number'"
-                        class="ui-state-default">
-                        {{parcel.plantation.charAt(0)}}
-                    </li>
-                </ol>
+            <div class="col-xs-6">
+                <div>
+                    <ol class="ui-selectable">
+                        <li style="background-image: url(<%= Rails.configuration.assets.prefix %>/{{parcel.plantation | lowercase}}.jpg)"
+                            ng-repeat="parcel in round.field.parcels | orderBy:'number'"
+                            class="ui-state-default">
+                            {{parcel.plantation.charAt(0)}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <a ng-click="submitRound()" class="btn btn-default">Abschicken</a>
             </div>
         </div>
     </div>

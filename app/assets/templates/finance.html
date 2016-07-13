@@ -2,15 +2,13 @@
 <uib-accordion close-others="false">
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div class="panel-toggle">
-            <table>
-                <tr>
-                    <th></th>
-                    <td ng-repeat="player in game.players | orderBy: 'id'">{{player.name}}
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <table>
+            <tr>
+                <th></th>
+                <td ng-repeat="player in game.players | orderBy: 'id'">{{player.name}}
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 <uib-accordion-group ng-if="selectedRound!='1'" is-open="true">
@@ -48,7 +46,7 @@
         </tr>
     </table>
 </uib-accordion-group>
-<uib-accordion-group ng-if="selectedRound!='1'">
+<uib-accordion-group ng-if="selectedRound!='1'" is-open="true">
     <uib-accordion-heading>Übersicht</uib-accordion-heading>
     <table>
         <tr>
@@ -78,7 +76,7 @@
         </tr>
     </table>
 </uib-accordion-group>
-<uib-accordion-group ng-if="selectedRound!='1'">
+<uib-accordion-group ng-if="selectedRound!='1'" is-open="true">
     <uib-accordion-heading>
         <table>
             <tr>
@@ -237,7 +235,7 @@
         </uib-accordion-group>
     </uib-accordion>
 </uib-accordion-group>
-<uib-accordion-group ng-if="selectedRound!='1'">
+<uib-accordion-group ng-if="selectedRound!='1'" is-open="true">
     <uib-accordion-heading>
         <table>
             <tr>
