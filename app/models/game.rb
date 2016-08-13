@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
   belongs_to :supervisor
   serialize :weather
   serialize :vermin
+  accepts_nested_attributes_for :players
 
   validates :name, :presence => true, :uniqueness => true, :length => {:in => 4..64}
 

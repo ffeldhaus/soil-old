@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
-  before_filter :authorize_player, only: [:show]
-  before_filter :authorize_supervisor, only: [:index]
+  before_action :authorize_player, only: [:show]
+  before_action :authorize_supervisor, only: [:index]
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   # GET /games
@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     @games = Game.all
     respond_to do |format|
       format.html
-      format.json {render :json => @games, :include => [ :supervisor, :players ]}
+      format.json { render :json => @games, :include => [ :supervisor, :players ] }
       #render :json => @player, :include => {:rounds => {:include => {:decision => {}, :result => {:include => {:income => {:include => :harvest},:expense => {:include => [:seed, :investment, :running_cost]}}}}}}
 
     end
@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @game, root: false }
+      format.json { render json: @game, :include => [ :players => [ :rounds => [ { :field => [ :parcels ] } , :decision, { :result => [ { :expense => [ :seed, :investment, :running_cost ] } , { :income => [ :harvest ] } ] } ] ] ], root: false }
     end
   end
 

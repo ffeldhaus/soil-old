@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :require_login
+  skip_before_action :require_login
 
   def create
     player = Player.where({ :name => params[:name], :game_id => params[:game]}).first

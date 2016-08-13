@@ -12,7 +12,7 @@ class PlayersController < ApplicationController
   # GET /players/1.json
   def show
     @player = Player.find_by_id(params[:id])
-    render json: @player, root: false
+    render json: @player
   end
 
   def create

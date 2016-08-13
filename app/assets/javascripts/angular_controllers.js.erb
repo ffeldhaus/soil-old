@@ -125,9 +125,7 @@ function SoilCtrl($scope, $rootScope, $uibModal, $resource, $log, $filter, $q, c
         'gut': '#00FF00'
     };
 
-    $rootScope.round_zero =
-    <%= RoundSerializer.new(Round.new(:number => 0)).to_json %>.
-    round;
+    $rootScope.round_zero = <%= RoundSerializer.new(Round.new(:number => 0)).to_json %>;
 
     $scope.hideAlert = false;
 

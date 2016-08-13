@@ -24,27 +24,24 @@ gem 'coffee-rails'
 
 gem 'uglifier'
 
+# jquery gems
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+
+# angular gems
 gem 'angularjs-rails'
 gem 'angular-ui-rails'
 gem 'angular-ui-bootstrap-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+#gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
-gem 'json_builder'
+#gem 'json_builder'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano', group: :development
 
 # To use debugger
 # gem 'debugger'

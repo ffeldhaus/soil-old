@@ -1,6 +1,6 @@
 class SupervisorsController < ApplicationController
   before_action :set_supervisor, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :require_login, only: :create
+  skip_before_action :require_login, only: :create
 
   def index
     @supervisors = Supervisor.all

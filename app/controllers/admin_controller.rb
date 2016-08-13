@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  before_filter :authorize_admin, only: [:index]
+  before_action :authorize_admin, only: [:index]
 
   private
 

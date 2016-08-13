@@ -8,7 +8,7 @@
   end
 
   def show
-    render json: @round, root: false
+    render json: @round
   end
 
   # PATCH/PUT /rounds/1
