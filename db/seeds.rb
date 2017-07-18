@@ -13,13 +13,13 @@ supervisor.save!
 
 game = supervisor.games.create(:name => 'Test')
 
-game.players.create(:name => 'Gruppe 1', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 2', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 3', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 4', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 5', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 6', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 7', :password => 'test', :password_confirmation => 'test')
-game.players.create(:name => 'Gruppe 8', :password => 'test', :password_confirmation => 'test')
+game.players.create(:name => 'Gruppe 1', :password => 'M3LLlePr', :password_confirmation => 'M3LLlePr')
+game.players.create(:name => 'Gruppe 2', :password => 'gCN6oriI', :password_confirmation => 'gCN6oriI')
+game.players.create(:name => 'Gruppe 3', :password => 'E2Ia9mEA', :password_confirmation => 'E2Ia9mEA')
+#game.players.create(:name => 'Gruppe 4', :password => 'test', :password_confirmation => 'test')
+#game.players.create(:name => 'Gruppe 5', :password => 'test', :password_confirmation => 'test')
+#game.players.create(:name => 'Gruppe 6', :password => 'test', :password_confirmation => 'test')
+#game.players.create(:name => 'Gruppe 7', :password => 'test', :password_confirmation => 'test')
+#game.players.create(:name => 'Gruppe 8', :password => 'test', :password_confirmation => 'test')
 
 game.save!
