@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h2>Start von Runde {{round.number}}<button ng-click="close()" class="close pull-right">&times;</button></h2>
+</div>
+<div class="modal-body">
+  <ul>
+    <li>Wetter: {{round.result.weather}}</li>
+    <li>Schädlinge: {{round.result.vermin}}</li>
+    <li>Gewinn: {{round.result.profit | currency}}</li>
+    <li ui-if="round.result.organic">Das Biosiegel wurde erworben!</li>
+  </ul>
+</div>

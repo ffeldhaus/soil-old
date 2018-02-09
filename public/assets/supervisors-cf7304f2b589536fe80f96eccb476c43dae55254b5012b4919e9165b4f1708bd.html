@@ -1,0 +1,61 @@
+<div class="supervisors">
+  <accordion>
+    <accordion-group is-open="!show()">
+      <accordion-heading>translation missing: en.new_supervisor</accordion-heading>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label">translation missing: en.name</label>
+            <div class="controls">
+              <span class="input-xlarge uneditable-input">{{supervisor.first_name.charAt(0) + supervisor.last_name | lowercase }}</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputFirstName">translation missing: en.first_name</label>
+            <div class="controls">
+              <input ng-model="supervisor.first_name" type="text" id="inputFirstName" placeholder="translation missing: en.first_name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputLastName">translation missing: en.last_name</label>
+            <div class="controls">
+              <input ng-model="supervisor.last_name" ttype="text" id="inputLastName" placeholder="translation missing: en.last_name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">translation missing: en.email</label>
+            <div class="controls">
+              <input ng-model="supervisor.email" ttype="email" id="inputEmail" placeholder="translation missing: en.email">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button ng-click="createSupervisor(supervisor)" type="submit" class="btn">translation missing: en.new_supervisor</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </accordion-group>
+    <accordion-group ng-repeat="supervisor in supervisors" is-open="supervisor.id==show()">
+      <accordion-heading>{{supervisor.first_name}} {{supervisor.last_name}}<button ng-click="deleteSupervisor(supervisor)" class="close pull-right">&times;</button></accordion-heading>
+      <table>
+        <tr>
+          <th>translation missing: en.name</th>
+          <td>{{supervisor.name}}</a></td>
+        </tr>
+        <tr>
+          <th>translation missing: en.first_name</th>
+          <td>{{supervisor.first_name}}</a></td>
+        </tr>
+        <tr>
+          <th>translation missing: en.last_name</th>
+          <td>{{supervisor.last_name}}</a></td>
+        </tr>
+        <tr>
+          <th>translation missing: en.email</th>
+          <td>{{supervisor.email}}</a></td>
+        </tr>
+      </table>
+    </accordion-group>
+  </accordion>
+</div>

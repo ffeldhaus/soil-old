@@ -1,0 +1,79 @@
+<div class="games">
+  <accordion>
+    <accordion-group is-open="!show()">
+      <accordion-heading>translation missing: en.new_game</accordion-heading>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="inputName">translation missing: en.game_name</label>
+
+            <div class="controls">
+              <input ng-model="game.name" type="text" id="inputName" placeholder="translation missing: en.game_name">
+            </div>
+          </div>
+          <div class="control-group" ng-init="game.player_count=4">
+            <label class="control-label" for="inputPlayerCount">translation missing: en.game_group_count</label>
+
+            <div class="controls form-align">
+              <div ui-slider min="2" max="8" ng-change="setPlayerSize(game.player_count)" ng-model="game.player_count"></div>
+              {{game.player_count}}
+            </div>
+          </div>
+          <div class="control-group" ng-repeat="player in game.players">
+            <accordion>
+              <accordion-group is-open="true">
+                <accordion-heading>{{player.name}}</accordion-heading>
+                <div class="control-group">
+                  <label class="control-label" for="inputPlayerName">translation missing: en.group_name</label>
+
+                  <div class="controls">
+                    <input ng-init="player.name='translation missing: en.group ' + ($index + 1)" ng-model="player.name" type="text" id="inputPlayerName">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="inputPlayerPassword">translation missing: en.password</label>
+
+                  <div class="controls">
+                    <input ng-model="player.password" type="text" id="inputPlayerPassword">
+                  </div>
+                </div>
+              </accordion-group>
+            </accordion>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button ng-click="createGame(game)" type="submit" class="btn">translation missing: en.new_game</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </accordion-group>
+    <accordion-group ng-repeat="game in games">
+      <accordion-heading ng-init="supervisor=getSupervisor(game.supervisor_id)">{{game.name}}
+        <button ng-click="deleteGame(game)" class="close pull-right">&times;</button>
+      </accordion-heading>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group" ng-show="admin">
+            <label class="control-label" for="inputName">translation missing: en.supervisor</label>
+            <div class="controls form-align">
+              <span><a href="#/supervisors?show={{game.supervisor.id}}">{{game.supervisor.first_name}} {{game.supervisor.last_name}}</a></span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputName">translation missing: en.current_round</label>
+            <div class="controls form-align">
+              <span>{{currentRound(game)}}</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputName">translation missing: en.game_group_count</label>
+            <div class="controls form-align">
+              <span>{{game.players.length}}</span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </accordion-group>
+  </accordion>
+</div>
