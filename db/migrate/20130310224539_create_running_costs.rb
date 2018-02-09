@@ -1,4 +1,4 @@
-class CreateRunningCosts < ActiveRecord::Migration
+class CreateRunningCosts < ActiveRecord::Migration[5.1]
   def change
     create_table :running_costs do |t|
       t.integer :sum
