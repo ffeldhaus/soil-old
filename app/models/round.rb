@@ -128,6 +128,7 @@ class Round < ActiveRecord::Base
   after_initialize do
     self.number ||= 1
     self.submitted = false if self.submitted.nil?
+    self.save!
     self.create_decision machines: '0', organic: false, pesticide: false, fertilize: false, organisms: false unless self.decision
     self.create_result machines: MACHINES, organic: 'false', weather: 'Normal', vermin: 'Keine' unless self.result
     self.create_field unless self.field
