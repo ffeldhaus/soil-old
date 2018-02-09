@@ -8,9 +8,6 @@
 # Ignore postgresql data
 /db/pgsql
 
-# Ignore database configuration
-/config/database.yml
-
 # Ignore all logfiles and tempfiles.
 /log
 /tmp
@@ -29,4 +26,4 @@ soil.iml
 .gems
 
 # ignore rails assets
-public/assets/**
+#public/assets/**
